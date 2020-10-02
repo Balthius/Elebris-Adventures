@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f6d1601b1a9e524cab7886ea781a147, type: 3}
+  m_Name: CombatHandler
+  m_EditorClassIdentifier: 
+  energyVariable:
+    subTypeVariable: {fileID: 11400000, guid: 4cd24e2a73022e8468ef37b0159b800a, type: 2}
+    variableModifier: 0.25
+  bluntVariable:
+    subTypeVariable: {fileID: 11400000, guid: 0a869c506b224044c8114d6e00b0c9f0, type: 2}
+    variableModifier: 0.25
+  sharpVariable:
+    subTypeVariable: {fileID: 11400000, guid: afbdce7b55d4fcf4abb5543ddbff781c, type: 2}
+    variableModifier: 0.25

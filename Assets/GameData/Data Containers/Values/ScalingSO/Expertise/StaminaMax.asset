@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c0b348211bf80a46a900bca54297a07, type: 3}
+  m_Name: StaminaMax
+  m_EditorClassIdentifier: 
+  usedAttributes:
+  - {fileID: 11400000, guid: d4182d7300f06d44aa5ac6813e1c21b3, type: 2}
+  baseValue: 5
+  minimumValue: 2
+  balanceValue: 2
+  scaleValue: 0.25
