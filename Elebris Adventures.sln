@@ -1,15 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{0D467D07-D123-C4CC-3D39-48E4582E0609}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AstarPathfindingProject", "AstarPathfindingProject.csproj", "{07C6F723-8379-E77B-E1A8-05FDAA860FCA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-Editor", "Assembly-CSharp-Editor.csproj", "{E614A04E-0BE4-9B66-16D5-015F7742EB49}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{0D467D07-D123-C4CC-3D39-48E4582E0609}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AstarPathfindingProjectEditor", "AstarPathfindingProjectEditor.csproj", "{1C444C70-9007-CBD1-41DF-7DE066AB670C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PackageToolsEditor", "PackageToolsEditor.csproj", "{22B28985-0B63-5BF3-7783-939C3DC9F3D2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Elebris.Library", "..\..\..\Libraries\Elebris.Library\Elebris.Library\Elebris.Library.csproj", "{14DC9116-69DF-40B2-BA2F-3DCCBD3B46C8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,18 +17,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{0D467D07-D123-C4CC-3D39-48E4582E0609}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0D467D07-D123-C4CC-3D39-48E4582E0609}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0D467D07-D123-C4CC-3D39-48E4582E0609}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0D467D07-D123-C4CC-3D39-48E4582E0609}.Release|Any CPU.Build.0 = Release|Any CPU
 		{07C6F723-8379-E77B-E1A8-05FDAA860FCA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{07C6F723-8379-E77B-E1A8-05FDAA860FCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{07C6F723-8379-E77B-E1A8-05FDAA860FCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{07C6F723-8379-E77B-E1A8-05FDAA860FCA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E614A04E-0BE4-9B66-16D5-015F7742EB49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E614A04E-0BE4-9B66-16D5-015F7742EB49}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E614A04E-0BE4-9B66-16D5-015F7742EB49}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E614A04E-0BE4-9B66-16D5-015F7742EB49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D467D07-D123-C4CC-3D39-48E4582E0609}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D467D07-D123-C4CC-3D39-48E4582E0609}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D467D07-D123-C4CC-3D39-48E4582E0609}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D467D07-D123-C4CC-3D39-48E4582E0609}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1C444C70-9007-CBD1-41DF-7DE066AB670C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1C444C70-9007-CBD1-41DF-7DE066AB670C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1C444C70-9007-CBD1-41DF-7DE066AB670C}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -37,6 +33,10 @@ Global
 		{22B28985-0B63-5BF3-7783-939C3DC9F3D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22B28985-0B63-5BF3-7783-939C3DC9F3D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{22B28985-0B63-5BF3-7783-939C3DC9F3D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14DC9116-69DF-40B2-BA2F-3DCCBD3B46C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14DC9116-69DF-40B2-BA2F-3DCCBD3B46C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14DC9116-69DF-40B2-BA2F-3DCCBD3B46C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14DC9116-69DF-40B2-BA2F-3DCCBD3B46C8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
