@@ -364,3 +364,8 @@ MigrationBackup/
 #Manually Added
 Assets/Graphics/
 Assets/Tiles/
+Library/
+Library/ArtifactDB
+Library/ShaderCache/EditorEncounteredVariants
+Library/SourceAssetDB
+Temp/UnityLockfile
