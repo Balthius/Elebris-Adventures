@@ -72,11 +72,55 @@
     <Compile Include="Assets\DapperEvents\GameEvents\Events\Void.cs" />
     <Compile Include="Assets\DapperEvents\GameEvents\Events\FloatListEvent.cs" />
     <Compile Include="Assets\DapperEvents\GameEvents\Events\IntEvent.cs" />
-    <Compile Include="Assets\Scripts\TestDll.cs" />
+    <Compile Include="Assets\Scripts\Actions\AttackBook.cs" />
+    <Compile Include="Assets\Scripts\Map\Tile\TreeTile.cs" />
+    <Compile Include="Assets\Scripts\Actions\Skill.cs" />
+    <Compile Include="Assets\Scripts\AI\EnemyStates\IState.cs" />
+    <Compile Include="Assets\Scripts\UI\UIManager.cs" />
+    <Compile Include="Assets\Scripts\Behaviours\DeathBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Map\Tile\WaterTile.cs" />
+    <Compile Include="Assets\Scripts\Actions\WeaponAttackScript.cs" />
+    <Compile Include="Assets\Scripts\Units\LayerSorter.cs" />
+    <Compile Include="Assets\Scripts\Units\Range.cs" />
+    <Compile Include="Assets\Scripts\PlayerInput\Buttons\ActionButton.cs" />
+    <Compile Include="Assets\Scripts\AI\EnemyStates\FollowState.cs" />
+    <Compile Include="Assets\Scripts\AI\EnemyStates\EvadeState.cs" />
+    <Compile Include="Assets\Scripts\Units\NPC.cs" />
+    <Compile Include="Assets\Scripts\Actions\SkillBook.cs" />
+    <Compile Include="Assets\Scripts\Map\Obstacle.cs" />
+    <Compile Include="Assets\Scripts\UI\KeybindManager.cs" />
+    <Compile Include="Assets\Scripts\Actions\SkillUsed.cs" />
+    <Compile Include="Assets\Scripts\Units\Player.cs" />
+    <Compile Include="Assets\Scripts\Actions\SkillScript.cs" />
+    <Compile Include="Assets\Scripts\Units\Enemy.cs" />
+    <Compile Include="Assets\Scripts\PlayerInput\Buttons\IUseable.cs" />
+    <Compile Include="Assets\Scripts\AI\EnemyStates\IdleState.cs" />
+    <Compile Include="Assets\Scripts\Actions\WeaponAttack.cs" />
+    <Compile Include="Assets\Scripts\AI\EnemyStates\AttackState.cs" />
+    <Compile Include="Assets\Scripts\Map\Tile\GrassTile.cs" />
+    <Compile Include="Assets\Scripts\Actions\DestroySelf.cs" />
+    <Compile Include="Assets\Scripts\Units\CameraFollow.cs" />
+    <Compile Include="Assets\Scripts\Units\Character.cs" />
+    <Compile Include="Assets\Scripts\Units\ResourceUIValue.cs" />
+    <Compile Include="Assets\Scripts\Map\Tile\LevelManager.cs" />
+    <Compile Include="Assets\Scripts\Saving\SavingSystem.cs" />
+    <Compile Include="Assets\Scripts\RuleTiles\RuleOverrideTile.cs" />
+    <Compile Include="Assets\Scripts\RuleTiles\RuleOverrideTileEditor.cs" />
+    <Compile Include="Assets\Scripts\Core\PlayerMovement.cs" />
+    <Compile Include="Assets\Scripts\RuleTiles\CustomRuleTileMenu.cs" />
+    <Compile Include="Assets\Scripts\RuleTiles\RuleTileEditor.cs" />
+    <Compile Include="Assets\Scripts\RuleTiles\RuleTile.cs" />
+    <Compile Include="Assets\Scripts\RuleTiles\PopulateRuleOverrideTileWizard.cs" />
+    <Compile Include="Assets\Scripts\Saving\SaveableEntity.cs" />
+    <Compile Include="Assets\Scripts\Saving\SerializableVector3.cs" />
+    <Compile Include="Assets\Scripts\SceneManagement\SavingWrapper.cs" />
+    <Compile Include="Assets\Scripts\Saving\ISaveable.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />
+     <None Include="Assets\Graphics\Unit Sprites\Character\3 Frame pc chars\tinytinyheroes_armies\Assets\ReadME.txt" />
+     <None Include="Assets\Graphics\Unit Sprites\Character\3 Frame pc chars\Assets\readme_update.txt" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap.shader" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface.shader" />
@@ -85,13 +129,16 @@
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF.shader" />
      <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Properties.cginc" />
+     <None Include="Assets\Graphics\Unit Sprites\Character\3 Frame pc chars\tinytinyheroes_armies\Assets\License.txt" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Surface.cginc" />
+     <None Include="Assets\Graphics\Unit Sprites\Character\3 Frame pc chars\tinytinyheroes_armies\Assets\ChangeLog.txt" />
+     <None Include="Assets\Graphics\Unit Sprites\Character\3 Frame pc chars\Assets\READ_ME.txt" />
      <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Masking.shader" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Mobile.shader" />
      <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
-     <None Include="Assets\Graphics\Sprites\GUI\7soulsrpggraphics_uipack\Assets\readme.txt" />
+     <None Include="Assets\Graphics\GUI\7soulsrpggraphics_uipack\Assets\readme.txt" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile.shader" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Sprite.shader" />
     <Reference Include="UnityEngine">
@@ -694,6 +741,9 @@
     <Reference Include="PsdPlugin">
       <HintPath>Library\ScriptAssemblies\PsdPlugin.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.2D.Tilemap.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.2D.Tilemap.Editor.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
@@ -712,14 +762,20 @@
     <Reference Include="Unity.2D.IK.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.2D.IK.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.RenderPipelines.Core.Runtime">
-      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Core.Runtime.dll</HintPath>
+    <Reference Include="Unity.2D.Sprite.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.2D.Sprite.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Psdimporter.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.2D.Psdimporter.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Path.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.2D.Path.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Core.Runtime">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Core.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.UI">
+      <HintPath>Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
     </Reference>
     <Reference Include="Unity.InputSystem">
       <HintPath>Library\ScriptAssemblies\Unity.InputSystem.dll</HintPath>
@@ -729,6 +785,9 @@
     </Reference>
     <Reference Include="Unity.RenderPipelines.Core.ShaderLibrary">
       <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Core.ShaderLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="Unity.InternalAPIEditorBridge.001">
       <HintPath>Library\ScriptAssemblies\Unity.InternalAPIEditorBridge.001.dll</HintPath>
@@ -780,18 +839,6 @@
     </Reference>
     <Reference Include="Unity.2D.SpriteShape.Runtime">
       <HintPath>Library\ScriptAssemblies\Unity.2D.SpriteShape.Runtime.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.UI">
-      <HintPath>Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.2D.Tilemap.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.2D.Tilemap.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.2D.Sprite.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.2D.Sprite.Editor.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
