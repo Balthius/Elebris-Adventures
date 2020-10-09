@@ -13,7 +13,7 @@ using UnityEngine.InputSystem;
 
 namespace Assets.Scripts.Units
 {
-    [RequireComponent(typeof(Character))]
+    [RequireComponent(typeof(Unit))]
     public class PlayerInputController : MonoBehaviour, IUnitController
     {
 
@@ -45,3 +45,4 @@ namespace Assets.Scripts.Units
         }
     }
 }
+//TODO: add class to let the player know when certain buttons are pressed (for on screen button indicators). Not connected to this class at all, but shares InputActions.cs to receive events 

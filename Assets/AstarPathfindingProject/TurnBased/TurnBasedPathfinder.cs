@@ -6,7 +6,6 @@ using UnityEngine;
 using Pathfinding.Util;
 using UnityEngine.EventSystems;
 using System.Linq;
-using UnityEditorInternal;
 using UnityEngine.Events;
 
 namespace RPG.InteractiveStateManagers
