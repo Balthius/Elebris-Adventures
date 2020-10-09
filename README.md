@@ -6,3 +6,8 @@ Complete:
 - Basic Character Movement, with the new input system and the ability to slot in AI units as well
 - Basic Character Animation
 - Tilemap Added, Sandbox Created
+
+Currently used assets from others:
+- Unity Build
+- GDM Assets(Base hero Grasslands; and attributed in the base Unity folder)
+- Animation Importer
