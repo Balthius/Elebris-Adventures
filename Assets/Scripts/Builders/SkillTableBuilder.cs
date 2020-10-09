@@ -4,7 +4,7 @@ namespace Assets.Scripts.Builders
 {
     public class SkillTableBuilder
     {
-        //grab all values from a database, link up animations from within unity, create a scriptableobject for each skill in a relevant folder
+        //grab all values from a database, link up animations from within unity, create a scriptableobject for each skill in a relevant folder, or update existing scriptable objects.
     
     }
 
