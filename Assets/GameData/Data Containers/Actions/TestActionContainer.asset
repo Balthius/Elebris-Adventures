@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32889cefac9aa5940bd6904fe24bd992, type: 3}
+  m_Name: TestActionContainer
+  m_EditorClassIdentifier: 
+  lightAttack: {fileID: 11400000, guid: 1eb284ad6fa2e1c4cbdd06082a6dfdbb, type: 2}
+  heavyAttack: {fileID: 11400000, guid: 4c49816537307c14db9daeb9bc615220, type: 2}
+  skillOne: {fileID: 11400000, guid: 7a65404cc2d86834a84c791439abd243, type: 2}
+  skillTwo: {fileID: 11400000, guid: 6291c635c98ba53469281b4447638f15, type: 2}
+  skillThree: {fileID: 11400000, guid: 9f6e7eb60594c9148906a60b32959a5c, type: 2}
+  skillFour: {fileID: 11400000, guid: 516fae7a3b04c3249b31b0b0621ff7e5, type: 2}

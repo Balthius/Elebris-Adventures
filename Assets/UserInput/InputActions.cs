@@ -32,7 +32,7 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""id"": ""9fe92edc-641c-4ce4-8f9a-5c3f42453dd8"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Press(behavior=1)""
+                    ""interactions"": """"
                 },
                 {
                     ""name"": ""Maneuver"",
@@ -40,7 +40,7 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""id"": ""c4c62d0e-bf7b-47ef-bc12-8462eae40a82"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Press(behavior=1)""
+                    ""interactions"": """"
                 },
                 {
                     ""name"": ""LightAttack"",
@@ -48,7 +48,7 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""id"": ""c59d1f53-f82c-451b-8cd6-24513bea43e4"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Press(behavior=1)""
+                    ""interactions"": """"
                 },
                 {
                     ""name"": ""HeavyAttack"",
@@ -56,7 +56,7 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""id"": ""a75596bb-ea9b-44c0-95a3-b7095028da3d"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Press(behavior=1)""
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [

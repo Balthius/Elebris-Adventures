@@ -1,73 +1,51 @@
 ﻿
 
+using Assets.Scripts.Actions;
 using UnityEngine;
 
 namespace Assets.Scripts.Units
 {
 
-	[CreateAssetMenu(menuName = "Actions/Attack")]
-	public class SkillScriptableObject : ScriptableObject
+    [CreateAssetMenu(menuName = "Actions/Skill")]
+	public class SkillScriptableObject : ActionScriptableObject, IActionBuilder
     {
-		//this was taken from a monobehaviour, I will probably recreate it as a scriptableobject
-		private string name;
-		private int damage;
-		private float duration;
-		private Sprite icon;
-		[SerializeField]
-		private float speed;
-		private float animationLength;
+		[SerializeField] private float skillDamage;
+		[SerializeField] private float skillDuration;
+		[SerializeField] private float skillSpeed;
 	
 
-		public string MyName
+		public float SkillDamage
 		{
 			get
 			{
-				return name;
+				return skillDamage;
 			}
 		}
 
-		public int MyDamage
+		public float SkillDuration
 		{
 			get
 			{
-				return damage;
+				return skillDuration;
 			}
 		}
-
-		public float MyDuration
+        public float SkillSpeed
 		{
 			get
 			{
-				return duration;
+				return skillSpeed;
 			}
 		}
 
-        public Sprite MyIcon
-        {
-            get
-            {
-                return icon;
-            }
-        }
-
-        public float MySpeed
+		public IAction CreateAction()
 		{
-			get
-			{
-				return speed;
-			}
+				SkillModel model = new SkillModel(
+					SkillDamage, SkillDuration, SkillSpeed, actionIcon, actionName,
+					animationLength, baseChargeTime, chargeMax, actionPrefab);
+				IAction action = new SkillAction(model);
+				return action;
 		}
+	}
 
-
-		public float MyAnimationLength
-		{
-			get
-			{
-				return animationLength;
-			}
-		}
-       
-
-    }
 
 }

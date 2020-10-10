@@ -1,45 +1,27 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Actions;
+using System;
+using UnityEngine;
 
 namespace Assets.Scripts.Units
 {
+
 	[CreateAssetMenu(menuName ="Actions/Attack")]
-    public class AttackScriptableObject : ScriptableObject
+    public class AttackScriptableObject : ActionScriptableObject, IActionBuilder
     {
-		//contains all information about an attack, used by attackaction
-		//this was taken from a monobehaviour, I will probably recreate it as a scriptableobject
-		private string name;
-		private int damage;
-		private float animationLength;
-		private float BaseChargeTime;
+		//contains all information about an attack, used by attackaction=
 
-		private GameObject attackPrefab; 
-        
-
-		public string MyName
+		[SerializeField] private int attackDamage;
+		public IAction CreateAction()
 		{
-			get
-			{
-				return name;
-			}
-		}
 
-		public int MyDamage
-		{
-			get
-			{
-				return damage;
-			}
-		}
+			AttackModel model = new AttackModel(
+				attackDamage, actionIcon, actionName,
+				animationLength, baseChargeTime, chargeMax, actionPrefab
+				);
 
-		public float MyAnimationLength
-		{
-			get
-			{
-				return animationLength;
-			}
+			IAction action = new AttackAction(model);
+			return action;
 		}
-		public GameObject AttackPrefab { get => attackPrefab; set => attackPrefab = value; }
-
 	}
 
 

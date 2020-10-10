@@ -10,40 +10,42 @@ namespace Assets.Scripts.Actions.Attacks
     [Serializable]
     public class ActiveAction : MonoBehaviour
     {
-        private Rigidbody2D weaponRigidBody;
-        private CircleCollider2D weaponColliderSize;
+        private Rigidbody2D actionRB;
+        private CircleCollider2D actionCollider;
         private Unit parentPlayer;
-
+        private Vector2 directionUsed; //if the skill travels at all
         private float durationDone;//til it needs to destroy itself
-
-        private Transform source;
+        private float travelSpeed;
 
         //private Element elementType;
         //private float elementDamage;
-        private float physDamage;
+        private float actionDamage;
 
-        public void Initialize(int damage, float damageMod, float duration, bool altAttack, bool empoweredAttack, Transform source)
+        public ActiveAction()
         {
-            weaponRigidBody = GetComponent<Rigidbody2D>();
-            weaponColliderSize = transform.GetComponent<CircleCollider2D>();
-            parentPlayer = FindObjectOfType<Unit>();
-            physDamage = damage * damageMod;
-            this.source = source;
 
-            if (altAttack)
+        }
+
+        public void Initialize(Unit owner, float travelSpeed, Vector2 directionUsed, float duration, int chargeLevel)
+        {
+            actionRB = GetComponent<Rigidbody2D>();
+            actionCollider = transform.GetComponent<CircleCollider2D>();
+            parentPlayer = owner;
+            durationDone = duration;
+            this.directionUsed = directionUsed;
+
+            for (int i = 0; i < chargeLevel; i++)
             {
+                //this is a hack job, radius is only one of many possible effects available to you.
+                //should pass in a "chargeTrigger" that can take a list of modifiers from the player/skill as parameters.
                 IncreaseRadius();
             }
-            if (empoweredAttack)
-            {
-                IncreaseRadius();
-            }
-
             durationDone = Time.time + .3f;
         }
 
         private void FixedUpdate()
         {
+            transform.Translate(directionUsed * Time.fixedDeltaTime * travelSpeed);
             if (Time.time >= durationDone)
             {
                 Destroy(gameObject);
@@ -52,6 +54,7 @@ namespace Assets.Scripts.Actions.Attacks
 
         private void OnTriggerEnter2D(Collider2D col)
         {
+            Debug.Log($"You hit {col.name}");
             //if (col.tag == "Enemy")
             //{
             //    Character c = col.GetComponentInParent<Character>();
@@ -61,7 +64,7 @@ namespace Assets.Scripts.Actions.Attacks
 
         public void IncreaseRadius()
         {
-            weaponColliderSize.transform.localScale *= 1.3f;// Was .radius, wouldn't have affected visual, amy revert if I set up different animations
+            actionCollider.transform.localScale *= 1.3f;// Was .radius, wouldn't have affected visual, amy revert if I set up different animations
         }
 
 

@@ -1,5 +1,6 @@
 using Assets.DapperEvents.GameEvents;
 using Assets.Scripts.Actions;
+using Assets.Scripts.Actions.Attacks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -31,15 +32,17 @@ namespace Assets.Scripts.Units
 
         [SerializeField] protected float speed = 5f;
 
-        private ActionState currentActionState = ActionState.None;
+
+        protected Vector2 movementDirection;
+        protected Vector2 facingDirection;
+
 
         private float timeBetweenCharges;
         private float chargeTime;
         private float currentCharge = 0;
 
-
-        protected Vector2 movementDirection;
-        protected Vector2 facingDirection;
+        private ActionState currentActionState = ActionState.None;
+        private ActiveAction chargingAction;
 
 
         protected virtual void Start()
@@ -51,15 +54,20 @@ namespace Assets.Scripts.Units
         }
         protected virtual void Update()
         {
-
             _animator.SetFloat("Horizontal", facingDirection.x);
             _animator.SetFloat("Vertical", facingDirection.y);
             _animator.SetFloat("Speed", movementDirection.sqrMagnitude); //sqr version is more optimizied, using movement direction to access idle animation but lock facing
 
             movementDirection = _unitController.ReturnMovement();
-            if (movementDirection.sqrMagnitude > 0.01)
+            if (movementDirection.sqrMagnitude > 0.01 && currentActionState == ActionState.None)
             {
                 facingDirection = movementDirection; //allows you to lock direction facing for skill casts etc
+            }
+
+            //if skill or attack pressed prevent other attack etc from being pressed. activate use action and upon release change state to ActionState.Using
+            if(chargingAction != null)
+            {
+
             }
         }
 
@@ -67,7 +75,6 @@ namespace Assets.Scripts.Units
         {
             _rigidbody.MovePosition(_rigidbody.position + movementDirection * speed * Time.fixedDeltaTime);
 
-            //if pressing relevant button queue up a current action and keep useAction running
         }
 
         public void UnitSelected()
@@ -84,14 +91,19 @@ namespace Assets.Scripts.Units
                 //get base charge, max charge level allowed, action size etc from IAction
                 //set timebetweencharges to time.deltatime + basecharge; 
 
+                currentCharge = 0;
+                timeBetweenCharges = currentAction.ChargeTime();
+                SetNextChargeTime();
+
                 currentActionState = ActionState.Charging;
             }
-            else if(currentActionState == ActionState.Charging)
+            if(currentActionState == ActionState.Charging)
             {
                 if(Time.deltaTime >= chargeTime &&  currentAction.ChargeMax() > currentCharge)
                 {
                     currentCharge++;
                     timeBetweenCharges *= .8f; //quicker charges as it gets higher
+                    SetNextChargeTime();
                 }
                 else if (currentAction.ChargeMax() == currentCharge)
                 {
@@ -100,9 +112,17 @@ namespace Assets.Scripts.Units
             }
             else if(currentActionState == ActionState.Using)
             {
-                //instantiate a new ActiveAction with directionfacing and info from action + chargetime modifiers where applicable
+
+                //after casting reset state.
+                currentActionState = ActionState.None;
+                chargingAction = null;
             }
 
+        }
+
+        private void SetNextChargeTime()
+        {
+            chargeTime = Time.deltaTime + timeBetweenCharges; // set 
         }
     }
 
