@@ -16,37 +16,33 @@ namespace Assets.Scripts.Actions.Attacks
         private Vector2 directionUsed; //if the skill travels at all
         private float durationDone;//til it needs to destroy itself
         private float travelSpeed;
-
+        public int maxCharges, currentCharge;
+        //replace set ints and floats with struct[]s 
         //private Element elementType;
         //private float elementDamage;
         private float actionDamage;
 
-        public ActiveAction()
-        {
 
-        }
-
-        public void Initialize(Unit owner, float travelSpeed, Vector2 directionUsed, float duration, int chargeLevel)
+        public void Initialize(Unit owner, float duration, int maxCharges, Vector2 directionUsed, float travelSpeed = 0f)
         {
             actionRB = GetComponent<Rigidbody2D>();
             actionCollider = transform.GetComponent<CircleCollider2D>();
             parentPlayer = owner;
-            durationDone = duration;
+            durationDone = Time.deltaTime + duration;
             this.directionUsed = directionUsed;
 
-            for (int i = 0; i < chargeLevel; i++)
+            for (int i = 0; i < maxCharges; i++)
             {
                 //this is a hack job, radius is only one of many possible effects available to you.
                 //should pass in a "chargeTrigger" that can take a list of modifiers from the player/skill as parameters.
                 IncreaseRadius();
             }
-            durationDone = Time.time + .3f;
         }
 
         private void FixedUpdate()
         {
             transform.Translate(directionUsed * Time.fixedDeltaTime * travelSpeed);
-            if (Time.time >= durationDone)
+            if (Time.fixedDeltaTime >= durationDone)
             {
                 Destroy(gameObject);
             }

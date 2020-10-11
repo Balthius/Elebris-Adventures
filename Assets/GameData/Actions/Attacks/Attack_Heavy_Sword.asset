@@ -9,13 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e65ec31d34aea146a5dc00bb6173f62, type: 3}
-  m_Name: Sword_Heavy_Attack
+  m_Script: {fileID: 11500000, guid: a4d87b2629282114db04c21a43e0fa19, type: 3}
+  m_Name: Attack_Heavy_Sword
   m_EditorClassIdentifier: 
   actionIcon: {fileID: 21300000, guid: 84fd409399773c540a7e50ac517924ec, type: 3}
-  actionName: Heavy Attack
-  animationLength: 0.3
-  baseChargeTime: 1.5
+  actionName: Heavy Sword Attack
+  animationLength: 1
+  actionDamage: 15
+  baseChargeTime: 2
   chargeMax: 3
+  actionDuration: 0.5
+  actionSpeed: 0
   actionPrefab: {fileID: 0}
-  attackDamage: 20

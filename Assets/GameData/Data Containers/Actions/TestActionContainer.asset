@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32889cefac9aa5940bd6904fe24bd992, type: 3}
   m_Name: TestActionContainer
   m_EditorClassIdentifier: 
-  lightAttack: {fileID: 11400000, guid: 1eb284ad6fa2e1c4cbdd06082a6dfdbb, type: 2}
-  heavyAttack: {fileID: 11400000, guid: 4c49816537307c14db9daeb9bc615220, type: 2}
-  skillOne: {fileID: 11400000, guid: 7a65404cc2d86834a84c791439abd243, type: 2}
-  skillTwo: {fileID: 11400000, guid: 6291c635c98ba53469281b4447638f15, type: 2}
-  skillThree: {fileID: 11400000, guid: 9f6e7eb60594c9148906a60b32959a5c, type: 2}
-  skillFour: {fileID: 11400000, guid: 516fae7a3b04c3249b31b0b0621ff7e5, type: 2}
+  lightAttack: {fileID: 11400000, guid: cce27a05ff9a7eb4b97b85dae7ca8fbb, type: 2}
+  heavyAttack: {fileID: 11400000, guid: bd8873e50963e8d49b3b6b151f827bde, type: 2}
+  skillOne: {fileID: 11400000, guid: 007fca53eb1c62f4f9119a6a17b10349, type: 2}
+  skillTwo: {fileID: 11400000, guid: 50711c2aadee01e43b995e5a500157ec, type: 2}
+  skillThree: {fileID: 11400000, guid: 5a245557df56b37449d9693e20f0c07c, type: 2}
+  skillFour: {fileID: 11400000, guid: f6a18908c815ff1489165eb6b4842eab, type: 2}

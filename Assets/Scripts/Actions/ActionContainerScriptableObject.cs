@@ -7,11 +7,11 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Container/Actions")]
 public class ActionContainerScriptableObject : ScriptableObject
 {
-    public AttackScriptableObject lightAttack;
-    public AttackScriptableObject heavyAttack;
+    public ActionScriptableObject lightAttack;
+    public ActionScriptableObject heavyAttack;
 
-    public SkillScriptableObject skillOne;
-    public SkillScriptableObject skillTwo;
-    public SkillScriptableObject skillThree;
-    public SkillScriptableObject skillFour;
+    public ActionScriptableObject skillOne;
+    public ActionScriptableObject skillTwo;
+    public ActionScriptableObject skillThree;
+    public ActionScriptableObject skillFour;
 }

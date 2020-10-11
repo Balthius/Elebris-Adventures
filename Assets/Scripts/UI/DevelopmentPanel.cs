@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class DevelopmentPanel : MonoBehaviour
 {
-
     Unit _activeUnit;
 
     [SerializeField] ActionContainerScriptableObject container;
@@ -35,15 +34,15 @@ public class DevelopmentPanel : MonoBehaviour
         Debug.Log($"Current Health: {currentHP}");
     }
 
-
-
     public void TestSkillSet()
     {
-        _activeUnit.AttackContainer.LightAttack = container.lightAttack.CreateAction();
-        _activeUnit.AttackContainer.HeavyAttack = container.heavyAttack.CreateAction();
-        _activeUnit.SkillContainer.SkillOne = container.skillOne.CreateAction();
-        _activeUnit.SkillContainer.SkillTwo = container.skillTwo.CreateAction();
-        _activeUnit.SkillContainer.SkillThree = container.skillThree.CreateAction();
-        _activeUnit.SkillContainer.SkillFour = container.skillFour.CreateAction();
+        Debug.Log("Test skillset not implemented");
+        _activeUnit.AttackContainer.LightAttack = container.lightAttack;
+        _activeUnit.AttackContainer.HeavyAttack = container.heavyAttack;
+        _activeUnit.SkillContainer.SkillOne = container.skillOne;
+        _activeUnit.SkillContainer.SkillTwo = container.skillTwo;
+        _activeUnit.SkillContainer.SkillThree = container.skillThree;
+        _activeUnit.SkillContainer.SkillFour = container.skillFour;
+        Debug.Log($"Set light attack { _activeUnit.AttackContainer.LightAttack}");
     }
 }

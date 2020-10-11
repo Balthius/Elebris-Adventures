@@ -4,6 +4,7 @@ using Assets.Scripts.Actions.Attacks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Assets.Scripts.Units
 {
@@ -36,17 +37,19 @@ namespace Assets.Scripts.Units
         protected Vector2 movementDirection;
         protected Vector2 facingDirection;
 
-
         private float timeBetweenCharges;
         private float chargeTime;
-        private float currentCharge = 0;
 
         private ActionState currentActionState = ActionState.None;
-        private ActiveAction chargingAction;
+
+        private ActiveAction currentAction;
+
+        GameObject actionObject;
 
 
         protected virtual void Start()
         {
+            //Set attacks and skills from Saved config
             _unitController = GetComponent<IUnitController>(); //find controller on this character, receives a normalized value
             _rigidbody = GetComponent<Rigidbody2D>(); //find controller on this character, receives a normalized value
             _animator = GetComponent<Animator>(); //find controller on this character, receives a normalized value
@@ -64,66 +67,158 @@ namespace Assets.Scripts.Units
                 facingDirection = movementDirection; //allows you to lock direction facing for skill casts etc
             }
 
-            //if skill or attack pressed prevent other attack etc from being pressed. activate use action and upon release change state to ActionState.Using
-            if(chargingAction != null)
+            if(currentAction != null)
+            {
+                ChargeAction();
+                if (currentActionState != ActionState.Using) return;
+                CheckActionRelease();
+            }
+            else
+            {
+                CheckActionInput();
+            }
+        }
+
+        private void CheckActionInput()
+        {
+
+            if (_unitController.Select == InputActionPhase.Performed)
+            {
+                //UseAction();
+            }
+            else if (_unitController.LightAttack == InputActionPhase.Started)
+            {
+                UseAction(AttackContainer.LightAttack);
+            }
+            else if (_unitController.HeavyAttack == InputActionPhase.Started)
+            {
+                UseAction(AttackContainer.HeavyAttack);
+            }
+            else if (_unitController.Maneuver == InputActionPhase.Started)
             {
 
+            }
+            else if (_unitController.SkillOne == InputActionPhase.Started)
+            {
+                UseAction(SkillContainer.SkillOne);
+            }
+            else if (_unitController.SkillTwo == InputActionPhase.Started)
+            {
+                UseAction(SkillContainer.SkillTwo);
+            }
+            else if (_unitController.SkillThree == InputActionPhase.Started)
+            {
+                UseAction(SkillContainer.SkillThree);
+            }
+            else if (_unitController.SkillFour == InputActionPhase.Started)
+            {
+                UseAction(SkillContainer.SkillFour);
+            }
+
+
+        }
+        private void CheckActionRelease()
+        {
+            if (_unitController.Select == InputActionPhase.Canceled)
+            {
+                currentActionState = ActionState.Using;
+            }
+            else if (_unitController.LightAttack == InputActionPhase.Canceled)
+            {
+                currentActionState = ActionState.Using;
+            }
+            else if (_unitController.HeavyAttack == InputActionPhase.Canceled)
+            {
+                currentActionState = ActionState.Using;
+            }
+            else if (_unitController.Maneuver == InputActionPhase.Canceled)
+            {
+                currentActionState = ActionState.Using;
+            }
+            else if (_unitController.SkillOne == InputActionPhase.Canceled)
+            {
+                currentActionState = ActionState.Using;
+            }
+            else if (_unitController.SkillTwo == InputActionPhase.Canceled)
+            {
+                currentActionState = ActionState.Using;
+            }
+            else if (_unitController.SkillThree == InputActionPhase.Canceled)
+            {
+                currentActionState = ActionState.Using;
+            }
+            else if (_unitController.SkillFour == InputActionPhase.Canceled)
+            {
+                currentActionState = ActionState.Using;
             }
         }
 
         protected virtual void FixedUpdate()
         {
             _rigidbody.MovePosition(_rigidbody.position + movementDirection * speed * Time.fixedDeltaTime);
-
         }
 
         public void UnitSelected()
         {
-            //target selected on todo
+            //targetselectedevent on todo list
             activeUnitEvent.Raise(this);
         }
 
-        public void UseAction(IAction currentAction)
+        public void UseAction(ActionScriptableObject actionPrototype)
         {
+            if (actionPrototype == null)
+            {
+                Debug.Log("No prototype");
+                return;
+            }
             //calculate how long the action is charged, and what charge level you reach
             if (currentActionState == ActionState.None)
             {
-                //get base charge, max charge level allowed, action size etc from IAction
-                //set timebetweencharges to time.deltatime + basecharge; 
+                Debug.Log("New action started");
+                actionObject = actionPrototype.actionPrefab;
+                currentAction.Initialize(this, actionPrototype.actionDuration, actionPrototype.chargeMax, facingDirection);
 
-                currentCharge = 0;
-                timeBetweenCharges = currentAction.ChargeTime();
+                timeBetweenCharges = actionPrototype.baseChargeTime;
                 SetNextChargeTime();
 
                 currentActionState = ActionState.Charging;
             }
-            if(currentActionState == ActionState.Charging)
+        }
+
+        private void ChargeAction()
+        {
+            if (currentActionState == ActionState.Charging)
             {
-                if(Time.deltaTime >= chargeTime &&  currentAction.ChargeMax() > currentCharge)
+                if (Time.deltaTime >= chargeTime && currentAction.maxCharges > currentAction.currentCharge)
                 {
-                    currentCharge++;
-                    timeBetweenCharges *= .8f; //quicker charges as it gets higher
+                    Debug.Log($"Action charging{ currentAction.currentCharge}");
+
                     SetNextChargeTime();
                 }
-                else if (currentAction.ChargeMax() == currentCharge)
+                else if (currentAction.maxCharges == currentAction.currentCharge)
                 {
                     //visual and audio effect for max charge
                 }
             }
-            else if(currentActionState == ActionState.Using)
+            else if (currentActionState == ActionState.Using)
             {
-
+                // I really wanted a way to create a clone of a gameobject without cloning it, tweaking values, and then instantiating it, but that currently doesnt seem easy/possib le
+                GameObject spawn = Instantiate(actionObject);
+                ActiveAction spawnAction = actionObject.GetComponent<ActiveAction>();
+                spawnAction = currentAction; // overwrite objects action
                 //after casting reset state.
                 currentActionState = ActionState.None;
-                chargingAction = null;
             }
-
         }
 
         private void SetNextChargeTime()
         {
-            chargeTime = Time.deltaTime + timeBetweenCharges; // set 
+            currentAction.currentCharge++;
+            chargeTime = Time.deltaTime + timeBetweenCharges; // set, and then reduce next required charge time
+            timeBetweenCharges *= .8f; //quicker charges as it gets higher
         }
+
+     
     }
 
 }
