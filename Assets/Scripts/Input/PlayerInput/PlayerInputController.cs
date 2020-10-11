@@ -129,8 +129,9 @@ namespace Assets.Scripts.Units
         }
         private void FixedUpdate()
         {
-            if(activeAction != null && activeAction.phase == InputActionPhase.Canceled)
+            if (activeAction != null && activeAction.phase != InputActionPhase.Started)
             {
+                Debug.Log("Unlock other inputs");
                 EnableActionInputs();
             }
         }
@@ -178,11 +179,14 @@ namespace Assets.Scripts.Units
             _inputActions.Gameplay.SkillTwo.Enable();
             _inputActions.Gameplay.SkillThree.Enable();
             _inputActions.Gameplay.SkillFour.Enable();
+            activeAction = null;
         }
 
         void LockOtherInputs(InputAction inputAction)
         {
-
+            if (activeAction != null) return;
+            Debug.Log("Lock other inputs");
+            activeAction = inputAction;
             foreach (var action in interactionInputs)
             {
                 if(action != inputAction)
