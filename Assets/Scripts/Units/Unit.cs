@@ -81,8 +81,7 @@ namespace Assets.Scripts.Units
 
         private void CheckActionInput()
         {
-
-            if (_unitController.Select == InputActionPhase.Performed)
+            if (_unitController.Select == InputActionPhase.Started)
             {
                 //UseAction();
             }
@@ -119,35 +118,35 @@ namespace Assets.Scripts.Units
         }
         private void CheckActionRelease()
         {
-            if (_unitController.Select == InputActionPhase.Canceled)
+            if (_unitController.Select == InputActionPhase.Started)
             {
                 currentActionState = ActionState.Using;
             }
-            else if (_unitController.LightAttack == InputActionPhase.Canceled)
+            else if (_unitController.LightAttack != InputActionPhase.Started)
             {
                 currentActionState = ActionState.Using;
             }
-            else if (_unitController.HeavyAttack == InputActionPhase.Canceled)
+            else if (_unitController.HeavyAttack != InputActionPhase.Started)
             {
                 currentActionState = ActionState.Using;
             }
-            else if (_unitController.Maneuver == InputActionPhase.Canceled)
+            else if (_unitController.Maneuver != InputActionPhase.Started)
             {
                 currentActionState = ActionState.Using;
             }
-            else if (_unitController.SkillOne == InputActionPhase.Canceled)
+            else if (_unitController.SkillOne != InputActionPhase.Started)
             {
                 currentActionState = ActionState.Using;
             }
-            else if (_unitController.SkillTwo == InputActionPhase.Canceled)
+            else if (_unitController.SkillTwo != InputActionPhase.Started)
             {
                 currentActionState = ActionState.Using;
             }
-            else if (_unitController.SkillThree == InputActionPhase.Canceled)
+            else if (_unitController.SkillThree != InputActionPhase.Started)
             {
                 currentActionState = ActionState.Using;
             }
-            else if (_unitController.SkillFour == InputActionPhase.Canceled)
+            else if (_unitController.SkillFour != InputActionPhase.Canceled)
             {
                 currentActionState = ActionState.Using;
             }
@@ -168,7 +167,7 @@ namespace Assets.Scripts.Units
         {
             if (actionPrototype == null)
             {
-                Debug.Log("No prototype");
+                Debug.Log($"No prototype");
                 return;
             }
             //calculate how long the action is charged, and what charge level you reach

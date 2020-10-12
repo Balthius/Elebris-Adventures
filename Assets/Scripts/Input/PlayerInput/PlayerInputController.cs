@@ -29,6 +29,8 @@ namespace Assets.Scripts.Units
 
         //could alternatively use _inputActions.Gameplay.LightAttack.triggered and return a bool; or inputAction.ReadValue<float>() > 0
 
+        //input logic needs to be kept completely on this side so I can't pass GameplayActions through
+
         public InputActionPhase LightAttack
         {
             get
@@ -49,7 +51,7 @@ namespace Assets.Scripts.Units
                 {
                     LockOtherInputs(_inputActions.Gameplay.HeavyAttack);
                 }
-                return _inputActions.Gameplay.LightAttack.phase;
+                return _inputActions.Gameplay.HeavyAttack.phase;
             }
         }
         public InputActionPhase SkillOne
@@ -60,7 +62,7 @@ namespace Assets.Scripts.Units
                 {
                     LockOtherInputs(_inputActions.Gameplay.SkillOne);
                 }
-                return _inputActions.Gameplay.LightAttack.phase;
+                return _inputActions.Gameplay.SkillOne.phase;
             }
         }
 
@@ -72,7 +74,7 @@ namespace Assets.Scripts.Units
                 {
                     LockOtherInputs(_inputActions.Gameplay.SkillTwo);
                 }
-                return _inputActions.Gameplay.LightAttack.phase;
+                return _inputActions.Gameplay.SkillTwo.phase;
             }
         }
 
@@ -84,7 +86,7 @@ namespace Assets.Scripts.Units
                 {
                     LockOtherInputs(_inputActions.Gameplay.SkillThree);
                 }
-                return _inputActions.Gameplay.LightAttack.phase;
+                return _inputActions.Gameplay.SkillThree.phase;
             }
         }
 
@@ -96,7 +98,7 @@ namespace Assets.Scripts.Units
                 {
                     LockOtherInputs(_inputActions.Gameplay.SkillFour);
                 }
-                return _inputActions.Gameplay.LightAttack.phase;
+                return _inputActions.Gameplay.SkillFour.phase;
             }
         }
 
@@ -108,7 +110,7 @@ namespace Assets.Scripts.Units
                 {
                     LockOtherInputs(_inputActions.Gameplay.Maneuver);
                 }
-                return _inputActions.Gameplay.LightAttack.phase;
+                return _inputActions.Gameplay.Maneuver.phase;
             }
         }
         public InputActionPhase Select
@@ -119,7 +121,7 @@ namespace Assets.Scripts.Units
                 {
                     LockOtherInputs(_inputActions.Gameplay.Select);
                 }
-                return _inputActions.Gameplay.LightAttack.phase;
+                return _inputActions.Gameplay.Select.phase;
             }
         }
 
@@ -131,7 +133,7 @@ namespace Assets.Scripts.Units
         {
             if (activeAction != null && activeAction.phase != InputActionPhase.Started)
             {
-                Debug.Log("Unlock other inputs");
+                Debug.Log($"unlock inputs");
                 EnableActionInputs();
             }
         }
@@ -139,6 +141,7 @@ namespace Assets.Scripts.Units
         {
             _inputActions.Gameplay.Movement.Enable();
             _inputActions.Gameplay.Select.Enable();
+            FillList();
             EnableActionInputs();
         }
 
@@ -160,9 +163,9 @@ namespace Assets.Scripts.Units
         {
             return CurrentMovement;
         }
-
-        public void EnableActionInputs()
+        public void FillList()
         {
+
             interactionInputs.Add(_inputActions.Gameplay.LightAttack);
             interactionInputs.Add(_inputActions.Gameplay.HeavyAttack);
             interactionInputs.Add(_inputActions.Gameplay.Maneuver);
@@ -172,6 +175,9 @@ namespace Assets.Scripts.Units
             interactionInputs.Add(_inputActions.Gameplay.SkillThree);
             interactionInputs.Add(_inputActions.Gameplay.SkillFour);
 
+        }
+        public void EnableActionInputs()
+        {
             _inputActions.Gameplay.LightAttack.Enable();
             _inputActions.Gameplay.HeavyAttack.Enable();
             _inputActions.Gameplay.Maneuver.Enable();
@@ -185,8 +191,9 @@ namespace Assets.Scripts.Units
         void LockOtherInputs(InputAction inputAction)
         {
             if (activeAction != null) return;
-            Debug.Log("Lock other inputs");
             activeAction = inputAction;
+
+            Debug.Log($"lock inputs other than {activeAction.name}");
             foreach (var action in interactionInputs)
             {
                 if(action != inputAction)
