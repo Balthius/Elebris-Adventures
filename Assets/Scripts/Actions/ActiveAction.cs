@@ -10,6 +10,7 @@ namespace Assets.Scripts.Actions.Attacks
     [Serializable]
     public class ActiveAction : MonoBehaviour
     {
+        //These will remain on the Active action
         private Rigidbody2D actionRB;
         private CircleCollider2D actionCollider;
         private Unit parentPlayer;
@@ -17,12 +18,14 @@ namespace Assets.Scripts.Actions.Attacks
         private float durationDone;//til it needs to destroy itself
         private float travelSpeed;
         public int maxCharges, currentCharge;
-        //replace set ints and floats with struct[]s 
+
+
+        //Anything like this, that is used in the calculation once it hits something will go into a struct that contains the items as CharacterValues
         //private Element elementType;
         //private float elementDamage;
         private float actionDamage;
 
-
+        //this stores the values inherent to ActiveAction
         public void Initialize(Unit owner, float duration, int maxCharges, Vector2 directionUsed, float travelSpeed = 0f)
         {
             actionRB = GetComponent<Rigidbody2D>();
@@ -38,7 +41,6 @@ namespace Assets.Scripts.Actions.Attacks
                 IncreaseRadius();
             }
         }
-
         private void FixedUpdate()
         {
             transform.Translate(directionUsed * Time.fixedDeltaTime * travelSpeed);
@@ -57,12 +59,14 @@ namespace Assets.Scripts.Actions.Attacks
             //    c.TakeDamage(physDamage, source);
             //}
         }
-
         public void IncreaseRadius()
         {
             actionCollider.transform.localScale *= 1.3f;// Was .radius, wouldn't have affected visual, amy revert if I set up different animations
         }
 
 
+        //public void AddCalculation()
+        //RemoveCalculation()
+        //ConvertCalculation()
     }
 }

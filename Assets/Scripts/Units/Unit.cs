@@ -17,7 +17,6 @@ namespace Assets.Scripts.Units
     [RequireComponent(typeof(Animator))]
     public class Unit : MonoBehaviour
     {
-
         [SerializeField] private ActiveUnitEvent activeUnitEvent = null;
         //we have the option of changing player scale to -1 when moving left and  1 when moving right in order to have a "player side" sprite transform.localScale
         //rather than a left and right, that can be reused. I'm not currently going this route because I want left and right assets to be more than just mirror copies of eachother
@@ -32,7 +31,6 @@ namespace Assets.Scripts.Units
         public AttackContainer AttackContainer { get => _attackContainer; set => _attackContainer = value; }
 
         [SerializeField] protected float speed = 5f;
-
 
         protected Vector2 movementDirection;
         protected Vector2 facingDirection;
