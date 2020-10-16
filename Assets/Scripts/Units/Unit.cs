@@ -34,6 +34,7 @@ namespace Assets.Scripts.Units
 
         protected Vector2 movementDirection = new Vector2(0, -1);
         protected Vector2 facingDirection = new Vector2(0, -1);
+        //add a "run" function similar to charging where as long as your moving you start to fill a hidden bar, when it fills you boost your movespeed by 1.25
 
         private float timeBetweenCharges;
         private float chargeTime;
@@ -74,6 +75,7 @@ namespace Assets.Scripts.Units
             }
             if (currentActionState == ActionState.Charging)
             {
+                _animator.SetBool("Charging", true);
                 ChargeAction();
 
                 CheckActionRelease();
@@ -81,6 +83,8 @@ namespace Assets.Scripts.Units
             if (currentActionState == ActionState.Using)
             {
                 SpawnAction();
+
+                _animator.SetBool("Charging", false);
             }
 
         }
@@ -135,39 +139,23 @@ namespace Assets.Scripts.Units
         private void CheckActionRelease()
         {
             //only reachable once a skill has been prepared to use, so other inputs should be disabled and this should only fire off at a "safe time"
+            //it iS ugly, so I'll need to find a better way to loop the values. I should feel guilty about this but I also have so little experience with the new input system.
             Debug.Log("Checking release");
-            if (!_unitController.ChargingSelect)
+            if (!_unitController.ChargingSelect &&
+                !_unitController.ChargingLightAttack &&
+                !_unitController.ChargingHeavyAttack &&
+                !_unitController.ChargingManeuver &&
+                !_unitController.ChargingSkillOne &&
+                !_unitController.ChargingSkillTwo &&
+                !_unitController.ChargingSkillThree &&
+                !_unitController.ChargingSkillFour
+                )
             {
                 currentActionState = ActionState.Using;
             }
-            else if (!_unitController.ChargingLightAttack)
-            {
-                currentActionState = ActionState.Using;
-            }
-            else if (!_unitController.ChargingHeavyAttack)
-            {
-                currentActionState = ActionState.Using;
-            }
-            else if (!_unitController.ChargingManeuver)
-            {
-                currentActionState = ActionState.Using;
-            }
-            else if (!_unitController.ChargingSkillOne)
-            {
-                currentActionState = ActionState.Using;
-            }
-            else if (!_unitController.ChargingSkillTwo)
-            {
-                currentActionState = ActionState.Using;
-            }
-            else if (!_unitController.ChargingSkillThree)
-            {
-                currentActionState = ActionState.Using;
-            }
-            else if (!_unitController.ChargingSkillFour)
-            {
-                currentActionState = ActionState.Using;
-            }
+           
+          
+            
         }
 
         protected virtual void FixedUpdate()
