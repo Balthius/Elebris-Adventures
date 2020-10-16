@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Elebris.Library.Units;
+
 namespace Assets.Scripts.Units
 {
-    public class UiResource : MonoBehaviour
+    public class UIResource : MonoBehaviour
     {
         private Slider content;//or image, down the road. slider just adds convenience for quick setup
         private TMP_Text valueText;
+
+        ValueHolder _resourceValue;
 
         public float MyMaxValue { get; set; }//Updating correctly to unique Values
 
@@ -46,7 +50,6 @@ namespace Assets.Scripts.Units
             valueText = GetComponentInChildren<TMP_Text>();
             if(valueText = null)
             {
-
                 Debug.Log("Null text in resource bar");
             }
 
@@ -55,6 +58,7 @@ namespace Assets.Scripts.Units
         // Update is called once per frame
         void FixedUpdate()
         {
+            MyCurrentValue = _resourceValue.currentValue;
             if (currentFill != content.value)
             {
                 //content.fillamount =  for when I switch to image.
@@ -62,10 +66,12 @@ namespace Assets.Scripts.Units
                 valueText.text = $"{MyCurrentValue}/{MyMaxValue}";
             }
         }
-        public void Initialize(float currentValue, float maxValue)
+        public void Initialize(ValueHolder valueHolder)
         {
-            MyMaxValue = maxValue;
-            MyCurrentValue = currentValue;
+            Debug.Log(valueHolder + "Holds hp value");
+            _resourceValue = valueHolder;
+            MyMaxValue = _resourceValue.maxValue;
+            MyCurrentValue = _resourceValue.currentValue;
 
             valueText = GetComponentInChildren<TMP_Text>(); //eliminates a race condition
             valueText.text = $"{MyCurrentValue}/{MyMaxValue}";

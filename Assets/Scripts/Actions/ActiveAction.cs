@@ -26,7 +26,7 @@ namespace Assets.Scripts.Actions.Attacks
         private float actionDamage;
 
         //this stores the values inherent to ActiveAction
-        public void Initialize(Unit owner, float duration, int maxCharges, Vector2 directionUsed, float travelSpeed = 0f)
+        public void Initialize(Unit owner, int currentCharge, float duration, Vector2 directionUsed, float travelSpeed = 0f)
         {
             actionRB = GetComponent<Rigidbody2D>();
             actionCollider = transform.GetComponent<CircleCollider2D>();
@@ -34,7 +34,7 @@ namespace Assets.Scripts.Actions.Attacks
             durationDone = Time.deltaTime + duration;
             this.directionUsed = directionUsed;
 
-            for (int i = 0; i < maxCharges; i++)
+            for (int i = 0; i < currentCharge; i++)
             {
                 //this is a hack job, radius is only one of many possible effects available to you.
                 //should pass in a "chargeTrigger" that can take a list of modifiers from the player/skill as parameters.

@@ -20,4 +20,4 @@ MonoBehaviour:
   chargeMax: 3
   actionDuration: 0.5
   actionSpeed: 0
-  actionPrefab: {fileID: 0}
+  actionPrefab: {fileID: 2798447261580245637, guid: d062a716a597c9b4c8e2962bf7f4911c, type: 3}

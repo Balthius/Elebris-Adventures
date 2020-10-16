@@ -7,10 +7,13 @@ public class DevelopmentPanel : MonoBehaviour
 {
     Unit _activeUnit;
 
+    
+
     [SerializeField] ActionContainerScriptableObject container;
     public void Initialize(Unit activeUnit)
     {
         _activeUnit = activeUnit;
+        TestSkillSet(); // remove this reference later and just use the one on the test panel
     }
 
     public void DecreaseHealth()
@@ -36,13 +39,11 @@ public class DevelopmentPanel : MonoBehaviour
 
     public void TestSkillSet()
     {
-        Debug.Log("Test skillset not implemented");
         _activeUnit.AttackContainer.LightAttack = container.lightAttack;
         _activeUnit.AttackContainer.HeavyAttack = container.heavyAttack;
         _activeUnit.SkillContainer.SkillOne = container.skillOne;
         _activeUnit.SkillContainer.SkillTwo = container.skillTwo;
         _activeUnit.SkillContainer.SkillThree = container.skillThree;
         _activeUnit.SkillContainer.SkillFour = container.skillFour;
-        Debug.Log($"Set light attack { _activeUnit.AttackContainer.LightAttack}");
     }
 }

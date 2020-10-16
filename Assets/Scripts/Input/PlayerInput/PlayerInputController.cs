@@ -31,7 +31,16 @@ namespace Assets.Scripts.Units
 
         //input logic needs to be kept completely on this side so I can't pass GameplayActions through
 
-        public InputActionPhase LightAttack
+
+
+
+        /// <summary>
+        /// TODO 
+        /// need to return a button pressed = true and a button released = false; 
+        /// that is ALL. true, and false. charging or not.
+        /// no more BS trying to bring over input itself
+        /// </summary>
+        public bool ChargingLightAttack
         {
             get
             {
@@ -39,11 +48,12 @@ namespace Assets.Scripts.Units
                 {
                     LockOtherInputs(_inputActions.Gameplay.LightAttack);
                 }
-                return _inputActions.Gameplay.LightAttack.phase;
+                //Debug.Log($"light attack value{_inputActions.Gameplay.LightAttack.ReadValue<float>()}");
+                return _inputActions.Gameplay.LightAttack.ReadValue<float>() > 0;
             }
         }
 
-        public InputActionPhase HeavyAttack
+        public bool ChargingHeavyAttack
         {
             get
             {
@@ -51,10 +61,11 @@ namespace Assets.Scripts.Units
                 {
                     LockOtherInputs(_inputActions.Gameplay.HeavyAttack);
                 }
-                return _inputActions.Gameplay.HeavyAttack.phase;
+
+                return _inputActions.Gameplay.HeavyAttack.ReadValue<float>() > 0;
             }
         }
-        public InputActionPhase SkillOne
+        public bool ChargingSkillOne
         {
             get
             {
@@ -62,11 +73,12 @@ namespace Assets.Scripts.Units
                 {
                     LockOtherInputs(_inputActions.Gameplay.SkillOne);
                 }
-                return _inputActions.Gameplay.SkillOne.phase;
+
+                return _inputActions.Gameplay.SkillOne.ReadValue<float>() > 0;
             }
         }
 
-        public InputActionPhase SkillTwo
+        public bool ChargingSkillTwo
         {
             get
             {
@@ -74,11 +86,12 @@ namespace Assets.Scripts.Units
                 {
                     LockOtherInputs(_inputActions.Gameplay.SkillTwo);
                 }
-                return _inputActions.Gameplay.SkillTwo.phase;
+
+                return _inputActions.Gameplay.SkillTwo.ReadValue<float>() > 0;
             }
         }
 
-        public InputActionPhase SkillThree
+        public bool ChargingSkillThree
         {
             get
             {
@@ -86,11 +99,12 @@ namespace Assets.Scripts.Units
                 {
                     LockOtherInputs(_inputActions.Gameplay.SkillThree);
                 }
-                return _inputActions.Gameplay.SkillThree.phase;
+
+                return _inputActions.Gameplay.SkillThree.ReadValue<float>() > 0;
             }
         }
 
-        public InputActionPhase SkillFour
+        public bool ChargingSkillFour
         {
             get
             {
@@ -98,11 +112,12 @@ namespace Assets.Scripts.Units
                 {
                     LockOtherInputs(_inputActions.Gameplay.SkillFour);
                 }
-                return _inputActions.Gameplay.SkillFour.phase;
+
+                return _inputActions.Gameplay.SkillFour.ReadValue<float>() > 0;
             }
         }
 
-        public InputActionPhase Maneuver
+        public bool ChargingManeuver
         {
             get
             {
@@ -110,18 +125,21 @@ namespace Assets.Scripts.Units
                 {
                     LockOtherInputs(_inputActions.Gameplay.Maneuver);
                 }
-                return _inputActions.Gameplay.Maneuver.phase;
+
+                return _inputActions.Gameplay.Maneuver.ReadValue<float>() > 0;
             }
         }
-        public InputActionPhase Select
+        public bool ChargingSelect
         {
             get
             {
+                //added for posterity, but might be useful for things like "collect all loot"
                 if (_inputActions.Gameplay.Select.phase == InputActionPhase.Started)
                 {
                     LockOtherInputs(_inputActions.Gameplay.Select);
                 }
-                return _inputActions.Gameplay.Select.phase;
+
+                return _inputActions.Gameplay.Select.ReadValue<float>() > 0;
             }
         }
 
@@ -131,7 +149,8 @@ namespace Assets.Scripts.Units
         }
         private void FixedUpdate()
         {
-            if (activeAction != null && activeAction.phase != InputActionPhase.Started)
+            //Debug.Log($"Active action is: {activeAction} and value is {activeAction.ReadValue<float>()}");
+            if (activeAction != null && activeAction.ReadValue<float>() < 0.1)
             {
                 Debug.Log($"unlock inputs");
                 EnableActionInputs();
@@ -178,6 +197,7 @@ namespace Assets.Scripts.Units
         }
         public void EnableActionInputs()
         {
+            _inputActions.Gameplay.Select.Enable();
             _inputActions.Gameplay.LightAttack.Enable();
             _inputActions.Gameplay.HeavyAttack.Enable();
             _inputActions.Gameplay.Maneuver.Enable();
@@ -193,7 +213,7 @@ namespace Assets.Scripts.Units
             if (activeAction != null) return;
             activeAction = inputAction;
 
-            Debug.Log($"lock inputs other than {activeAction.name}");
+            //Debug.Log($"lock inputs other than {activeAction.name}");
             foreach (var action in interactionInputs)
             {
                 if(action != inputAction)
@@ -205,4 +225,6 @@ namespace Assets.Scripts.Units
 
     }
 }
+
+//instead of enabling and disabling every action I could set up an enum of ready, charging, locked and toggle each value that way.
 //TODO: add class to let the player know when certain buttons are pressed (for on screen button indicators). Not connected to this class at all, but shares InputActions.cs to receive events 

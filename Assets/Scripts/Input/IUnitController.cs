@@ -15,35 +15,35 @@ namespace Assets.Scripts.Units
         void EnableActionInputs();
 
         //return true if cooresponding button pressed pressed
-        InputActionPhase LightAttack
+        bool ChargingLightAttack
         {
             get;
         }
-        InputActionPhase HeavyAttack
+        bool ChargingHeavyAttack
         {
             get;
         }
-        InputActionPhase SkillOne
+        bool ChargingSkillOne
         {
             get;
         }
-        InputActionPhase SkillTwo
+        bool ChargingSkillTwo
         {
             get;
         }
-        InputActionPhase SkillThree
+        bool ChargingSkillThree
         {
             get;
         }
-        InputActionPhase SkillFour
+        bool ChargingSkillFour
         {
             get;
         }
-        InputActionPhase Maneuver
+        bool ChargingManeuver
         {
             get;
         }
-        InputActionPhase Select
+        bool ChargingSelect
         {
             get;
         }

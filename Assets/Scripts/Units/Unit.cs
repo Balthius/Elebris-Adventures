@@ -20,7 +20,7 @@ namespace Assets.Scripts.Units
         [SerializeField] private ActiveUnitEvent activeUnitEvent = null;
         //we have the option of changing player scale to -1 when moving left and  1 when moving right in order to have a "player side" sprite transform.localScale
         //rather than a left and right, that can be reused. I'm not currently going this route because I want left and right assets to be more than just mirror copies of eachother
-        protected IUnitController _unitController;
+        public IUnitController _unitController;
         protected Rigidbody2D _rigidbody;
         protected Animator _animator;//make sure the base idle down animation is at the top of the blend tree
         private ResourceContainer _resourceContainer = new ResourceContainer();
@@ -32,21 +32,27 @@ namespace Assets.Scripts.Units
 
         [SerializeField] protected float speed = 5f;
 
-        protected Vector2 movementDirection;
-        protected Vector2 facingDirection;
+        protected Vector2 movementDirection = new Vector2(0, -1);
+        protected Vector2 facingDirection = new Vector2(0, -1);
 
         private float timeBetweenCharges;
         private float chargeTime;
+        private int currentCharge = 0, chargeMax = 3;
 
         private ActionState currentActionState = ActionState.None;
 
         private ActiveAction currentAction;
+
+        private ActionScriptableObject _actionPrototype;
+
+        private bool chargingAction;
 
         GameObject actionObject;
 
 
         protected virtual void Start()
         {
+            ResetActionState();
             //Set attacks and skills from Saved config
             _unitController = GetComponent<IUnitController>(); //find controller on this character, receives a normalized value
             _rigidbody = GetComponent<Rigidbody2D>(); //find controller on this character, receives a normalized value
@@ -55,6 +61,7 @@ namespace Assets.Scripts.Units
         }
         protected virtual void Update()
         {
+            Debug.Log(currentActionState);
             _animator.SetFloat("Horizontal", facingDirection.x);
             _animator.SetFloat("Vertical", facingDirection.y);
             _animator.SetFloat("Speed", movementDirection.sqrMagnitude); //sqr version is more optimizied, using movement direction to access idle animation but lock facing
@@ -63,52 +70,63 @@ namespace Assets.Scripts.Units
             if (movementDirection.sqrMagnitude > 0.01 && currentActionState == ActionState.None)
             {
                 facingDirection = movementDirection; //allows you to lock direction facing for skill casts etc
-            }
-
-            if(currentAction != null)
-            {
-                ChargeAction();
-                if (currentActionState != ActionState.Using) return;
-                CheckActionRelease();
-            }
-            else
-            {
                 CheckActionInput();
             }
+            if (currentActionState == ActionState.Charging)
+            {
+                ChargeAction();
+
+                CheckActionRelease();
+            }
+            if (currentActionState == ActionState.Using)
+            {
+                SpawnAction();
+            }
+
         }
 
         private void CheckActionInput()
         {
-            if (_unitController.Select == InputActionPhase.Started)
+            
+            if (_unitController.ChargingSelect)
             {
                 //UseAction();
+                Debug.Log("ChargingSelect");
             }
-            else if (_unitController.LightAttack == InputActionPhase.Started)
+            else if (_unitController.ChargingManeuver)
             {
+                Debug.Log("ChargingManeuver");
+            }
+
+            else if (_unitController.ChargingLightAttack)
+            {
+                Debug.Log("ChargingLightAttack");
                 UseAction(AttackContainer.LightAttack);
             }
-            else if (_unitController.HeavyAttack == InputActionPhase.Started)
+            else if (_unitController.ChargingHeavyAttack)
             {
+                Debug.Log("ChargingHeavyAttack");
                 UseAction(AttackContainer.HeavyAttack);
             }
-            else if (_unitController.Maneuver == InputActionPhase.Started)
-            {
 
-            }
-            else if (_unitController.SkillOne == InputActionPhase.Started)
+            else if (_unitController.ChargingSkillOne)
             {
+                Debug.Log("ChargingSkillOne");
                 UseAction(SkillContainer.SkillOne);
             }
-            else if (_unitController.SkillTwo == InputActionPhase.Started)
+            else if (_unitController.ChargingSkillTwo)
             {
+                Debug.Log("ChargingSkillTwo");
                 UseAction(SkillContainer.SkillTwo);
             }
-            else if (_unitController.SkillThree == InputActionPhase.Started)
+            else if (_unitController.ChargingSkillThree)
             {
+                Debug.Log("ChargingSkillThree");
                 UseAction(SkillContainer.SkillThree);
             }
-            else if (_unitController.SkillFour == InputActionPhase.Started)
+            else if (_unitController.ChargingSkillFour)
             {
+                Debug.Log("ChargingSkillFour");
                 UseAction(SkillContainer.SkillFour);
             }
 
@@ -116,35 +134,37 @@ namespace Assets.Scripts.Units
         }
         private void CheckActionRelease()
         {
-            if (_unitController.Select == InputActionPhase.Started)
+            //only reachable once a skill has been prepared to use, so other inputs should be disabled and this should only fire off at a "safe time"
+            Debug.Log("Checking release");
+            if (!_unitController.ChargingSelect)
             {
                 currentActionState = ActionState.Using;
             }
-            else if (_unitController.LightAttack != InputActionPhase.Started)
+            else if (!_unitController.ChargingLightAttack)
             {
                 currentActionState = ActionState.Using;
             }
-            else if (_unitController.HeavyAttack != InputActionPhase.Started)
+            else if (!_unitController.ChargingHeavyAttack)
             {
                 currentActionState = ActionState.Using;
             }
-            else if (_unitController.Maneuver != InputActionPhase.Started)
+            else if (!_unitController.ChargingManeuver)
             {
                 currentActionState = ActionState.Using;
             }
-            else if (_unitController.SkillOne != InputActionPhase.Started)
+            else if (!_unitController.ChargingSkillOne)
             {
                 currentActionState = ActionState.Using;
             }
-            else if (_unitController.SkillTwo != InputActionPhase.Started)
+            else if (!_unitController.ChargingSkillTwo)
             {
                 currentActionState = ActionState.Using;
             }
-            else if (_unitController.SkillThree != InputActionPhase.Started)
+            else if (!_unitController.ChargingSkillThree)
             {
                 currentActionState = ActionState.Using;
             }
-            else if (_unitController.SkillFour != InputActionPhase.Canceled)
+            else if (!_unitController.ChargingSkillFour)
             {
                 currentActionState = ActionState.Using;
             }
@@ -163,17 +183,16 @@ namespace Assets.Scripts.Units
 
         public void UseAction(ActionScriptableObject actionPrototype)
         {
-            if (actionPrototype == null)
-            {
-                Debug.Log($"No prototype");
-                return;
-            }
+
+            Debug.Log("Use Action");
+            if (actionPrototype == null) return;
             //calculate how long the action is charged, and what charge level you reach
             if (currentActionState == ActionState.None)
             {
+                currentCharge = 0;
+                _actionPrototype = actionPrototype;
                 Debug.Log("New action started");
-                actionObject = actionPrototype.actionPrefab;
-                currentAction.Initialize(this, actionPrototype.actionDuration, actionPrototype.chargeMax, facingDirection);
+                actionObject = _actionPrototype.actionPrefab;
 
                 timeBetweenCharges = actionPrototype.baseChargeTime;
                 SetNextChargeTime();
@@ -184,33 +203,47 @@ namespace Assets.Scripts.Units
 
         private void ChargeAction()
         {
-            if (currentActionState == ActionState.Charging)
-            {
-                if (Time.deltaTime >= chargeTime && currentAction.maxCharges > currentAction.currentCharge)
-                {
-                    Debug.Log($"Action charging{ currentAction.currentCharge}");
 
-                    SetNextChargeTime();
-                }
-                else if (currentAction.maxCharges == currentAction.currentCharge)
-                {
-                    //visual and audio effect for max charge
-                }
-            }
-            else if (currentActionState == ActionState.Using)
+            Debug.Log("Charge Action");
+            if (Time.deltaTime >= chargeTime && chargeMax > currentCharge)
             {
-                // I really wanted a way to create a clone of a gameobject without cloning it, tweaking values, and then instantiating it, but that currently doesnt seem easy/possib le
-                GameObject spawn = Instantiate(actionObject);
-                ActiveAction spawnAction = actionObject.GetComponent<ActiveAction>();
-                spawnAction = currentAction; // overwrite objects action
-                //after casting reset state.
-                currentActionState = ActionState.None;
+                SetNextChargeTime();
+                Debug.Log($"Action charge{ currentCharge}");
+
             }
+            else if (chargeMax == currentCharge)
+            {
+                //visual and audio effect for max charge
+            }
+            
+          
+        }
+
+        private void SpawnAction()
+        {
+            Debug.Log("Spawn Action");
+            // I really wanted a way to create a clone of a gameobject without cloning it, tweaking values, and then instantiating it, but that currently doesnt seem easy/possib le
+            Vector3 actionDirection = new Vector3(facingDirection.x, facingDirection.y, 0);
+
+
+            GameObject spawn = Instantiate(actionObject, transform.position + actionDirection, Quaternion.identity);
+            currentAction = spawn.GetComponent<ActiveAction>(); //update the Active Action attached to the new prefab
+            currentAction.Initialize(this, currentCharge, _actionPrototype.actionDuration, facingDirection);
+            ResetActionState();
+            
+        }
+
+        private void ResetActionState()
+        {
+            //after casting reset state.
+            currentActionState = ActionState.None;
+            actionObject = null;
+            _actionPrototype = null;
         }
 
         private void SetNextChargeTime()
         {
-            currentAction.currentCharge++;
+            currentCharge++;
             chargeTime = Time.deltaTime + timeBetweenCharges; // set, and then reduce next required charge time
             timeBetweenCharges *= .8f; //quicker charges as it gets higher
         }

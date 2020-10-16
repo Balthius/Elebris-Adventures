@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4d87b2629282114db04c21a43e0fa19, type: 3}
   m_Name: Skill_Projectile_Icebolt
   m_EditorClassIdentifier: 
-  actionIcon: {fileID: 0}
+  actionIcon: {fileID: 21300000, guid: 74f574ffa365b5a4f9ea0cb21d8e605e, type: 3}
   actionName: 
   animationLength: 0
   actionDamage: 0
@@ -20,4 +20,4 @@ MonoBehaviour:
   chargeMax: 0
   actionDuration: 0
   actionSpeed: 0
-  actionPrefab: {fileID: 0}
+  actionPrefab: {fileID: 2798447261580245637, guid: d062a716a597c9b4c8e2962bf7f4911c, type: 3}
