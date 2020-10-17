@@ -58,7 +58,7 @@ namespace Assets.Scripts.Units
         // Update is called once per frame
         void FixedUpdate()
         {
-            MyCurrentValue = _resourceValue.currentValue;
+            MyCurrentValue = _resourceValue.CurrentValue;
             if (currentFill != content.value)
             {
                 //content.fillamount =  for when I switch to image.
@@ -70,8 +70,8 @@ namespace Assets.Scripts.Units
         {
             Debug.Log(valueHolder + "Holds hp value");
             _resourceValue = valueHolder;
-            MyMaxValue = _resourceValue.maxValue;
-            MyCurrentValue = _resourceValue.currentValue;
+            MyMaxValue = _resourceValue.MaxValue;
+            MyCurrentValue = _resourceValue.CurrentValue;
 
             valueText = GetComponentInChildren<TMP_Text>(); //eliminates a race condition
             valueText.text = $"{MyCurrentValue}/{MyMaxValue}";

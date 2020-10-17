@@ -7,6 +7,9 @@ public class UIResourceController : UIBaseController
 {
     //reference to the resources this is the parent of for initialization
     [SerializeField] private UIResource _healthResource;
+    [SerializeField] private UIResource _spiritResource;
+    [SerializeField] private UIResource _staminaResource;
+    [SerializeField] private UIResource _manaResource;
     //all resources are updated from here
     // Start is called before the first frame update
 
@@ -18,10 +21,13 @@ public class UIResourceController : UIBaseController
     }
     public override void OnPlayerUpdated()
     {
-        SetHealthValues();
+        SetResourceValues();
     }
-    private void SetHealthValues()
+    private void SetResourceValues()
     {
         _healthResource.Initialize(canvas._player.ResourceContainer.HealthValue);
+        _spiritResource.Initialize(canvas._player.ResourceContainer.SpiritValue);
+        _staminaResource.Initialize(canvas._player.ResourceContainer.StaminaValue);
+        _manaResource.Initialize(canvas._player.ResourceContainer.ManaValue);
     }
 }

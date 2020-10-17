@@ -184,6 +184,7 @@ namespace Assets.Scripts.Units
         }
         public void FillList()
         {
+            //remove Maneuver, and then use Maneuver to cancel attacks(and set activeAction.Disable();)
 
             interactionInputs.Add(_inputActions.Gameplay.LightAttack);
             interactionInputs.Add(_inputActions.Gameplay.HeavyAttack);

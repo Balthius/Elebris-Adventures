@@ -20,20 +20,20 @@ public class DevelopmentPanel : MonoBehaviour
     {
 
         //these can be moved into a "changehealth" method with a parameter of int/float in order to crunch this down to 1 method
-        _activeUnit.ResourceContainer.HealthValue.currentValue -= 5;
+        _activeUnit.ResourceContainer.HealthValue.CurrentValue -= 5;
         DisplayStats();
     }
     public void IncreaseHealth()
     {
 
-        _activeUnit.ResourceContainer.HealthValue.currentValue += 5;
+        _activeUnit.ResourceContainer.HealthValue.CurrentValue += 5;
         DisplayStats();
     }
 
     public void DisplayStats()
     {
         //console log of all relevant stat changes
-        float currentHP = _activeUnit.ResourceContainer.HealthValue.currentValue;
+        float currentHP = _activeUnit.ResourceContainer.HealthValue.CurrentValue;
         Debug.Log($"Current Health: {currentHP}");
     }
 
