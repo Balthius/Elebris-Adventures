@@ -1,0 +1,86 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d5886119a5c7b34d8872ab527ca3e1b, type: 3}
+  m_Name: UnityBuildSettings
+  m_EditorClassIdentifier: 
+  _basicSettings:
+    baseBuildFolder: Game Build
+    buildPath: $YEAR-$MONTH-$DAY/$BUILD/$RELEASE_TYPE/$PLATFORM/$ARCHITECTURE/$DISTRIBUTION
+    openFolderPostBuild: 1
+  _productParameters:
+    buildCounter: 1
+    lastGeneratedVersion: 1.0.2108.1768
+    version: 1.0.$DAYSSINCE("January 1, 2015").$SECONDS
+    autoGenerate: 1
+  _releaseTypeList:
+    releaseTypes:
+    - typeName: Development
+      bundleIndentifier: 
+      companyName: StudioSoluna
+      productName: Elebris Adventures
+      developmentBuild: 1
+      allowDebugging: 0
+      enableHeadlessMode: 0
+      customDefines: 
+      sceneList:
+        enabledScenes:
+        - fileGUID: 3e83cfc664382c6418e9bd2acfaa997c
+  _platformList:
+    platforms:
+    - enabled: 1
+      distributionList:
+        distributions: []
+      architectures:
+      - target: 5
+        name: Windows x86
+        enabled: 1
+        binaryNameFormat: '{0}.exe'
+      - target: 19
+        name: Windows x64
+        enabled: 0
+        binaryNameFormat: '{0}.exe'
+      variants: []
+      platformName: PC
+      dataDirNameFormat: '{0}_Data'
+      targetGroup: 1
+  _projectConfigurations:
+    configSet:
+      _Buckets: ffffffffffffffff02000000
+      _HashCodes: 8d54a91383c47952a7676149
+      _Next: ffffffff0000000001000000
+      _Count: 3
+      _Version: 3
+      _FreeList: -1
+      _FreeCount: 0
+      _Keys:
+      - Development/PC/Windows x86
+      - Development/PC
+      - Development
+      _Values:
+      - enabled: 1
+        childKeys: []
+      - enabled: 1
+        childKeys:
+        - Development/PC/Windows x86
+      - enabled: 1
+        childKeys:
+        - Development/PC
+    showViewOptions: 0
+    showConfigs: 0
+    showBuildInfo: 0
+    hideDisabled: 0
+    treeView: 0
+    selectedKeyChain: 
+  _preBuildActions:
+    buildActions: []
+  _postBuildActions:
+    buildActions: []

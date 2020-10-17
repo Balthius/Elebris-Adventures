@@ -32,7 +32,7 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""id"": ""9fe92edc-641c-4ce4-8f9a-5c3f42453dd8"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Press(behavior=1)""
+                    ""interactions"": """"
                 },
                 {
                     ""name"": ""Maneuver"",
@@ -40,7 +40,7 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""id"": ""c4c62d0e-bf7b-47ef-bc12-8462eae40a82"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Press(behavior=1)""
+                    ""interactions"": """"
                 },
                 {
                     ""name"": ""LightAttack"",
@@ -48,7 +48,7 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""id"": ""c59d1f53-f82c-451b-8cd6-24513bea43e4"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Press(behavior=1)""
+                    ""interactions"": """"
                 },
                 {
                     ""name"": ""HeavyAttack"",
@@ -56,7 +56,39 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""id"": ""a75596bb-ea9b-44c0-95a3-b7095028da3d"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Press(behavior=1)""
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""SkillOne"",
+                    ""type"": ""Button"",
+                    ""id"": ""13c00767-cc1c-463b-ac1c-6f026b4a3abd"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""SkillTwo"",
+                    ""type"": ""Button"",
+                    ""id"": ""4c5349ba-02a0-4c4b-a4ee-c6a01ea1460e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""SkillThree"",
+                    ""type"": ""Button"",
+                    ""id"": ""9cc8777f-84ff-4c48-8191-fb3db32baa3f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""SkillFour"",
+                    ""type"": ""Button"",
+                    ""id"": ""504fcd96-39bc-4957-a0ae-1c839a2ca9e2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -242,7 +274,7 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""path"": ""<Keyboard>/x"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard"",
                     ""action"": ""HeavyAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -255,6 +287,94 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": ""Controller"",
                     ""action"": ""HeavyAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8a03c563-5de1-4d84-97a1-1dabfa62f29e"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""SkillOne"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3f3f4dc0-41d5-429a-8abd-35de7a314238"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""SkillOne"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c7e88336-70a5-4a7c-8a76-13f491aed46e"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""SkillTwo"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4173efa6-f184-426e-85ad-c823d0fe1a3a"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""SkillTwo"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""daa815a5-cc8b-49e4-9df4-11380bfcdf7c"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""SkillThree"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0f5e89b2-ab93-4e16-bf5b-85d13a5dcd1b"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""SkillThree"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""957e0163-4e15-4e70-810c-6a1d42060305"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""SkillFour"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""86e14fea-e961-4bd3-ac38-b3efba86a036"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""SkillFour"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -484,6 +604,10 @@ public class @InputActions : IInputActionCollection, IDisposable
         m_Gameplay_Maneuver = m_Gameplay.FindAction("Maneuver", throwIfNotFound: true);
         m_Gameplay_LightAttack = m_Gameplay.FindAction("LightAttack", throwIfNotFound: true);
         m_Gameplay_HeavyAttack = m_Gameplay.FindAction("HeavyAttack", throwIfNotFound: true);
+        m_Gameplay_SkillOne = m_Gameplay.FindAction("SkillOne", throwIfNotFound: true);
+        m_Gameplay_SkillTwo = m_Gameplay.FindAction("SkillTwo", throwIfNotFound: true);
+        m_Gameplay_SkillThree = m_Gameplay.FindAction("SkillThree", throwIfNotFound: true);
+        m_Gameplay_SkillFour = m_Gameplay.FindAction("SkillFour", throwIfNotFound: true);
         // Menu
         m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
         m_Menu_Navigate = m_Menu.FindAction("Navigate", throwIfNotFound: true);
@@ -543,6 +667,10 @@ public class @InputActions : IInputActionCollection, IDisposable
     private readonly InputAction m_Gameplay_Maneuver;
     private readonly InputAction m_Gameplay_LightAttack;
     private readonly InputAction m_Gameplay_HeavyAttack;
+    private readonly InputAction m_Gameplay_SkillOne;
+    private readonly InputAction m_Gameplay_SkillTwo;
+    private readonly InputAction m_Gameplay_SkillThree;
+    private readonly InputAction m_Gameplay_SkillFour;
     public struct GameplayActions
     {
         private @InputActions m_Wrapper;
@@ -552,6 +680,10 @@ public class @InputActions : IInputActionCollection, IDisposable
         public InputAction @Maneuver => m_Wrapper.m_Gameplay_Maneuver;
         public InputAction @LightAttack => m_Wrapper.m_Gameplay_LightAttack;
         public InputAction @HeavyAttack => m_Wrapper.m_Gameplay_HeavyAttack;
+        public InputAction @SkillOne => m_Wrapper.m_Gameplay_SkillOne;
+        public InputAction @SkillTwo => m_Wrapper.m_Gameplay_SkillTwo;
+        public InputAction @SkillThree => m_Wrapper.m_Gameplay_SkillThree;
+        public InputAction @SkillFour => m_Wrapper.m_Gameplay_SkillFour;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -576,6 +708,18 @@ public class @InputActions : IInputActionCollection, IDisposable
                 @HeavyAttack.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnHeavyAttack;
                 @HeavyAttack.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnHeavyAttack;
                 @HeavyAttack.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnHeavyAttack;
+                @SkillOne.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSkillOne;
+                @SkillOne.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSkillOne;
+                @SkillOne.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSkillOne;
+                @SkillTwo.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSkillTwo;
+                @SkillTwo.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSkillTwo;
+                @SkillTwo.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSkillTwo;
+                @SkillThree.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSkillThree;
+                @SkillThree.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSkillThree;
+                @SkillThree.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSkillThree;
+                @SkillFour.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSkillFour;
+                @SkillFour.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSkillFour;
+                @SkillFour.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSkillFour;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -595,6 +739,18 @@ public class @InputActions : IInputActionCollection, IDisposable
                 @HeavyAttack.started += instance.OnHeavyAttack;
                 @HeavyAttack.performed += instance.OnHeavyAttack;
                 @HeavyAttack.canceled += instance.OnHeavyAttack;
+                @SkillOne.started += instance.OnSkillOne;
+                @SkillOne.performed += instance.OnSkillOne;
+                @SkillOne.canceled += instance.OnSkillOne;
+                @SkillTwo.started += instance.OnSkillTwo;
+                @SkillTwo.performed += instance.OnSkillTwo;
+                @SkillTwo.canceled += instance.OnSkillTwo;
+                @SkillThree.started += instance.OnSkillThree;
+                @SkillThree.performed += instance.OnSkillThree;
+                @SkillThree.canceled += instance.OnSkillThree;
+                @SkillFour.started += instance.OnSkillFour;
+                @SkillFour.performed += instance.OnSkillFour;
+                @SkillFour.canceled += instance.OnSkillFour;
             }
         }
     }
@@ -673,6 +829,10 @@ public class @InputActions : IInputActionCollection, IDisposable
         void OnManeuver(InputAction.CallbackContext context);
         void OnLightAttack(InputAction.CallbackContext context);
         void OnHeavyAttack(InputAction.CallbackContext context);
+        void OnSkillOne(InputAction.CallbackContext context);
+        void OnSkillTwo(InputAction.CallbackContext context);
+        void OnSkillThree(InputAction.CallbackContext context);
+        void OnSkillFour(InputAction.CallbackContext context);
     }
     public interface IMenuActions
     {
