@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionIcon: {fileID: 21300000, guid: efbb6b249847e4a41b79a9611f4f8b9e, type: 3}
   actionName: Light Sword Attack
-  animationLength: 0.5
+  animationLength: 0.1
   actionDamage: 10
   baseChargeTime: 1
   chargeMax: 2
-  actionDuration: 0.2
+  actionDuration: 0.1
   actionSpeed: 0
   actionPrefab: {fileID: 2798447261580245637, guid: d062a716a597c9b4c8e2962bf7f4911c, type: 3}

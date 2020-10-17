@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Units;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,9 +8,12 @@ using UnityEngine;
 
 namespace Assets.Scripts.Actions.Attacks
 {
+    [RequireComponent(typeof(Rigidbody2D))]
+    [RequireComponent(typeof(CircleCollider2D))]
     [Serializable]
     public class ActiveAction : MonoBehaviour
     {
+        //this behaviour will need to be moved to a CircleAction so that activeaction can remain usable elsewhere
         //These will remain on the Active action
         private Rigidbody2D actionRB;
         private CircleCollider2D actionCollider;
@@ -31,9 +35,11 @@ namespace Assets.Scripts.Actions.Attacks
             actionRB = GetComponent<Rigidbody2D>();
             actionCollider = transform.GetComponent<CircleCollider2D>();
             parentPlayer = owner;
-            durationDone = Time.deltaTime + duration;
+            durationDone = duration;
+            StartCoroutine(DestroySelf(durationDone));
             this.directionUsed = directionUsed;
-
+            this.travelSpeed = travelSpeed;
+            Debug.Log(actionRB);
             for (int i = 0; i < currentCharge; i++)
             {
                 //this is a hack job, radius is only one of many possible effects available to you.
@@ -43,11 +49,8 @@ namespace Assets.Scripts.Actions.Attacks
         }
         private void FixedUpdate()
         {
-            transform.Translate(directionUsed * Time.fixedDeltaTime * travelSpeed);
-            if (Time.fixedDeltaTime >= durationDone)
-            {
-                Destroy(gameObject);
-            }
+            //Debug.Log(actionRB.position + "current action Position" + "speed"  + travelSpeed + "direction used " + directionUsed + "and duration " + durationDone);
+            actionRB.MovePosition(actionRB.position + directionUsed * travelSpeed * Time.fixedDeltaTime);
         }
 
         private void OnTriggerEnter2D(Collider2D col)
@@ -64,6 +67,12 @@ namespace Assets.Scripts.Actions.Attacks
             actionCollider.transform.localScale *= 1.3f;// Was .radius, wouldn't have affected visual, amy revert if I set up different animations
         }
 
+        private IEnumerator DestroySelf(float time)
+        {
+            yield return new WaitForSeconds(time);
+            Destroy(gameObject);
+
+        }
 
         //public void AddCalculation()
         //RemoveCalculation()

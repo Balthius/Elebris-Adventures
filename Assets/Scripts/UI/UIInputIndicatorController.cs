@@ -43,6 +43,8 @@ public class UIInputIndicatorController : UIBaseController
 
     private void FixedUpdate()
     {
+        //to properly mirror the resource bar I should really either change that to update like this, or find a workaround to add an initialize to this mirroring that,
+        //but i'm not sure how I'd reference a bool-returning property
         if (unitController == null) return;
         lightAttack.AlterImageState(unitController.ChargingLightAttack);
         heavyAttack.AlterImageState(unitController.ChargingHeavyAttack);

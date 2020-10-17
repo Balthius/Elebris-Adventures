@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Skill_Pulse_FlameNova
   m_EditorClassIdentifier: 
   actionIcon: {fileID: 21300000, guid: 8ce28e8fbcad40f4db326302c0cb34a1, type: 3}
-  actionName: 
-  animationLength: 0
+  actionName: Flame Nova
+  animationLength: 0.1
   actionDamage: 0
   baseChargeTime: 0
-  chargeMax: 0
-  actionDuration: 0
-  actionSpeed: 0
+  chargeMax: 3
+  actionDuration: 0.5
+  actionSpeed: 3
   actionPrefab: {fileID: 2798447261580245637, guid: d062a716a597c9b4c8e2962bf7f4911c, type: 3}

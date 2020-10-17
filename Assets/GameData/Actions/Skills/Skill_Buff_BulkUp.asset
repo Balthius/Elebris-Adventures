@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionIcon: {fileID: 21300000, guid: 71e23350e5fb5044eb1ca7d29a248b27, type: 3}
   actionName: Bulk Up
-  animationLength: 1
+  animationLength: 0.5
   actionDamage: 0
   baseChargeTime: 0
   chargeMax: 0
-  actionDuration: 0
+  actionDuration: 0.1
   actionSpeed: 0
   actionPrefab: {fileID: 2798447261580245637, guid: d062a716a597c9b4c8e2962bf7f4911c, type: 3}

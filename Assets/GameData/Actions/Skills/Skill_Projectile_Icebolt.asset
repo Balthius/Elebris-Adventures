@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Skill_Projectile_Icebolt
   m_EditorClassIdentifier: 
   actionIcon: {fileID: 21300000, guid: 74f574ffa365b5a4f9ea0cb21d8e605e, type: 3}
-  actionName: 
-  animationLength: 0
+  actionName: Icebolt
+  animationLength: 0.2
   actionDamage: 0
   baseChargeTime: 0
-  chargeMax: 0
-  actionDuration: 0
-  actionSpeed: 0
+  chargeMax: 3
+  actionDuration: 1
+  actionSpeed: 5
   actionPrefab: {fileID: 2798447261580245637, guid: d062a716a597c9b4c8e2962bf7f4911c, type: 3}

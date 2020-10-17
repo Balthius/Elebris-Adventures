@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Skill_Cone_Blast
   m_EditorClassIdentifier: 
   actionIcon: {fileID: 21300000, guid: 10b44e62f72491c49b53462d540e097d, type: 3}
-  actionName: 
-  animationLength: 0
+  actionName: Cone Blast
+  animationLength: 0.2
   actionDamage: 0
   baseChargeTime: 0
-  chargeMax: 0
-  actionDuration: 0
-  actionSpeed: 0
+  chargeMax: 3
+  actionDuration: 0.1
+  actionSpeed: 3
   actionPrefab: {fileID: 2798447261580245637, guid: d062a716a597c9b4c8e2962bf7f4911c, type: 3}

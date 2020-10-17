@@ -13,8 +13,6 @@ public class UIResourceController : UIBaseController
     //all resources are updated from here
     // Start is called before the first frame update
 
-
-
     public override void Start()
     {
         base.Start();
@@ -25,6 +23,7 @@ public class UIResourceController : UIBaseController
     }
     private void SetResourceValues()
     {
+        //pass in the value you want the ui elements to be tracking
         _healthResource.Initialize(canvas._player.ResourceContainer.HealthValue);
         _spiritResource.Initialize(canvas._player.ResourceContainer.SpiritValue);
         _staminaResource.Initialize(canvas._player.ResourceContainer.StaminaValue);

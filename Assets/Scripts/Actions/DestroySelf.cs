@@ -16,6 +16,6 @@ public class DestroySelf : MonoBehaviour {
 
 	public void DestroySkill()
 	{
-		Destroy (gameObject);
+		
 	}
 }

@@ -50,6 +50,8 @@ namespace Assets.Scripts.Units
 
         GameObject actionObject;
 
+        private bool lockedByAction = false;
+
 
         protected virtual void Start()
         {
@@ -62,6 +64,7 @@ namespace Assets.Scripts.Units
         }
         protected virtual void Update()
         {
+            if (lockedByAction) return; //this is specifically how long a unit is locked out of ANY movemement or action after using an action. the "vulnerability" window
             Debug.Log(currentActionState);
             _animator.SetFloat("Horizontal", facingDirection.x);
             _animator.SetFloat("Vertical", facingDirection.y);
@@ -71,6 +74,10 @@ namespace Assets.Scripts.Units
             if (movementDirection.sqrMagnitude > 0.01 && currentActionState == ActionState.None)
             {
                 facingDirection = movementDirection; //allows you to lock direction facing for skill casts etc
+                
+            }
+            if(currentActionState == ActionState.None)
+            {
                 CheckActionInput();
             }
             if (currentActionState == ActionState.Charging)
@@ -95,42 +102,42 @@ namespace Assets.Scripts.Units
             if (_unitController.ChargingSelect)
             {
                 //UseAction();
-                Debug.Log("ChargingSelect");
+                //Debug.Log("ChargingSelect");
             }
             else if (_unitController.ChargingManeuver)
             {
-                Debug.Log("ChargingManeuver");
+                //Debug.Log("ChargingManeuver");
             }
 
             else if (_unitController.ChargingLightAttack)
             {
-                Debug.Log("ChargingLightAttack");
+                //Debug.Log("ChargingLightAttack");
                 UseAction(AttackContainer.LightAttack);
             }
             else if (_unitController.ChargingHeavyAttack)
             {
-                Debug.Log("ChargingHeavyAttack");
+                //Debug.Log("ChargingHeavyAttack");
                 UseAction(AttackContainer.HeavyAttack);
             }
 
             else if (_unitController.ChargingSkillOne)
             {
-                Debug.Log("ChargingSkillOne");
+                //Debug.Log("ChargingSkillOne");
                 UseAction(SkillContainer.SkillOne);
             }
             else if (_unitController.ChargingSkillTwo)
             {
-                Debug.Log("ChargingSkillTwo");
+                //Debug.Log("ChargingSkillTwo");
                 UseAction(SkillContainer.SkillTwo);
             }
             else if (_unitController.ChargingSkillThree)
             {
-                Debug.Log("ChargingSkillThree");
+                //Debug.Log("ChargingSkillThree");
                 UseAction(SkillContainer.SkillThree);
             }
             else if (_unitController.ChargingSkillFour)
             {
-                Debug.Log("ChargingSkillFour");
+                //Debug.Log("ChargingSkillFour");
                 UseAction(SkillContainer.SkillFour);
             }
 
@@ -160,6 +167,7 @@ namespace Assets.Scripts.Units
 
         protected virtual void FixedUpdate()
         {
+            if (lockedByAction) return; //this is specifically how long a unit is locked out of ANY movemement or action after using an action. the "vulnerability" window
             _rigidbody.MovePosition(_rigidbody.position + movementDirection * speed * Time.fixedDeltaTime);
         }
 
@@ -172,14 +180,14 @@ namespace Assets.Scripts.Units
         public void UseAction(ActionScriptableObject actionPrototype)
         {
 
-            Debug.Log("Use Action");
+            //Debug.Log("Use Action");
             if (actionPrototype == null) return;
             //calculate how long the action is charged, and what charge level you reach
             if (currentActionState == ActionState.None)
             {
                 currentCharge = 0;
                 _actionPrototype = actionPrototype;
-                Debug.Log("New action started");
+                //Debug.Log("New action started");
                 actionObject = _actionPrototype.actionPrefab;
 
                 timeBetweenCharges = actionPrototype.baseChargeTime;
@@ -192,11 +200,11 @@ namespace Assets.Scripts.Units
         private void ChargeAction()
         {
 
-            Debug.Log("Charge Action");
+            //Debug.Log("Charge Action");
             if (Time.deltaTime >= chargeTime && chargeMax > currentCharge)
             {
                 SetNextChargeTime();
-                Debug.Log($"Action charge{ currentCharge}");
+                //Debug.Log($"Action charge{ currentCharge}");
 
             }
             else if (chargeMax == currentCharge)
@@ -209,14 +217,14 @@ namespace Assets.Scripts.Units
 
         private void SpawnAction()
         {
-            Debug.Log("Spawn Action");
+            StartCoroutine(LockDuringAction(_actionPrototype.animationLength)); //time spent "casting" the skill (locked in place) whereas action duration is how long it sticks around
             // I really wanted a way to create a clone of a gameobject without cloning it, tweaking values, and then instantiating it, but that currently doesnt seem easy/possib le
             Vector3 actionDirection = new Vector3(facingDirection.x, facingDirection.y, 0);
 
 
             GameObject spawn = Instantiate(actionObject, transform.position + actionDirection, Quaternion.identity);
             currentAction = spawn.GetComponent<ActiveAction>(); //update the Active Action attached to the new prefab
-            currentAction.Initialize(this, currentCharge, _actionPrototype.actionDuration, facingDirection);
+            currentAction.Initialize(this, currentCharge, _actionPrototype.actionDuration, facingDirection, _actionPrototype.actionSpeed);
             ResetActionState();
             
         }
@@ -236,7 +244,13 @@ namespace Assets.Scripts.Units
             timeBetweenCharges *= .8f; //quicker charges as it gets higher
         }
 
-     
+        private IEnumerator LockDuringAction(float time)
+        {
+            lockedByAction = true;
+            //activate "action" trigger to change from movement/charging or attacking animation
+            yield return new WaitForSeconds(time);
+            lockedByAction = false;
+        }
     }
 
 }

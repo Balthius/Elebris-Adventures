@@ -68,7 +68,8 @@ namespace Assets.Scripts.Units
         }
         public void Initialize(ValueHolder valueHolder)
         {
-            Debug.Log(valueHolder + "Holds hp value");
+
+            //Debug.Log($"{valueHolder} is now being tracked");
             _resourceValue = valueHolder;
             MyMaxValue = _resourceValue.MaxValue;
             MyCurrentValue = _resourceValue.CurrentValue;
