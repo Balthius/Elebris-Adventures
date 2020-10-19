@@ -152,7 +152,7 @@ namespace Assets.Scripts.Units
             //Debug.Log($"Active action is: {activeAction} and value is {activeAction.ReadValue<float>()}");
             if (activeAction != null && activeAction.ReadValue<float>() < 0.1)
             {
-                Debug.Log($"unlock inputs");
+                //Debug.Log($"unlock inputs");
                 EnableActionInputs();
             }
         }

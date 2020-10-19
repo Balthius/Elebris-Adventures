@@ -6,7 +6,7 @@ namespace Assets.Scripts.Units
     public class SkillContainer
     {
 
-        //change these to ActiveAction which store a ccalculated reference to each active attack.
+        //change these to ActiveAction which store a ccalculated reference to each active attack. as well as a monitored cooldown valueholder
         //They need a failsafe to check that they are updated if any of their underlying values change. 
         private ActionScriptableObject skillOne = null;
         private ActionScriptableObject skillTwo = null;

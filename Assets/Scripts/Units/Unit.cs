@@ -1,6 +1,8 @@
 using Assets.DapperEvents.GameEvents;
 using Assets.Scripts.Actions;
 using Assets.Scripts.Actions.Attacks;
+using Elebris.Library.Units;
+using Elebris.Library.Values;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -36,9 +38,9 @@ namespace Assets.Scripts.Units
         protected Vector2 facingDirection = new Vector2(0, -1);
         //add a "run" function similar to charging where as long as your moving you start to fill a hidden bar, when it fills you boost your movespeed by 1.25
 
-        private float timeBetweenCharges;
-        private float chargeTime;
-        private int currentCharge = 0, chargeMax = 3;
+        //Right now valueholders are overkill.
+        public ValueHolder chargeTime = new ValueHolder(1.5f, 0, StatsEnum.HealthResource);
+        public ValueHolder chargeAmount = new ValueHolder(3, 0, StatsEnum.HealthResource);// placeholder Enum. Needs to either be a nullable value or removed from the valueholder and put in a child class
 
         private ActionState currentActionState = ActionState.None;
 
@@ -65,7 +67,7 @@ namespace Assets.Scripts.Units
         protected virtual void Update()
         {
             if (lockedByAction) return; //this is specifically how long a unit is locked out of ANY movemement or action after using an action. the "vulnerability" window
-            Debug.Log(currentActionState);
+            //Debug.Log(currentActionState);
             _animator.SetFloat("Horizontal", facingDirection.x);
             _animator.SetFloat("Vertical", facingDirection.y);
             _animator.SetFloat("Speed", movementDirection.sqrMagnitude); //sqr version is more optimizied, using movement direction to access idle animation but lock facing
@@ -147,7 +149,7 @@ namespace Assets.Scripts.Units
         {
             //only reachable once a skill has been prepared to use, so other inputs should be disabled and this should only fire off at a "safe time"
             //it iS ugly, so I'll need to find a better way to loop the values. I should feel guilty about this but I also have so little experience with the new input system.
-            Debug.Log("Checking release");
+            //Debug.Log("Checking release");
             if (!_unitController.ChargingSelect &&
                 !_unitController.ChargingLightAttack &&
                 !_unitController.ChargingHeavyAttack &&
@@ -168,7 +170,18 @@ namespace Assets.Scripts.Units
         protected virtual void FixedUpdate()
         {
             if (lockedByAction) return; //this is specifically how long a unit is locked out of ANY movemement or action after using an action. the "vulnerability" window
-            _rigidbody.MovePosition(_rigidbody.position + movementDirection * speed * Time.fixedDeltaTime);
+
+            float currentSpeed;
+            if (chargingAction)
+            {
+                currentSpeed = speed * .75f;
+            }
+            else
+            {
+                currentSpeed = speed;
+            }
+           // Debug.Log(currentSpeed);
+            _rigidbody.MovePosition(_rigidbody.position + movementDirection * currentSpeed * Time.fixedDeltaTime);
         }
 
         public void UnitSelected()
@@ -185,12 +198,12 @@ namespace Assets.Scripts.Units
             //calculate how long the action is charged, and what charge level you reach
             if (currentActionState == ActionState.None)
             {
-                currentCharge = 0;
                 _actionPrototype = actionPrototype;
-                //Debug.Log("New action started");
                 actionObject = _actionPrototype.actionPrefab;
 
-                timeBetweenCharges = actionPrototype.baseChargeTime;
+                chargeTime.MaxValue = actionPrototype.baseChargeTime;
+                chargeAmount.MaxValue = actionPrototype.chargeMax;
+                chargeAmount.CurrentValue = -1;
                 SetNextChargeTime();
 
                 currentActionState = ActionState.Charging;
@@ -199,34 +212,25 @@ namespace Assets.Scripts.Units
 
         private void ChargeAction()
         {
+            chargingAction = true;
 
-            //Debug.Log("Charge Action");
-            if (Time.deltaTime >= chargeTime && chargeMax > currentCharge)
-            {
-                SetNextChargeTime();
-                //Debug.Log($"Action charge{ currentCharge}");
-
-            }
-            else if (chargeMax == currentCharge)
+            if (chargeAmount.MaxValue == chargeAmount.CurrentValue)
             {
                 //visual and audio effect for max charge
             }
-            
-          
         }
 
         private void SpawnAction()
         {
+            _animator.SetTrigger("ActionUsed");
             StartCoroutine(LockDuringAction(_actionPrototype.animationLength)); //time spent "casting" the skill (locked in place) whereas action duration is how long it sticks around
             // I really wanted a way to create a clone of a gameobject without cloning it, tweaking values, and then instantiating it, but that currently doesnt seem easy/possib le
             Vector3 actionDirection = new Vector3(facingDirection.x, facingDirection.y, 0);
 
-
             GameObject spawn = Instantiate(actionObject, transform.position + actionDirection, Quaternion.identity);
             currentAction = spawn.GetComponent<ActiveAction>(); //update the Active Action attached to the new prefab
-            currentAction.Initialize(this, currentCharge, _actionPrototype.actionDuration, facingDirection, _actionPrototype.actionSpeed);
+            currentAction.Initialize(this, (int)chargeAmount.CurrentValue, _actionPrototype.actionDuration, facingDirection, _actionPrototype.actionSpeed);
             ResetActionState();
-            
         }
 
         private void ResetActionState()
@@ -235,13 +239,17 @@ namespace Assets.Scripts.Units
             currentActionState = ActionState.None;
             actionObject = null;
             _actionPrototype = null;
+            chargingAction = false;
         }
 
         private void SetNextChargeTime()
         {
-            currentCharge++;
-            chargeTime = Time.deltaTime + timeBetweenCharges; // set, and then reduce next required charge time
-            timeBetweenCharges *= .8f; //quicker charges as it gets higher
+            chargeAmount.CurrentValue++;
+            
+            chargeTime.MaxValue *= .8f; //quicker charges as it gets higher
+            StartCoroutine(CheckChargeAction(chargeTime.MaxValue));
+            //Debug.Log($"{chargeTime.MaxValue} max time, {chargeTime.CurrentValue} current time  and then abse charge time{_actionPrototype.baseChargeTime}");
+            
         }
 
         private IEnumerator LockDuringAction(float time)
@@ -250,6 +258,15 @@ namespace Assets.Scripts.Units
             //activate "action" trigger to change from movement/charging or attacking animation
             yield return new WaitForSeconds(time);
             lockedByAction = false;
+        }
+
+        private IEnumerator CheckChargeAction(float duration)
+        {
+            yield return new WaitForSeconds(duration);
+            if(currentActionState == ActionState.Charging && chargeAmount.CurrentValue < chargeAmount.MaxValue)
+            {
+                SetNextChargeTime();
+            }
         }
     }
 
