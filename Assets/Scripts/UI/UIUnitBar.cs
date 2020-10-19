@@ -7,7 +7,8 @@ namespace Assets.Scripts.Units
     public class UIUnitBar : MonoBehaviour
     {
         ValueHolder _resourceValue;
-
+        //this is not currently working as intended, but doesnt impact gameplay either. 
+        //at some point I'll either add a color changing system for each level of charge, or work out the fillamount properly.
         public float MyMaxValue { get; set; }//Updating correctly to unique Values
 
         private float lerpSpeed = 15f; //speed of health change
@@ -46,8 +47,8 @@ namespace Assets.Scripts.Units
         void FixedUpdate()
         {
             MyCurrentValue = _resourceValue.CurrentValue;
-            MyMaxValue = _resourceValue.MaxValue - Time.deltaTime;
-            //Debug.Log($"Current value {MyCurrentValue} and max {MyMaxValue}");
+            MyMaxValue = _resourceValue.MaxValue;
+            Debug.Log($"Current value {MyCurrentValue} and max {MyMaxValue}");
             if (currentFill != _unitBar.fillAmount)
             {
                 _unitBar.fillAmount = Mathf.Lerp(_unitBar.fillAmount, currentFill, Time.fixedDeltaTime * lerpSpeed);

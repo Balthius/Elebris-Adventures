@@ -203,6 +203,7 @@ namespace Assets.Scripts.Units
 
                 chargeTime.MaxValue = actionPrototype.baseChargeTime;
                 chargeAmount.MaxValue = actionPrototype.chargeMax;
+                Debug.Log($"Charge max {chargeAmount.MaxValue}");
                 chargeAmount.CurrentValue = -1;
                 SetNextChargeTime();
 

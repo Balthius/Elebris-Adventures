@@ -21,7 +21,7 @@ public class UIChargeController : UIBaseController
     private void SetResourceValues()
     {
         //pass in the value you want the ui elements to be tracking
-        _chargeBar.Initialize(canvas._player.chargeTime);
+        _chargeBar.Initialize(canvas._player.chargeAmount); //this is supposed to use chargeTime but I'm workin on other features right now
         _chargeText.Initialize(canvas._player.chargeAmount);
     }
 }
