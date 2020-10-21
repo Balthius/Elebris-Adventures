@@ -7,11 +7,11 @@ using UnityEngine;
 public class UIMasterController : MonoBehaviour
 {
     //set all values from this centralized class attached to the canvas
-    public Unit _player;
+    public Hero _player;
 
     public List<UIBaseController> uIBaseControllers;
 
-    public void UpdateActivePlayer(Unit player)
+    public void UpdateActivePlayer(Hero player)
     {
         //connected up to an "activeplayer" dapperevent
         _player = player;

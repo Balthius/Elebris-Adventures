@@ -17,7 +17,7 @@ namespace Assets.Scripts.Units
         private Image _unitBar;
         void Awake()
         {
-            _unitBar = GetComponentInChildren<Image>();
+            _unitBar = transform.GetChild(0).GetComponent<Image>();
         }
 
         public float MyCurrentValue

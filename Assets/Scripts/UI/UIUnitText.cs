@@ -16,7 +16,7 @@ namespace Assets.Scripts.Units
         private TMP_Text valueText;
         void Awake()
         {
-            valueText = GetComponentInChildren<TMP_Text>();
+            valueText = transform.GetChild(0).GetComponent<TMP_Text>();
         }
 
         void FixedUpdate()

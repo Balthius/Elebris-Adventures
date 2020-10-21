@@ -5,12 +5,12 @@ using UnityEngine;
 
 public class DevelopmentPanel : MonoBehaviour
 {
-    Unit _activeUnit;
+    Hero _activeUnit;
 
     
 
     [SerializeField] ActionContainerScriptableObject container;
-    public void Initialize(Unit activeUnit)
+    public void Initialize(Hero activeUnit)
     {
         _activeUnit = activeUnit;
         TestSkillSet(); // remove this reference later and just use the one on the test panel

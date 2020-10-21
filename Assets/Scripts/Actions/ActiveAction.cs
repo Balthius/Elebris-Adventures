@@ -23,6 +23,8 @@ namespace Assets.Scripts.Actions.Attacks
         private float travelSpeed;
         public int maxCharges, currentCharge;
 
+        //target as an optional variable if the skill  moves towards/doesnt function off collision with something.
+
 
         //Anything like this, that is used in the calculation once it hits something will go into a struct that contains the items as CharacterValues
         //private Element elementType;
@@ -54,12 +56,14 @@ namespace Assets.Scripts.Actions.Attacks
         }
 
         private void OnTriggerEnter2D(Collider2D col)
-        {
+        { 
+            //if target != null you can have that as a condition for hitting,
             Debug.Log($"You hit {col.name}");
-            //if (col.tag == "Enemy")
+            //if (Idamagable?)
             //{
             //    Character c = col.GetComponentInParent<Character>();
             //    c.TakeDamage(physDamage, source);
+            //    DestroySelf(.01);
             //}
         }
         public void IncreaseRadius()

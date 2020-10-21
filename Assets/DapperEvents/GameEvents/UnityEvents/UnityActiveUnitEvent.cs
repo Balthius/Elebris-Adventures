@@ -6,6 +6,6 @@ using Assets.Scripts.Units;
 
 namespace Assets.DapperEvents.GameEvents {
 [System.Serializable]
-public class UnityActiveUnitEvent : UnityEvent<Unit> {
+public class UnityActiveUnitEvent : UnityEvent<Hero> {
 }
 }

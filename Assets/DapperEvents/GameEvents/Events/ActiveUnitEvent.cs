@@ -6,6 +6,6 @@ using Assets.Scripts.Units;
 
 namespace Assets.DapperEvents.GameEvents {
 [CreateAssetMenu(fileName = "NewActiveUnitEvent", menuName = "Game Events /ActiveUnitEvent")]
-public class ActiveUnitEvent : BaseGameEvent <Unit> {
+public class ActiveHeroEvent : BaseGameEvent <Hero> {
 }
 }
