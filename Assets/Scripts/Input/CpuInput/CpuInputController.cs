@@ -37,7 +37,7 @@ namespace Assets.Scripts.Units
             //going to need to work on selectively locking out movement here as well for when the unit is attacking
             if (target != null)
             {
-                return Vector2.MoveTowards(transform.position, target.position, 5);
+                return target.position - transform.position;
             }
             else
             {
