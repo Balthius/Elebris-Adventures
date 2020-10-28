@@ -59,8 +59,8 @@ namespace Assets.Scripts.Units
             _animator.SetFloat("Horizontal", facingDirection.x);
             _animator.SetFloat("Vertical", facingDirection.y);
             _animator.SetFloat("Speed", movementDirection.sqrMagnitude); //sqr version is more optimizied, using movement direction to access idle animation but lock facing
-
-            movementDirection = _unitController.ReturnMovement();
+            Debug.Log($"the values {gameObject.name} is using to move are {_unitController.ReturnMovement().normalized}");
+            movementDirection = _unitController.ReturnMovement().normalized;
             if (movementDirection.sqrMagnitude > 0.01 && currentActionState == ActionState.None)
             {
                 facingDirection = movementDirection; //allows you to lock direction facing for skill casts etc

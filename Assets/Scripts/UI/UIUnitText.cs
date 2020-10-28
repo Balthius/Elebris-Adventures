@@ -16,11 +16,12 @@ namespace Assets.Scripts.Units
         private TMP_Text valueText;
         void Awake()
         {
-            valueText = transform.GetChild(0).GetComponent<TMP_Text>();
+            valueText = GetComponent<TMP_Text>();
         }
 
         void FixedUpdate()
         {
+            if (_resourceValue == null) return;
             MyCurrentValue = _resourceValue.CurrentValue;
            
             //valueText.text = $"{MyCurrentValue}/{MyMaxValue}"; // Also displays max

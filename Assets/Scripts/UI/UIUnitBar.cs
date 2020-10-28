@@ -17,7 +17,7 @@ namespace Assets.Scripts.Units
         private Image _unitBar;
         void Awake()
         {
-            _unitBar = transform.GetChild(0).GetComponent<Image>();
+            _unitBar = GetComponent<Image>();
         }
 
         public float MyCurrentValue
@@ -46,6 +46,7 @@ namespace Assets.Scripts.Units
         }
         void FixedUpdate()
         {
+            if (_resourceValue == null) return;
             MyCurrentValue = _resourceValue.CurrentValue;
             MyMaxValue = _resourceValue.MaxValue;
             Debug.Log($"Current value {MyCurrentValue} and max {MyMaxValue}");

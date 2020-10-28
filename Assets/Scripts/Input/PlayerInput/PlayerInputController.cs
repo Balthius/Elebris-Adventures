@@ -13,6 +13,7 @@ using UnityEngine.InputSystem;
 
 namespace Assets.Scripts.Units
 {
+
     [RequireComponent(typeof(Hero))]
     public class PlayerInputController : MonoBehaviour, IUnitController
     {

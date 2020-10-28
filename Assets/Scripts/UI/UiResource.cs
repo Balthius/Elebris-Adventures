@@ -58,6 +58,8 @@ namespace Assets.Scripts.Units
         // Update is called once per frame
         void FixedUpdate()
         {
+            if (_resourceValue == null) return;
+            
             MyCurrentValue = _resourceValue.CurrentValue;
             if (currentFill != content.value)
             {

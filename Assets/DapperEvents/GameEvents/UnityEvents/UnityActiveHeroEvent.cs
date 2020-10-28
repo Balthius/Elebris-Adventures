@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using Assets.Scripts.Units;
 
 namespace Assets.DapperEvents.GameEvents {
-[CreateAssetMenu(fileName = "NewActiveUnitEvent", menuName = "Game Events /ActiveUnitEvent")]
-public class ActiveHeroEvent : BaseGameEvent <Hero> {
+[System.Serializable]
+public class UnityActiveHeroEvent : UnityEvent<Hero> {
 }
 }

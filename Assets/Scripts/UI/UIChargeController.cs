@@ -18,6 +18,11 @@ public class UIChargeController : UIBaseController
     {
         SetResourceValues();
     }
+
+    private void FixedUpdate()
+    {
+        transform.position = canvas._player.transform.position;
+    }
     private void SetResourceValues()
     {
         //pass in the value you want the ui elements to be tracking

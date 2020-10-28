@@ -12,7 +12,6 @@ namespace Assets.Scripts.Units
     {
         Vector2 ReturnMovement();
 
-        void EnableActionInputs();
 
         //return true if cooresponding button pressed pressed
         bool ChargingLightAttack

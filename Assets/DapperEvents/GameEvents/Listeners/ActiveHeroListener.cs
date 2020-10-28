@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using Assets.Scripts.Units;
 
 namespace Assets.DapperEvents.GameEvents {
-public class ActiveUnitListener : BaseGameEventListener<Hero, ActiveHeroEvent,UnityActiveUnitEvent > 
+public class ActiveHeroListener : BaseGameEventListener<Hero, ActiveHeroEvent,UnityActiveHeroEvent > 
     {
 
     }
