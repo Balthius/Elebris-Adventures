@@ -11,7 +11,7 @@ namespace Assets.Scripts.Units
         public float MyMaxValue { get; set; }//Updating correctly to unique Values
         public float MyCurrentValue { get; private set; }
 
-        private float lerpSpeed = 15f; //speed of health change
+        //private float lerpSpeed = 15f; //speed of health change
         private float currentValue;
         private TMP_Text valueText;
         void Awake()

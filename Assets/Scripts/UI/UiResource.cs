@@ -9,7 +9,7 @@ namespace Assets.Scripts.Units
 {
     public class UIResource : MonoBehaviour
     {
-        private Slider content;//or image, down the road. slider just adds convenience for quick setup
+        private Image content;//or image, down the road. slider just adds convenience for quick setup
         private TMP_Text valueText;
 
         ValueHolder _resourceValue;
@@ -46,7 +46,7 @@ namespace Assets.Scripts.Units
         }
         void Awake()
         {
-            content = GetComponent<Slider>();
+            content = GetComponentInChildren<Image>();
             valueText = GetComponentInChildren<TMP_Text>();
             if(valueText = null)
             {
@@ -61,10 +61,9 @@ namespace Assets.Scripts.Units
             if (_resourceValue == null) return;
             
             MyCurrentValue = _resourceValue.CurrentValue;
-            if (currentFill != content.value)
+            if (currentFill != content.fillAmount)
             {
-                //content.fillamount =  for when I switch to image.
-                content.value = Mathf.Lerp(content.value, currentFill, Time.fixedDeltaTime * lerpSpeed);
+                content.fillAmount = Mathf.Lerp(content.fillAmount, currentFill, Time.fixedDeltaTime * lerpSpeed);
                 valueText.text = $"{MyCurrentValue}/{MyMaxValue}";
             }
         }
