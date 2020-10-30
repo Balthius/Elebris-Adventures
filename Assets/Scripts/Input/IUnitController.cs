@@ -40,6 +40,7 @@ namespace Assets.Scripts.Units
         }
         bool ChargingManeuver
         {
+            //Also cancels other actions when used
             get;
         }
         bool ChargingSelect

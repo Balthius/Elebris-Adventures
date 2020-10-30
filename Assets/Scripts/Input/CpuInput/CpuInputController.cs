@@ -9,7 +9,7 @@
 
 namespace Assets.Scripts.Units
 {
-    public class CpuInputController : MonoBehaviour, IUnitController
+    public class CpuInputController : MonoBehaviour, IUnitController, IAIController
     {
         //implement a FSM that feeds info into the controller?
         //"initialize" the weights of each skill, percentages units perform certain actions at, whatever
@@ -31,20 +31,38 @@ namespace Assets.Scripts.Units
         public Transform Target { get => target; set => target = value; }
 
         private Transform target;
+        private IState currentState;
 
+        public float AttackRange { get; set; }
+        public Vector2 CurrentMovement { get; set; }
         public Vector2 ReturnMovement()
         {
-            //going to need to work on selectively locking out movement here as well for when the unit is attacking
-            if (target != null)
-            {
-                return target.position - transform.position;
-            }
-            else
-            {
-                return Vector2.zero;
-            }
+            return CurrentMovement;
         }
 
+        private void Awake()
+        {
+            ChangeState(new IdleState());
+        }
 
+        private void Update()
+        {
+            currentState.UpdateState();
+        }
+
+        public void ChangeState(IState newState)
+        {
+            if (currentState != null)
+            {
+                currentState.Exit();
+            }
+            currentState = newState;
+            currentState.Enter(this);
+        }
+
+        public void Initialize(float attackRange)
+        {
+            AttackRange = attackRange;
+        }
     }
 }

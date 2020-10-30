@@ -7,6 +7,8 @@ namespace Assets.Scripts.Units
     [RequireComponent(typeof(Animator))]
     public class Enemy : Unit
     {
+        public float attackRange;
+        public IAIController _aiController;
         //we have the option of changing player scale to -1 when moving left and  1 when moving right in order to have a "player side" sprite transform.localScale
         //rather than a left and right, that can be reused. I'm not currently going this route because I want left and right assets to be more than just mirror copies of eachother
 
@@ -17,6 +19,9 @@ namespace Assets.Scripts.Units
         protected override void Start()
         {
             base.Start();
+            _aiController = GetComponent<IAIController>();
+            _aiController.Initialize(attackRange);
+
         }
 
         protected override void FixedUpdate()

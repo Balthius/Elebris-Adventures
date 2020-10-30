@@ -33,7 +33,7 @@ namespace Assets.Scripts.Units
 
         protected ActionState currentActionState = ActionState.None;
 
-        protected Vector2 movementDirection = new Vector2(0, -1);
+        protected Vector2 movementDirection = new Vector2(0, 0);
         protected Vector2 facingDirection = new Vector2(0, -1);
         public ResourceContainer ResourceContainer { get => _resourceContainer; set => _resourceContainer = value; }
         public SkillContainer SkillContainer { get => _skillContainer; set => _skillContainer = value; }
@@ -59,7 +59,7 @@ namespace Assets.Scripts.Units
             _animator.SetFloat("Horizontal", facingDirection.x);
             _animator.SetFloat("Vertical", facingDirection.y);
             _animator.SetFloat("Speed", movementDirection.sqrMagnitude); //sqr version is more optimizied, using movement direction to access idle animation but lock facing
-            Debug.Log($"the values {gameObject.name} is using to move are {_unitController.ReturnMovement().normalized}");
+            //Debug.Log($"the values {gameObject.name} is using to move are {_unitController.ReturnMovement().normalized}");
             movementDirection = _unitController.ReturnMovement().normalized;
             if (movementDirection.sqrMagnitude > 0.01 && currentActionState == ActionState.None)
             {
@@ -88,7 +88,6 @@ namespace Assets.Scripts.Units
 
             protected void CheckActionInput()
             {
-
                 if (_unitController.ChargingSelect)
                 {
                     //UseAction();
@@ -130,8 +129,6 @@ namespace Assets.Scripts.Units
                     //Debug.Log("ChargingSkillFour");
                     UseAction(SkillContainer.SkillFour);
                 }
-
-
             }
             protected void CheckActionRelease()
             {
@@ -168,8 +165,10 @@ namespace Assets.Scripts.Units
             {
                 currentSpeed = speed;
             }
-            // Debug.Log(currentSpeed);
-            _rigidbody.MovePosition(_rigidbody.position + movementDirection * currentSpeed * Time.fixedDeltaTime);
+            if (movementDirection.sqrMagnitude > 0.01)
+            {
+                _rigidbody.MovePosition(_rigidbody.position + movementDirection * currentSpeed * Time.fixedDeltaTime);
+            }
         }
 
 
