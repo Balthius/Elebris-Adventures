@@ -7,6 +7,7 @@ public class IdleState : BaseState
 
     public override void Enter(CpuInputController parent)
     {
+        Debug.Log("Idling");
         base.Enter(parent);
     }
     public override void UpdateState()

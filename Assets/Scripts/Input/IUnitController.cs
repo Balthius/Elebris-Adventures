@@ -13,7 +13,7 @@ namespace Assets.Scripts.Units
         Vector2 ReturnMovement();
 
 
-        //return true if cooresponding button pressed pressed
+        //return true if corresponding button pressed pressed
         bool ChargingLightAttack
         {
             get;

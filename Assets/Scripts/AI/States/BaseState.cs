@@ -14,7 +14,11 @@ public class BaseState : IState
     }
     public virtual void UpdateState()
     {
-        
+        AIAction checkAction = _parent.ActionContainer.CheckActions(_parent.DistanceFromTarget); 
+        if(checkAction != null)
+        {
+            _parent.currentAction = checkAction;
+        }
     }
 
 }

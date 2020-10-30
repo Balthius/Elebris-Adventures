@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 
 /// <summary>
@@ -9,20 +12,20 @@
 
 namespace Assets.Scripts.Units
 {
-    public class CpuInputController : MonoBehaviour, IUnitController, IAIController
+    public class CpuInputController : MonoBehaviour, IUnitController
     {
         //implement a FSM that feeds info into the controller?
         //"initialize" the weights of each skill, percentages units perform certain actions at, whatever
         //target and aggro range/type.
         //all of the above sound like good contained classes
-        public bool ChargingLightAttack { get; set ; }
-        public bool ChargingHeavyAttack { get; set ; }
+        public bool ChargingLightAttack { get; set; }
+        public bool ChargingHeavyAttack { get; set; }
 
-        public bool ChargingSkillOne { get; set ; }
+        public bool ChargingSkillOne { get; set; }
 
-        public bool ChargingSkillTwo { get; set ; }
+        public bool ChargingSkillTwo { get; set; }
 
-        public bool ChargingSkillThree { get; set ; }
+        public bool ChargingSkillThree { get; set; }
 
         public bool ChargingSkillFour { get; set; }
 
@@ -32,16 +35,32 @@ namespace Assets.Scripts.Units
 
         private Transform target;
         private IState currentState;
+        public AIActionContainer ActionContainer { get; set; }
 
-        public float AttackRange { get; set; }
+        public AIAction currentAction;
         public Vector2 CurrentMovement { get; set; }
         public Vector2 ReturnMovement()
         {
             return CurrentMovement;
         }
+        public float DistanceFromTarget {
+            get
+            {
+                if (target != null)
+                {
+                    return Vector2.Distance(Target.position, transform.position);
+                }
+                else
+                {
+                    return 9999;
+                }
+            }
+        }
 
         private void Awake()
         {
+            ActionContainer = new AIActionContainer();
+            ActionContainer.SubscribeAllActions();
             ChangeState(new IdleState());
         }
 
@@ -60,9 +79,25 @@ namespace Assets.Scripts.Units
             currentState.Enter(this);
         }
 
-        public void Initialize(float attackRange)
+
+        public IEnumerator ChargeAction(float duration)
         {
-            AttackRange = attackRange;
+            yield return new WaitForSeconds(duration);
+            EndAction();
         }
+
+        public void EndAction()
+        {
+            ChargingLightAttack = false;
+            ChargingHeavyAttack = false;
+            ChargingSkillOne = false;
+            ChargingSkillTwo = false;
+            ChargingSkillThree = false;
+            ChargingSkillFour = false;
+            ChargingManeuver = false;
+        }
+
+      
     }
+
 }

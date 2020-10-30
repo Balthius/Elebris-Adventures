@@ -7,6 +7,7 @@ public class FollowState : BaseState
 
     public override void Enter(CpuInputController parent)
     {
+        Debug.Log("Following");
         base.Enter(parent);
     }
 
@@ -23,10 +24,7 @@ public class FollowState : BaseState
        if(_parent.Target != null)
         {
             _parent.CurrentMovement = _parent.Target.position - _parent.transform.position;
-
-            float distance = Vector2.Distance(_parent.Target.position, _parent.transform.position);
-
-            if(distance <= _parent.AttackRange)
+            if (_parent.currentAction.actionRange > _parent.DistanceFromTarget)
             {
                 _parent.ChangeState(new AttackState());
             }

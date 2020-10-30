@@ -8,6 +8,14 @@ namespace Assets.Scripts.Units
 {
     public interface IAIController
     {
-        void Initialize(float attackRange);
+        void InititateLightAttack();
+        void InititateHeavyAttack();
+
+        void InititateSkillOne();
+        void InititateSkillTwo();
+        void InititateSkillThree();
+        void InititateSkillFour();
+
+        void InititateManeuver();
     }
 }

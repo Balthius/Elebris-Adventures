@@ -20,7 +20,6 @@ namespace Assets.Scripts.Units
         {
             base.Start();
             _aiController = GetComponent<IAIController>();
-            _aiController.Initialize(attackRange);
 
         }
 
