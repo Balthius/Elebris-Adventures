@@ -24,7 +24,8 @@ public class FollowState : BaseState
        if(_parent.Target != null)
         {
             _parent.CurrentMovement = _parent.Target.position - _parent.transform.position;
-            if (_parent.currentAction.actionRange > _parent.DistanceFromTarget)
+            
+            if (_parent.AttemptAttackRange > _parent.DistanceFromTarget)
             {
                 _parent.ChangeState(new AttackState());
             }

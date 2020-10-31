@@ -1,5 +1,6 @@
 ﻿
 using Assets.Scripts.Units;
+using UnityEngine;
 
 public class BaseState : IState
 {
@@ -7,6 +8,7 @@ public class BaseState : IState
     public virtual void Enter(CpuInputController parent)
     {
         _parent = parent;
+        
     }
 
     public virtual void Exit()
@@ -14,11 +16,9 @@ public class BaseState : IState
     }
     public virtual void UpdateState()
     {
-        AIAction checkAction = _parent.ActionContainer.CheckActions(_parent.DistanceFromTarget); 
-        if(checkAction != null)
-        {
-            _parent.currentAction = checkAction;
-        }
+        //Debug.Log("Using action is: " + _parent.UsingAction);
+        if (_parent.UsingAction) return;
+        //short-circuit all behaviour while carrying out an action
     }
 
 }

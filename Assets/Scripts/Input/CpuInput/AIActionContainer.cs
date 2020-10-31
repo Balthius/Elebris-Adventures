@@ -1,63 +1,58 @@
 ﻿
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 /// <summary>
-/// This class is responsible for passing Input from the player to the Active character class. IUnitController is the only public portion of 
-/// this class so you should only call this via the interface
-/// Other classes to control AI input need to implement the IUnitcontroller separately
+/// This acts as the "gamepad" for the AI. cotaining any button the Unit would need to press
+/// Also handles the sorting of actions so they can choose what they want to press next
 /// </summary>
 namespace Assets.Scripts.Units
 {
     //This should be moved to the DLL
     public class AIActionContainer
     {
-        public AIAction lightAttack = new AIAction();
-        public AIAction heavyAttack = new AIAction();
-        public AIAction actionOne = new AIAction();
-        public AIAction actionTwo = new AIAction();
-        public AIAction actionThree = new AIAction();
-        public AIAction actionFour = new AIAction();
-        public AIAction maneuver = new AIAction();
+        //I plan on having these be overriden in editor
+        public AIAction lightAttack = new AIAction(ActionSlot.lightAttack);
+        public AIAction heavyAttack = new AIAction(ActionSlot.heavyAttack);
+        public AIAction actionOne = new AIAction(ActionSlot.skillOne);
+        public AIAction actionTwo = new AIAction(ActionSlot.skillTwo);
+        public AIAction actionThree = new AIAction(ActionSlot.skillThree);
+        public AIAction actionFour = new AIAction(ActionSlot.skillFour);
+        public AIAction maneuver = new AIAction(ActionSlot.maneuver);
 
-        public List<AIAction> sortedActions, actionList;
+        public List<AIAction> sortedActions = new List<AIAction>(), actionList = new List<AIAction>();
         
-        public void SubscribeAllActions()
+        public void GroupActions()
         {
-            sortedActions = new List<AIAction>();
-            actionList = new List<AIAction>();
-
-            lightAttack.SubscribeItem(this, ActionSlot.lightAttack);
-            heavyAttack.SubscribeItem(this, ActionSlot.heavyAttack);
-            actionOne.SubscribeItem(this, ActionSlot.skillOne);
-            actionTwo.SubscribeItem(this, ActionSlot.skillTwo);
-            actionThree.SubscribeItem(this, ActionSlot.skillThree);
-            actionFour.SubscribeItem(this,ActionSlot.skillFour);
-            maneuver.SubscribeItem(this, ActionSlot.maneuver);
-        }
-        public void SubscribeAction(AIAction action)
-        {
-            actionList.Add(action);
+            //Debug.Log("Grouping Actions");
+            //Execute once
+            actionList.Add(lightAttack);
+            actionList.Add(heavyAttack);
+            actionList.Add(actionOne);
+            actionList.Add(actionTwo);
+            actionList.Add(actionThree);
+            actionList.Add(actionFour);
+            actionList.Add(maneuver);
+            //Debug.Log("actionlist count" + actionList.Count);
+            OrderActions();
+            //Debug.Log("SortedList count" + sortedActions.Count);
         }
         public AIAction CheckActions(float distance)
         {
             OrderActions();
             foreach (AIAction action in sortedActions)
             {
-                if (action.CheckAction(distance) && action != null)
-                { 
+                if (action.CheckAction(distance))
+                {
                     return action;
                 }
             }
-        OrderActions();
             return null;
         }
         private void OrderActions()
         {
+            //Debug.Log("Ordering Actions");
             sortedActions = actionList.OrderBy(x => x.currentWeight).ToList();
-            foreach (var item in actionList)
-            {
-                item.ChangeWeight();//lowers everythings weight every time the lsit is sorted
-            }
         }
     }
 }

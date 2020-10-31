@@ -11,7 +11,7 @@ public class Range : MonoBehaviour
     private void Start()
     {
         parent = GetComponentInParent<CpuInputController>();
-        Debug.Log(parent);
+        //Debug.Log(parent);
     }
 
 

@@ -26,7 +26,7 @@ public class UIInputIndicatorController : UIBaseController
     }
     public override void OnPlayerUpdated()
     {
-        Debug.Log("Player Updated");
+        //Debug.Log("Player Updated");
         unitController = canvas._player._unitController;
         //update images of skills, and the state a skill is in
 

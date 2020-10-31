@@ -1,5 +1,7 @@
 ﻿
 using Assets.Scripts.Units;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class AttackState : BaseState
@@ -19,15 +21,18 @@ public class AttackState : BaseState
     public override void UpdateState()
     {
         base.UpdateState();
-        if(_parent.Target != null)
+
+
+        if (_parent.Target != null)
         {
-            if(_parent.currentAction.actionRange < _parent.DistanceFromTarget)
+            if(_parent.AttemptAttackRange > _parent.DistanceFromTarget && !_parent.UsingAction)
+            {
+                _parent.currentAction = _parent.ActionContainer.CheckActions(_parent.DistanceFromTarget);
+                UseAction(_parent.currentAction);
+            }
+            else if(_parent.AttemptAttackRange < _parent.DistanceFromTarget)
             {
                 _parent.ChangeState(new FollowState());
-            }
-            else
-            {
-                UseAction(_parent.currentAction);
             }
         }
         else
@@ -35,7 +40,6 @@ public class AttackState : BaseState
             _parent.ChangeState(new IdleState());
         }
     }
-
     public void UseAction(AIAction action)
     {
         switch (action.slot)
@@ -65,8 +69,19 @@ public class AttackState : BaseState
             default: _parent.ChargingSelect = true;
                 break;
         }
-        _parent.ChargeAction(action.chargeDuration);
+        //Can also use GetCurrentAnimatorStateInfo(0).Length if we'd like
+        _parent.StartCoroutine(ChargeAction(action.maxActionDelay));
+        Debug.Log("using" + action);
     }
+
+    public IEnumerator ChargeAction(float duration)
+    {
+        //ensures actions arent being checked for while another is executing
+        _parent.UsingAction = true;
+        yield return new WaitForSeconds(duration);
+        _parent.EndAction();
+    }
+
 }
 
  

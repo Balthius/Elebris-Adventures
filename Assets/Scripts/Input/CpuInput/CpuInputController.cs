@@ -35,7 +35,7 @@ namespace Assets.Scripts.Units
 
         private Transform target;
         private IState currentState;
-        public AIActionContainer ActionContainer { get; set; }
+        public AIActionContainer ActionContainer { get; set; } = new AIActionContainer(); //contains a list (scriptable object?) of each skill available to the unit
 
         public AIAction currentAction;
         public Vector2 CurrentMovement { get; set; }
@@ -43,6 +43,9 @@ namespace Assets.Scripts.Units
         {
             return CurrentMovement;
         }
+
+        public float AttemptAttackRange { get; set; } = 1;//distance at which at least one action will be within range
+
         public float DistanceFromTarget {
             get
             {
@@ -57,10 +60,12 @@ namespace Assets.Scripts.Units
             }
         }
 
+        public bool UsingAction { get; set; }
+
         private void Awake()
         {
-            ActionContainer = new AIActionContainer();
-            ActionContainer.SubscribeAllActions();
+            ActionContainer.GroupActions();
+            SetAttackThreshold();
             ChangeState(new IdleState());
         }
 
@@ -79,15 +84,9 @@ namespace Assets.Scripts.Units
             currentState.Enter(this);
         }
 
-
-        public IEnumerator ChargeAction(float duration)
-        {
-            yield return new WaitForSeconds(duration);
-            EndAction();
-        }
-
         public void EndAction()
         {
+            UsingAction = false;
             ChargingLightAttack = false;
             ChargingHeavyAttack = false;
             ChargingSkillOne = false;
@@ -95,9 +94,23 @@ namespace Assets.Scripts.Units
             ChargingSkillThree = false;
             ChargingSkillFour = false;
             ChargingManeuver = false;
+            //sets next action to use
         }
 
-      
+
+        private void SetAttackThreshold()
+        {
+            //Debug.Log("Reached");
+            foreach (AIAction item in ActionContainer.actionList)
+            {
+                if(item.maxRange > AttemptAttackRange)
+                {
+                    AttemptAttackRange = item.maxRange;
+
+                    //Debug.Log("Enemy attack range" + AttemptAttackRange);
+                }
+            }
+        }
     }
 
 }
