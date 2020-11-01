@@ -25,12 +25,8 @@ public class AttackState : BaseState
         Debug.Log(_parent.UsingAction + " Action is being used");
         if (_parent.Target != null && !_parent.UsingAction)
         {
-            if (_parent.AttemptRetreatRange > _parent.DistanceFromTarget )
-            {
-                Debug.Log("Attempting Retreat From Attack");
-                _parent.ChangeState(new RetreatState()); //Disabled for now
-            }
-            else if(_parent.AttemptAttackRange > _parent.DistanceFromTarget)
+            
+            if(_parent.AttemptAttackRange > _parent.DistanceFromTarget)
             {
                 Debug.Log("Attempting Action From Attack");
                 _parent.currentAction = _parent.ActionContainer.CheckActions(_parent.DistanceFromTarget);
@@ -41,7 +37,6 @@ public class AttackState : BaseState
                 Debug.Log("Attempting Follow From Attack");
                 _parent.ChangeState(new FollowState());
             }
-            
         }
         else
         {

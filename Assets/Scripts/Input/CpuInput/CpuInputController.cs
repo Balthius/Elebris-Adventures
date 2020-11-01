@@ -46,7 +46,7 @@ namespace Assets.Scripts.Units
 
         public float AttemptAttackRange { get; set; } = 2;//distance at which at least one action will be within range
 
-        public float AttemptRetreatRange { get; set; } = .3f;//distance at which at least one action will be within range
+        //public float AttemptRetreatRange { get; set; } = .3f;//distance at which at least one action will be within range
 
         public float DistanceFromTarget {
             get
@@ -111,10 +111,10 @@ namespace Assets.Scripts.Units
                     AttemptAttackRange = item.maxRange;
                     //Debug.Log("Enemy attack range" + AttemptAttackRange);
                 }
-                if( item.minRange < AttemptRetreatRange)
-                {
-                    AttemptRetreatRange = item.minRange;
-                }
+                //if( item.minRange < AttemptRetreatRange)
+                //{
+                //    AttemptRetreatRange = item.minRange;
+                //}
             }
         }
     }
