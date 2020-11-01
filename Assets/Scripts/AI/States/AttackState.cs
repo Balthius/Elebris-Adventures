@@ -22,18 +22,26 @@ public class AttackState : BaseState
     {
         base.UpdateState();
 
-
-        if (_parent.Target != null)
+        Debug.Log(_parent.UsingAction + " Action is being used");
+        if (_parent.Target != null && !_parent.UsingAction)
         {
-            if(_parent.AttemptAttackRange > _parent.DistanceFromTarget && !_parent.UsingAction)
+            if (_parent.AttemptRetreatRange > _parent.DistanceFromTarget )
             {
+                Debug.Log("Attempting Retreat From Attack");
+                _parent.ChangeState(new RetreatState()); //Disabled for now
+            }
+            else if(_parent.AttemptAttackRange > _parent.DistanceFromTarget)
+            {
+                Debug.Log("Attempting Action From Attack");
                 _parent.currentAction = _parent.ActionContainer.CheckActions(_parent.DistanceFromTarget);
                 UseAction(_parent.currentAction);
             }
             else if(_parent.AttemptAttackRange < _parent.DistanceFromTarget)
             {
+                Debug.Log("Attempting Follow From Attack");
                 _parent.ChangeState(new FollowState());
             }
+            
         }
         else
         {
@@ -65,6 +73,7 @@ public class AttackState : BaseState
             case ActionSlot.maneuver:
                 _parent.ChargingManeuver = true;
                 break;
+            case ActionSlot.select:
 
             default: _parent.ChargingSelect = true;
                 break;
@@ -82,6 +91,6 @@ public class AttackState : BaseState
         _parent.EndAction();
     }
 
-}
 
- 
+
+}

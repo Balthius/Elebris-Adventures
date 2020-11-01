@@ -11,166 +11,104 @@ namespace Assets.Scripts.Units
     /// </summary>
     public class Unit : MonoBehaviour
     {
-
+        #region Core Containers and stats
         [SerializeField] protected float speed = 5f;
-
-        public IUnitController _unitController;
-
-        protected Rigidbody2D _rigidbody;
-        protected Animator _animator;//make sure the base idle down animation is at the top of the blend tree
+        protected Vector2 movementDirection = new Vector2(0, 0);
+        protected Vector2 facingDirection = new Vector2(0, -1);
 
         protected ResourceContainer _resourceContainer = new ResourceContainer();
         protected SkillContainer _skillContainer = new SkillContainer();
         protected AttackContainer _attackContainer = new AttackContainer();
-
-        protected ActiveAction currentAction;
-
-        protected ActionScriptableObject _actionPrototype;
-
-        protected GameObject actionObject;
-
-        protected bool lockedByAction = false;
-
-        protected ActionState currentActionState = ActionState.None;
-
-        protected Vector2 movementDirection = new Vector2(0, 0);
-        protected Vector2 facingDirection = new Vector2(0, -1);
         public ResourceContainer ResourceContainer { get => _resourceContainer; set => _resourceContainer = value; }
         public SkillContainer SkillContainer { get => _skillContainer; set => _skillContainer = value; }
         public AttackContainer AttackContainer { get => _attackContainer; set => _attackContainer = value; }
+        #endregion
+
+        #region Components
+
+        public IUnitController _unitController;
+        protected Rigidbody2D _rigidbody;
+        protected Animator _animator;//make sure the base idle down animation is at the top of the blend tree
+
+
+        #endregion
+
+        #region Action
+        //Most of these can be separated into a 3 part FSM like ai\s idle,follow,attack fsm
+
+        protected bool lockedByAction = false;
+        protected ActionState currentActionState = ActionState.None;
+
+        protected ActionScriptableObject _actionPrototype;
+        protected ActiveAction currentAction;
+        protected GameObject actionObject;
 
         public ValueHolder chargeTime = new ValueHolder(1.5f, 0, StatsEnum.HealthResource);
         public ValueHolder chargeAmount = new ValueHolder(3, 0, StatsEnum.HealthResource);// placeholder Enum. Needs to either be a nullable value or removed from the valueholder and put in a child class
 
 
-        protected virtual void Start()
+        protected void CheckActionInput()
         {
-            ResetActionState();
-            //Set attacks and skills from Saved config
-            _unitController = GetComponent<IUnitController>(); //find controller on this character, receives a normalized value
-            _rigidbody = GetComponent<Rigidbody2D>(); //find controller on this character, receives a normalized value
-            _animator = GetComponent<Animator>(); //find controller on this character, receives a normalized value
-            
-        }
-        protected virtual void Update()
-        {
-            if (lockedByAction) return; //this is specifically how long a unit is locked out of ANY movemement or action after using an action. the "vulnerability" window
-            //Debug.Log(currentActionState);
-            _animator.SetFloat("Horizontal", facingDirection.x);
-            _animator.SetFloat("Vertical", facingDirection.y);
-            _animator.SetFloat("Speed", movementDirection.sqrMagnitude); //sqr version is more optimizied, using movement direction to access idle animation but lock facing
-            //Debug.Log($"the values {gameObject.name} is using to move are {_unitController.ReturnMovement().normalized}");
-            movementDirection = _unitController.ReturnMovement().normalized;
-            if (movementDirection.sqrMagnitude > 0.01 && currentActionState == ActionState.None)
+            if (_unitController.ChargingSelect)
             {
-                facingDirection = movementDirection; //allows you to lock direction facing for skill casts etc
-
+                //UseAction();
+                //Debug.Log("ChargingSelect");
             }
-            if (currentActionState == ActionState.None)
+            else if (_unitController.ChargingManeuver)
             {
-                CheckActionInput();
-            }
-            if (currentActionState == ActionState.Charging)
-            {
-                _animator.SetBool("Charging", true);
-                ChargeAction();
-
-                CheckActionRelease();
-            }
-            if (currentActionState == ActionState.Using)
-            {
-                SpawnAction();
-
-                _animator.SetBool("Charging", false);
-            }
-            //If I break out of an action (cancel, stunned, maneuver etc) then i need to call stopcoroutine on charging
-        }
-
-            protected void CheckActionInput()
-            {
-                if (_unitController.ChargingSelect)
-                {
-                    //UseAction();
-                    //Debug.Log("ChargingSelect");
-                }
-                else if (_unitController.ChargingManeuver)
-                {
-                    //Debug.Log("ChargingManeuver");
-                }
-
-                else if (_unitController.ChargingLightAttack)
-                {
-                    //Debug.Log("ChargingLightAttack");
-                    UseAction(AttackContainer.LightAttack);
-                }
-                else if (_unitController.ChargingHeavyAttack)
-                {
-                    //Debug.Log("ChargingHeavyAttack");
-                    UseAction(AttackContainer.HeavyAttack);
-                }
-
-                else if (_unitController.ChargingSkillOne)
-                {
-                    //Debug.Log("ChargingSkillOne");
-                    UseAction(SkillContainer.SkillOne);
-                }
-                else if (_unitController.ChargingSkillTwo)
-                {
-                    //Debug.Log("ChargingSkillTwo");
-                    UseAction(SkillContainer.SkillTwo);
-                }
-                else if (_unitController.ChargingSkillThree)
-                {
-                    //Debug.Log("ChargingSkillThree");
-                    UseAction(SkillContainer.SkillThree);
-                }
-                else if (_unitController.ChargingSkillFour)
-                {
-                    //Debug.Log("ChargingSkillFour");
-                    UseAction(SkillContainer.SkillFour);
-                }
-            }
-            protected void CheckActionRelease()
-            {
-                //only reachable once a skill has been prepared to use, so other inputs should be disabled and this should only fire off at a "safe time"
-                //it iS ugly, so I'll need to find a better way to loop the values. I should feel guilty about this but I also have so little experience with the new input system.
-                //Debug.Log("Checking release");
-                if (!_unitController.ChargingSelect &&
-                    !_unitController.ChargingLightAttack &&
-                    !_unitController.ChargingHeavyAttack &&
-                    !_unitController.ChargingManeuver &&
-                    !_unitController.ChargingSkillOne &&
-                    !_unitController.ChargingSkillTwo &&
-                    !_unitController.ChargingSkillThree &&
-                    !_unitController.ChargingSkillFour
-                    )
-                {
-                    currentActionState = ActionState.Using;
-                }
-
-
-
+                //Debug.Log("ChargingManeuver");
             }
 
-        protected virtual void FixedUpdate()
-        {
-            if (lockedByAction) return; //this is specifically how long a unit is locked out of ANY movemement or action after using an action. the "vulnerability" window
+            else if (_unitController.ChargingLightAttack)
+            {
+                //Debug.Log("ChargingLightAttack");
+                UseAction(AttackContainer.LightAttack);
+            }
+            else if (_unitController.ChargingHeavyAttack)
+            {
+                //Debug.Log("ChargingHeavyAttack");
+                UseAction(AttackContainer.HeavyAttack);
+            }
 
-            float currentSpeed;
-            if (currentActionState == ActionState.Charging)
+            else if (_unitController.ChargingSkillOne)
             {
-                currentSpeed = speed * .75f;
+                //Debug.Log("ChargingSkillOne");
+                UseAction(SkillContainer.SkillOne);
             }
-            else
+            else if (_unitController.ChargingSkillTwo)
             {
-                currentSpeed = speed;
+                //Debug.Log("ChargingSkillTwo");
+                UseAction(SkillContainer.SkillTwo);
             }
-            if (movementDirection.sqrMagnitude > 0.01)
+            else if (_unitController.ChargingSkillThree)
             {
-                _rigidbody.MovePosition(_rigidbody.position + movementDirection * currentSpeed * Time.fixedDeltaTime);
+                //Debug.Log("ChargingSkillThree");
+                UseAction(SkillContainer.SkillThree);
+            }
+            else if (_unitController.ChargingSkillFour)
+            {
+                //Debug.Log("ChargingSkillFour");
+                UseAction(SkillContainer.SkillFour);
             }
         }
-
+        protected void CheckActionRelease()
+        {
+            //only reachable once a skill has been prepared to use, so other inputs should be disabled and this should only fire off at a "safe time"
+            //it iS ugly, so I'll need to find a better way to loop the values. I should feel guilty about this but I also have so little experience with the new input system.
+            //Debug.Log("Checking release");
+            if (!_unitController.ChargingSelect &&
+                !_unitController.ChargingLightAttack &&
+                !_unitController.ChargingHeavyAttack &&
+                !_unitController.ChargingManeuver &&
+                !_unitController.ChargingSkillOne &&
+                !_unitController.ChargingSkillTwo &&
+                !_unitController.ChargingSkillThree &&
+                !_unitController.ChargingSkillFour
+                )
+            {
+                currentActionState = ActionState.Using;
+            }
+        }
 
         protected void UseAction(ActionScriptableObject actionPrototype)
         {
@@ -247,6 +185,101 @@ namespace Assets.Scripts.Units
                 SetNextChargeTime();
             }
         }
+        #endregion
+
+
+
+        #region UnityCallbacks
+        private void Awake()
+        {
+            TestSkillSet();
+        }
+        protected virtual void Start()
+        {
+            ResetActionState();
+            //Set attacks and skills from Saved config
+            _unitController = GetComponent<IUnitController>(); //find controller on this character, receives a normalized value
+            _rigidbody = GetComponent<Rigidbody2D>(); //find controller on this character, receives a normalized value
+            _animator = GetComponent<Animator>(); //find controller on this character, receives a normalized value
+            
+        }
+        protected virtual void Update()
+        {
+            if (lockedByAction) return; //this is specifically how long a unit is locked out of ANY movemement or action after using an action. the "vulnerability" window
+            //Debug.Log(currentActionState);
+            _animator.SetFloat("Horizontal", facingDirection.x);
+            _animator.SetFloat("Vertical", facingDirection.y);
+            _animator.SetFloat("Speed", movementDirection.sqrMagnitude); //sqr version is more optimizied, using movement direction to access idle animation but lock facing
+            //Debug.Log($"the values {gameObject.name} is using to move are {_unitController.ReturnMovement().normalized}");
+            movementDirection = _unitController.ReturnMovement().normalized;
+            if (movementDirection.sqrMagnitude > 0.01 && currentActionState == ActionState.None)
+            {
+                facingDirection = movementDirection; //allows you to lock direction facing for skill casts etc
+
+            }
+            if (currentActionState == ActionState.None)
+            {
+                CheckActionInput();
+            }
+            if (currentActionState == ActionState.Charging)
+            {
+                _animator.SetBool("Charging", true);
+                ChargeAction();
+
+                CheckActionRelease();
+            }
+            if (currentActionState == ActionState.Using)
+            {
+                SpawnAction();
+
+                _animator.SetBool("Charging", false);
+            }
+            //If I break out of an action (cancel, stunned, maneuver etc) then i need to call stopcoroutine on charging
+        }
+
+
+        protected virtual void FixedUpdate()
+        {
+            if (lockedByAction) return; //this is specifically how long a unit is locked out of ANY movemement or action after using an action. the "vulnerability" window
+
+            float currentSpeed;
+            if (currentActionState == ActionState.Charging)
+            {
+                currentSpeed = speed * .75f;
+            }
+            else
+            {
+                currentSpeed = speed;
+            }
+            if (movementDirection.sqrMagnitude > 0.01)
+            {
+                _rigidbody.MovePosition(_rigidbody.position + movementDirection * currentSpeed * Time.fixedDeltaTime);
+            }
+        }
+
+
+        #endregion
+
+        #region TestSection
+
+        [SerializeField] ActionContainerScriptableObject container;
+        public void TestSkillSet()
+        {
+            if (container == null)
+            {
+                Debug.Log("No Skillset inserted");
+                return;
+            }
+            AttackContainer.LightAttack = container.lightAttack;
+            AttackContainer.HeavyAttack = container.heavyAttack;
+            SkillContainer.SkillOne = container.skillOne;
+            SkillContainer.SkillTwo = container.skillTwo;
+            SkillContainer.SkillThree = container.skillThree;
+            SkillContainer.SkillFour = container.skillFour;
+        }
+
+
+        #endregion
     }
 
 }
