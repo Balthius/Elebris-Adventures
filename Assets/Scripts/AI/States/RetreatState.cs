@@ -26,11 +26,13 @@ public class RetreatState : BaseState
         {
             _parent.CurrentMovement = _parent.transform.position - _parent.Target.position;
             //if Unit is within min and max ranges then switch to follow
-            if (_parent.AttemptRetreatRange < _parent.DistanceFromTarget && _parent.AttemptAttackRange > _parent.DistanceFromTarget)
+            if (_parent.AttemptAttackRange > _parent.DistanceFromTarget)
             {
+                //and needs to be outside min retreat range.
+
+                //need to find a way to let creatures react if the player stays close to them.
                 _parent.ChangeState(new AttackState());
             }
-          
         }
         else
         {

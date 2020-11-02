@@ -22,19 +22,16 @@ public class AttackState : BaseState
     {
         base.UpdateState();
 
-        Debug.Log(_parent.UsingAction + " Action is being used");
         if (_parent.Target != null && !_parent.UsingAction)
         {
             
             if(_parent.AttemptAttackRange > _parent.DistanceFromTarget)
             {
-                Debug.Log("Attempting Action From Attack");
                 _parent.currentAction = _parent.ActionContainer.CheckActions(_parent.DistanceFromTarget);
                 UseAction(_parent.currentAction);
             }
             else if(_parent.AttemptAttackRange < _parent.DistanceFromTarget)
             {
-                Debug.Log("Attempting Follow From Attack");
                 _parent.ChangeState(new FollowState());
             }
         }
