@@ -6,11 +6,7 @@ using UnityEngine.InputSystem;
 
 namespace Assets.Scripts.Units
 {
-
-
-
     [RequireComponent(typeof(Rigidbody2D))]
-    [RequireComponent(typeof(Animator))]
     public class Hero : Unit
     {
         [SerializeField] private ActiveHeroEvent activeHeroEvent = null;

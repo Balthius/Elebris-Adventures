@@ -10,4 +10,3 @@ public interface IState
     void Exit();
 }
 
- 

@@ -1,5 +1,6 @@
 ﻿
 using Assets.Scripts.Units;
+using Elebris.Library.Units.AI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,9 +23,10 @@ public class AttackState : BaseState
     {
         base.UpdateState();
 
-        if (_parent.Target != null && !_parent.UsingAction)
+        if (_parent.Target != null)
         {
             
+            if (_parent.UsingAction) return;
             if(_parent.AttemptAttackRange > _parent.DistanceFromTarget)
             {
                 _parent.currentAction = _parent.ActionContainer.CheckActions(_parent.DistanceFromTarget);

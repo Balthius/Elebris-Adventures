@@ -1,6 +1,8 @@
 ﻿using Assets.Scripts.Actions.Attacks;
+using Assets.Scripts.Input;
+using Elebris.Library.Enums;
 using Elebris.Library.Units;
-using Elebris.Library.Values;
+using Elebris.Library.Units.Containers;
 using System.Collections;
 using UnityEngine;
 
@@ -13,6 +15,7 @@ namespace Assets.Scripts.Units
     {
         #region Core Containers and stats
         [SerializeField] protected float speed = 5f;
+        protected float currentSpeed;
         protected Vector2 movementDirection = new Vector2(0, 0);
         protected Vector2 facingDirection = new Vector2(0, -1);
 
@@ -28,7 +31,7 @@ namespace Assets.Scripts.Units
 
         public IUnitController _unitController;
         protected Rigidbody2D _rigidbody;
-        protected Animator _animator;//make sure the base idle down animation is at the top of the blend tree
+        public Animator _animator;//make sure the base idle down animation is at the top of the blend tree
 
 
         #endregion
@@ -37,108 +40,29 @@ namespace Assets.Scripts.Units
         //Most of these can be separated into a 3 part FSM like ai\s idle,follow,attack fsm
 
         protected bool lockedByAction = false;
-        protected ActionState currentActionState = ActionState.None;
+        public IChargingState currentChargeState;
 
-        protected ActionScriptableObject _actionPrototype;
-        protected ActiveAction currentAction;
+        public ActionScriptableObject _actionPrototype;
+        public ActiveAction currentAction;
         protected GameObject actionObject;
 
-        public ValueHolder chargeTime = new ValueHolder(1.5f, 0, StatsEnum.HealthResource);
-        public ValueHolder chargeAmount = new ValueHolder(3, 0, StatsEnum.HealthResource);// placeholder Enum. Needs to either be a nullable value or removed from the valueholder and put in a child class
+        public bool canChangeFacing = true;
+      
 
-
-        protected void CheckActionInput()
+        public bool UseAction(ActionScriptableObject actionPrototype)
         {
-            if (_unitController.ChargingSelect)
-            {
-                //UseAction();
-                //Debug.Log("ChargingSelect");
-            }
-            else if (_unitController.ChargingManeuver)
-            {
-                //Debug.Log("ChargingManeuver");
-            }
-
-            else if (_unitController.ChargingLightAttack)
-            {
-                //Debug.Log("ChargingLightAttack");
-                UseAction(AttackContainer.LightAttack);
-            }
-            else if (_unitController.ChargingHeavyAttack)
-            {
-                //Debug.Log("ChargingHeavyAttack");
-                UseAction(AttackContainer.HeavyAttack);
-            }
-
-            else if (_unitController.ChargingSkillOne)
-            {
-                //Debug.Log("ChargingSkillOne");
-                UseAction(SkillContainer.SkillOne);
-            }
-            else if (_unitController.ChargingSkillTwo)
-            {
-                //Debug.Log("ChargingSkillTwo");
-                UseAction(SkillContainer.SkillTwo);
-            }
-            else if (_unitController.ChargingSkillThree)
-            {
-                //Debug.Log("ChargingSkillThree");
-                UseAction(SkillContainer.SkillThree);
-            }
-            else if (_unitController.ChargingSkillFour)
-            {
-                //Debug.Log("ChargingSkillFour");
-                UseAction(SkillContainer.SkillFour);
-            }
-        }
-        protected void CheckActionRelease()
-        {
-            //only reachable once a skill has been prepared to use, so other inputs should be disabled and this should only fire off at a "safe time"
-            //it iS ugly, so I'll need to find a better way to loop the values. I should feel guilty about this but I also have so little experience with the new input system.
-            //Debug.Log("Checking release");
-            if (!_unitController.ChargingSelect &&
-                !_unitController.ChargingLightAttack &&
-                !_unitController.ChargingHeavyAttack &&
-                !_unitController.ChargingManeuver &&
-                !_unitController.ChargingSkillOne &&
-                !_unitController.ChargingSkillTwo &&
-                !_unitController.ChargingSkillThree &&
-                !_unitController.ChargingSkillFour
-                )
-            {
-                currentActionState = ActionState.Using;
-            }
-        }
-
-        protected void UseAction(ActionScriptableObject actionPrototype)
-        {
-
             //Debug.Log("Use Action");
-            if (actionPrototype == null) return;
+            if (actionPrototype == null) return false;
             //calculate how long the action is charged, and what charge level you reach
-            if (currentActionState == ActionState.None)
-            {
-                _actionPrototype = actionPrototype;
-                actionObject = _actionPrototype.actionPrefab;
+            
+            _actionPrototype = actionPrototype;
+            actionObject = _actionPrototype.actionPrefab;
 
-                chargeTime.MaxValue = actionPrototype.baseChargeTime;
-                chargeAmount.MaxValue = actionPrototype.chargeMax;
-                chargeAmount.CurrentValue = -1;
-                SetNextChargeTime();
-
-                currentActionState = ActionState.Charging;
-            }
+            return true;
         }
 
-        protected void ChargeAction()
-        {
-            if (chargeAmount.MaxValue == chargeAmount.CurrentValue)
-            {
-                //visual and audio effect for max charge
-            }
-        }
 
-        protected void SpawnAction()
+        public void SpawnAction(int charge)
         {
             _animator.SetTrigger("ActionUsed");
             StartCoroutine(LockDuringAction(_actionPrototype.animationLength)); //time spent "casting" the skill (locked in place) whereas action duration is how long it sticks around
@@ -147,19 +71,17 @@ namespace Assets.Scripts.Units
 
             GameObject spawn = Instantiate(actionObject, transform.position + actionDirection, Quaternion.identity);
             currentAction = spawn.GetComponent<ActiveAction>(); //update the Active Action attached to the new prefab
-            currentAction.Initialize(this, (int)chargeAmount.CurrentValue, _actionPrototype.actionDuration, facingDirection, _actionPrototype.actionSpeed);
-            ResetActionState();
+            currentAction.Initialize(this, charge, _actionPrototype.actionDuration, facingDirection, _actionPrototype.actionSpeed);
+            
         }
 
-        protected void ResetActionState()
+        public void ResetActionState()
         {
-            //after casting reset state.
-            currentActionState = ActionState.None;
             actionObject = null;
             _actionPrototype = null;
         }
 
-        protected IEnumerator LockDuringAction(float time)
+        public IEnumerator LockDuringAction(float time)
         {
             lockedByAction = true;
             //activate "action" trigger to change from movement/charging or attacking animation
@@ -167,23 +89,16 @@ namespace Assets.Scripts.Units
             lockedByAction = false;
         }
 
-        protected void SetNextChargeTime()
+        
+
+        public void ChangeState(IChargingState newState)
         {
-            chargeAmount.CurrentValue++;
-
-            chargeTime.MaxValue *= .8f; //quicker charges as it gets higher
-            StartCoroutine(CheckChargeAction(chargeTime.MaxValue));
-            //Debug.Log($"{chargeTime.MaxValue} max time, {chargeTime.CurrentValue} current time  and then abse charge time{_actionPrototype.baseChargeTime}");
-
-        }
-
-        protected IEnumerator CheckChargeAction(float duration)
-        {
-            yield return new WaitForSeconds(duration);
-            if (currentActionState == ActionState.Charging && chargeAmount.CurrentValue < chargeAmount.MaxValue)
+            if (currentChargeState != null)
             {
-                SetNextChargeTime();
+                currentChargeState.Exit();
             }
+            currentChargeState = newState;
+            currentChargeState.Enter(this);
         }
         #endregion
 
@@ -192,6 +107,7 @@ namespace Assets.Scripts.Units
         #region UnityCallbacks
         private void Awake()
         {
+            ChangeState(new ActionWaiting());
             TestSkillSet();
         }
         protected virtual void Start()
@@ -200,8 +116,8 @@ namespace Assets.Scripts.Units
             //Set attacks and skills from Saved config
             _unitController = GetComponent<IUnitController>(); //find controller on this character, receives a normalized value
             _rigidbody = GetComponent<Rigidbody2D>(); //find controller on this character, receives a normalized value
-            _animator = GetComponent<Animator>(); //find controller on this character, receives a normalized value
-            
+            _animator = GetComponentInChildren<Animator>(); //find controller on this character, receives a normalized value
+
         }
         protected virtual void Update()
         {
@@ -212,28 +128,13 @@ namespace Assets.Scripts.Units
             _animator.SetFloat("Speed", movementDirection.sqrMagnitude); //sqr version is more optimizied, using movement direction to access idle animation but lock facing
             //Debug.Log($"the values {gameObject.name} is using to move are {_unitController.ReturnMovement().normalized}");
             movementDirection = _unitController.ReturnMovement().normalized;
-            if (movementDirection.sqrMagnitude > 0.01 && currentActionState == ActionState.None)
+            if (movementDirection.sqrMagnitude > 0.01 && canChangeFacing)
             {
                 facingDirection = movementDirection; //allows you to lock direction facing for skill casts etc
 
             }
-            if (currentActionState == ActionState.None)
-            {
-                CheckActionInput();
-            }
-            if (currentActionState == ActionState.Charging)
-            {
-                _animator.SetBool("Charging", true);
-                ChargeAction();
 
-                CheckActionRelease();
-            }
-            if (currentActionState == ActionState.Using)
-            {
-                SpawnAction();
 
-                _animator.SetBool("Charging", false);
-            }
             //If I break out of an action (cancel, stunned, maneuver etc) then i need to call stopcoroutine on charging
         }
 
@@ -242,19 +143,15 @@ namespace Assets.Scripts.Units
         {
             if (lockedByAction) return; //this is specifically how long a unit is locked out of ANY movemement or action after using an action. the "vulnerability" window
 
-            float currentSpeed;
-            if (currentActionState == ActionState.Charging)
-            {
-                currentSpeed = speed * .75f;
-            }
-            else
-            {
-                currentSpeed = speed;
-            }
             if (movementDirection.sqrMagnitude > 0.01)
             {
                 _rigidbody.MovePosition(_rigidbody.position + movementDirection * currentSpeed * Time.fixedDeltaTime);
             }
+        }
+
+        public void SetSpeed(float modifier)
+        {
+            currentSpeed = speed * modifier;
         }
 
 
