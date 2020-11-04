@@ -5,12 +5,11 @@ namespace Assets.Scripts.Input
 {
     public class BaseChargeState : IChargingState
     {
-        protected IUnitController _unitController;
         protected Unit _parent;
         protected ActiveAction _action;
         public virtual void Enter(Unit parent)
         {
-            _unitController = _parent._unitController;
+
             _parent = parent;
 
         }

@@ -27,7 +27,7 @@ public class UIInputIndicatorController : UIBaseController
     public override void OnPlayerUpdated()
     {
         //Debug.Log("Player Updated");
-        unitController = canvas._player._unitController;
+        unitController = canvas._player.UnitController;
         //update images of skills, and the state a skill is in
 
         lightAttack.SetImage(canvas._player.AttackContainer.LightAttack.actionIcon);

@@ -7,7 +7,9 @@ namespace Assets.Scripts.Input
     {
         public override void Enter(Unit parent)
         {
-            _action = _parent.currentAction;
+
+            _parent.Animator.SetTrigger("ActionUsed");
+            _action = _parent.CurrentAction;
             base.Enter(parent);
         }
 

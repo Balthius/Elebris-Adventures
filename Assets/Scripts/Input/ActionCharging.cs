@@ -17,13 +17,13 @@ namespace Assets.Scripts.Input
         {
             base.Enter(parent);
             _parent.canChangeFacing = false;
-            _action = _parent.currentAction;
-            _parent._animator.SetBool("Charging", true);
+            _action = _parent.CurrentAction;
+            _parent.Animator.SetBool("Charging", true);
             _parent.SetSpeed(.75f); // this should proooooobably be moved back into the unit itself
             SetNextChargeTime();
 
-            chargeTime.MaxValue = _parent._actionPrototype.baseChargeTime;
-            chargeAmount.MaxValue = _parent._actionPrototype.chargeMax;
+            chargeTime.MaxValue = _parent.ActionPrototype.baseChargeTime;
+            chargeAmount.MaxValue = _parent.ActionPrototype.chargeMax;
             chargeAmount.CurrentValue = -1;
         }
 
@@ -31,7 +31,7 @@ namespace Assets.Scripts.Input
         {
             base.Exit();
 
-            _parent._animator.SetBool("Charging", false);
+            _parent.Animator.SetBool("Charging", false);
 
             _parent.canChangeFacing = true;
             _parent.SetSpeed(1);
@@ -44,14 +44,14 @@ namespace Assets.Scripts.Input
             //only reachable once a skill has been prepared to use, so other inputs should be disabled and this should only fire off at a "safe time"
             //it iS ugly, so I'll need to find a better way to loop the values. I should feel guilty about this but I also have so little experience with the new input system.
             //Debug.Log("Checking release");
-            if (!_unitController.ChargingSelect &&
-                !_unitController.ChargingLightAttack &&
-                !_unitController.ChargingHeavyAttack &&
-                !_unitController.ChargingManeuver &&
-                !_unitController.ChargingSkillOne &&
-                !_unitController.ChargingSkillTwo &&
-                !_unitController.ChargingSkillThree &&
-                !_unitController.ChargingSkillFour
+            if (!_parent.UnitController.ChargingSelect &&
+                !_parent.UnitController.ChargingLightAttack &&
+                !_parent.UnitController.ChargingHeavyAttack &&
+                !_parent.UnitController.ChargingManeuver &&
+                !_parent.UnitController.ChargingSkillOne &&
+                !_parent.UnitController.ChargingSkillTwo &&
+                !_parent.UnitController.ChargingSkillThree &&
+                !_parent.UnitController.ChargingSkillFour
                 )
             {
                 _parent.SpawnAction((int)chargeAmount.CurrentValue);

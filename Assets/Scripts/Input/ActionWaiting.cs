@@ -25,43 +25,43 @@ namespace Assets.Scripts.Input
             base.UpdateState();
             bool actionInitiated = false; ;
 
-            if (_unitController.ChargingSelect)
+            if (_parent.UnitController.ChargingSelect)
             {
                 //UseAction();
                 //Debug.Log("ChargingSelect");
             }
-            else if (_unitController.ChargingManeuver)
+            else if (_parent.UnitController.ChargingManeuver)
             {
                 //Debug.Log("ChargingManeuver");
             }
 
-            else if (_unitController.ChargingLightAttack)
+            else if (_parent.UnitController.ChargingLightAttack)
             {
                 //Debug.Log("ChargingLightAttack");
                 actionInitiated = _parent.UseAction(_parent.AttackContainer.LightAttack);
             }
-            else if (_unitController.ChargingHeavyAttack)
+            else if (_parent.UnitController.ChargingHeavyAttack)
             {
                 //Debug.Log("ChargingHeavyAttack");
                 actionInitiated = _parent.UseAction(_parent.AttackContainer.HeavyAttack);
             }
 
-            else if (_unitController.ChargingSkillOne)
+            else if (_parent.UnitController.ChargingSkillOne)
             {
                 //Debug.Log("ChargingSkillOne");
                 actionInitiated = _parent.UseAction(_parent.SkillContainer.SkillOne);
             }
-            else if (_unitController.ChargingSkillTwo)
+            else if (_parent.UnitController.ChargingSkillTwo)
             {
                 //Debug.Log("ChargingSkillTwo");
                 actionInitiated = _parent.UseAction(_parent.SkillContainer.SkillTwo);
             }
-            else if (_unitController.ChargingSkillThree)
+            else if (_parent.UnitController.ChargingSkillThree)
             {
                 //Debug.Log("ChargingSkillThree");
                 actionInitiated = _parent.UseAction(_parent.SkillContainer.SkillThree);
             }
-            else if (_unitController.ChargingSkillFour)
+            else if (_parent.UnitController.ChargingSkillFour)
             {
                 //Debug.Log("ChargingSkillFour");
                 actionInitiated = _parent.UseAction(_parent.SkillContainer.SkillFour);
