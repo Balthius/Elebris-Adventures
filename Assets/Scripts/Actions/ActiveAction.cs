@@ -8,6 +8,8 @@ using UnityEngine;
 
 namespace Assets.Scripts.Actions.Attacks
 {
+
+
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(CircleCollider2D))]
     [Serializable]
