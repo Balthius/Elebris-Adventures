@@ -25,6 +25,7 @@ namespace Assets.Scripts.Actions.Attacks
         private float travelSpeed;
         public int maxCharges, currentCharge;
 
+
         //target as an optional variable if the skill  moves towards/doesnt function off collision with something.
 
 

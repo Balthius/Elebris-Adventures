@@ -19,12 +19,8 @@ namespace Assets.Scripts.Units
         protected Vector2 movementDirection = new Vector2(0, 0);
         protected Vector2 facingDirection = new Vector2(0, -1);
 
-        protected ResourceContainer _resourceContainer = new ResourceContainer();
-        protected SkillContainer _skillContainer = new SkillContainer();
-        protected AttackContainer _attackContainer = new AttackContainer();
-        public ResourceContainer ResourceContainer { get => _resourceContainer; set => _resourceContainer = value; }
-        public SkillContainer SkillContainer { get => _skillContainer; set => _skillContainer = value; }
-        public AttackContainer AttackContainer { get => _attackContainer; set => _attackContainer = value; }
+        public Character Character { get; set; }
+
         public IUnitController UnitController { get => unitController; set => unitController = value; }
         public Rigidbody2D Rigidbody { get => rigidBody; set => rigidBody = value; }
         public Animator Animator { get => animator; set => animator = value; }
