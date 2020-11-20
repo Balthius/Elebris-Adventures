@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.DapperEvents.GameEvents.Events
 {
@@ -8,5 +7,5 @@ namespace Assets.DapperEvents.GameEvents.Events
     {
         public void Raise() => Raise(new Void());
     }
-    
+
 }

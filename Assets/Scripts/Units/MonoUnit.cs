@@ -1,8 +1,6 @@
 ﻿using Assets.Scripts.Actions.Attacks;
 using Assets.Scripts.Input;
-using Elebris.Library.Enums;
-using Elebris.Library.Units;
-using Elebris.Library.Units.Containers;
+using Elebris.Core.Library.Components;
 using System.Collections;
 using UnityEngine;
 
@@ -11,7 +9,7 @@ namespace Assets.Scripts.Units
     /// <summary>
     /// Base class for all Units, Inhereted by player, character(uncontrolled hero), enemies, NPC
     /// </summary>
-    public class Unit : MonoBehaviour
+    public class MonoUnit : MonoBehaviour
     {
         #region Core Containers and stats
         [SerializeField] protected float speed = 5f;
@@ -21,11 +19,17 @@ namespace Assets.Scripts.Units
 
         public Character Character { get; set; }
 
+
+        //public ActionContainerScriptableObject defaultActions;
+
+        public AttackContainer AttackContainer { get; set; }
+        public SkillContainer SkillContainer { get; set; }
+
+        public PassiveContainer PassiveContainer { get; set; }
         public IUnitController UnitController { get => unitController; set => unitController = value; }
         public Rigidbody2D Rigidbody { get => rigidBody; set => rigidBody = value; }
         public Animator Animator { get => animator; set => animator = value; }
-        public ActionScriptableObject ActionPrototype { get => actionPrototype; set => actionPrototype = value; }
-        public ActiveAction CurrentAction { get => currentAction; set => currentAction = value; }
+
         #endregion
 
         #region Components
@@ -42,13 +46,19 @@ namespace Assets.Scripts.Units
             UnitController = GetComponent<IUnitController>(); //find controller on this character, receives a normalized value
             Rigidbody = GetComponent<Rigidbody2D>(); //find controller on this character, receives a normalized value
             Animator = GetComponentInChildren<Animator>(); //find controller on this character, receives a normalized value
-            
+
         }
         protected virtual void Start()
         {
-            ResetActionState();
+            PassiveContainer.ModifyCharacter(this);
             //Set attacks and skills from Saved config
-            TestSkillSet();
+            //AttackContainer.LightAttack = defaultActions.lightAttack;
+            //AttackContainer.HeavyAttack = defaultActions.heavyAttack;
+            //SkillContainer.SkillOne = defaultActions.skillOne;
+            //SkillContainer.SkillTwo = defaultActions.skillTwo;
+            //SkillContainer.SkillThree = defaultActions.skillThree;
+            //SkillContainer.SkillFour = defaultActions.skillFour;
+
             ChangeState(new ActionWaiting());
             currentSpeed = speed;
 
@@ -90,7 +100,6 @@ namespace Assets.Scripts.Units
             currentSpeed = speed * modifier;
         }
 
-
         #endregion
 
 
@@ -98,41 +107,33 @@ namespace Assets.Scripts.Units
 
         protected bool lockedByAction = false;
         public IChargingState currentChargeState;
+        public ActionBase ActionBase { get; set; }
 
-        protected ActionScriptableObject actionPrototype;
-        protected ActiveAction currentAction;
-        protected GameObject actionObject;
 
         public bool canChangeFacing = true;
-      
 
-        public bool UseAction(ActionScriptableObject actionPrototype)
+
+        public bool UseAction(StoredAction action)
         {
-            if (actionPrototype == null) return false;
-            
-            ActionPrototype = actionPrototype;
-            actionObject = ActionPrototype.actionPrefab;
-
+            if (ActionBase != null) return false;
+            ActionBase = new ActionBase();
+            ActionBase.ActionInfo = action.ActionInfo;
+            ActionBase.ActionPacket = action.ActionPacket;
             return true;
         }
 
 
         public void SpawnAction(int charge)
         {
-            StartCoroutine(LockDuringAction(ActionPrototype.animationLength)); //time spent "casting" the skill (locked in place) whereas action duration is how long it sticks around
+            PassiveContainer.ModifyAction(ActionBase, this);
+            StartCoroutine(LockDuringAction(ActionBase.ActionInfo.animationLength.ReturnValue)); //time spent "casting" the skill (locked in place) whereas action duration is how long it sticks around
             // I really wanted a way to create a clone of a gameobject without cloning it, tweaking values, and then instantiating it, but that currently doesnt seem easy/possib le
             Vector3 actionDirection = new Vector3(facingDirection.x, facingDirection.y, 0);
 
-            GameObject spawn = Instantiate(actionObject, transform.position + actionDirection, Quaternion.identity);
-            CurrentAction = spawn.GetComponent<ActiveAction>(); //update the Active Action attached to the new prefab
-            CurrentAction.Initialize(this, charge, ActionPrototype.actionDuration, facingDirection, ActionPrototype.actionSpeed);
-            
-        }
+            GameObject spawn = Instantiate(ActionBase.ActionInfo.actionPrefab, transform.position + actionDirection, Quaternion.identity);
+            ExecutedAction executedAction = spawn.GetComponent<ExecutedAction>(); 
+            executedAction.Initialize(this, charge, facingDirection, ActionBase);
 
-        public void ResetActionState()
-        {
-            actionObject = null;
-            ActionPrototype = null;
         }
 
         public IEnumerator LockDuringAction(float time)
@@ -143,7 +144,7 @@ namespace Assets.Scripts.Units
             lockedByAction = false;
         }
 
-        
+
 
         public void ChangeState(IChargingState newState)
         {
@@ -156,27 +157,6 @@ namespace Assets.Scripts.Units
         }
         #endregion
 
-
-        #region TestSection
-
-        [SerializeField] ActionContainerScriptableObject container;
-        public void TestSkillSet()
-        {
-            if (container == null)
-            {
-                Debug.Log("No Skillset inserted");
-                return;
-            }
-            AttackContainer.LightAttack = container.lightAttack;
-            AttackContainer.HeavyAttack = container.heavyAttack;
-            SkillContainer.SkillOne = container.skillOne;
-            SkillContainer.SkillTwo = container.skillTwo;
-            SkillContainer.SkillThree = container.skillThree;
-            SkillContainer.SkillFour = container.skillFour;
-        }
-
-
-        #endregion
     }
 
 }

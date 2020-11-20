@@ -1,8 +1,5 @@
 using Assets.Scripts.Units;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class UIInputIndicatorController : UIBaseController
 {
@@ -30,15 +27,15 @@ public class UIInputIndicatorController : UIBaseController
         unitController = canvas._player.UnitController;
         //update images of skills, and the state a skill is in
 
-        lightAttack.SetImage(canvas._player.AttackContainer.LightAttack.actionIcon);
-        heavyAttack.SetImage(canvas._player.AttackContainer.HeavyAttack.actionIcon);
+        lightAttack.SetImage(canvas._player.AttackContainer.LightAttack.ActionInfo.actionIcon);
+        heavyAttack.SetImage(canvas._player.AttackContainer.HeavyAttack.ActionInfo.actionIcon);
         //select.SetImage(canvas._player.XXXX.Select.actionIcon);
         //maneuver.SetImage(canvas._player.XXXX.Select.actionIcon);
-        skillOne.SetImage(canvas._player.SkillContainer.SkillOne.actionIcon);
-        skillTwo.SetImage(canvas._player.SkillContainer.SkillTwo.actionIcon);
-        skillThree.SetImage(canvas._player.SkillContainer.SkillThree.actionIcon);
+        skillOne.SetImage(canvas._player.SkillContainer.SkillOne.ActionInfo.actionIcon);
+        skillTwo.SetImage(canvas._player.SkillContainer.SkillTwo.ActionInfo.actionIcon);
+        skillThree.SetImage(canvas._player.SkillContainer.SkillThree.ActionInfo.actionIcon);
 
-        skillFour.SetImage(canvas._player.SkillContainer.SkillFour.actionIcon);
+        skillFour.SetImage(canvas._player.SkillContainer.SkillFour.ActionInfo.actionIcon);
     }
 
     private void FixedUpdate()

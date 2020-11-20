@@ -7,7 +7,7 @@ public class ActionButton : MonoBehaviour, IPointerClickHandler
 
     public IUseable MyUseable { get; set; }
 
-    public Button MyButton { get;private set; }
+    public Button MyButton { get; private set; }
     // Use this for initialization
     void Start()
     {
@@ -24,10 +24,10 @@ public class ActionButton : MonoBehaviour, IPointerClickHandler
     {
 
     }
- 
+
     public void OnPointerClick(PointerEventData eventData)
     {
-        
+
     }
 
 }

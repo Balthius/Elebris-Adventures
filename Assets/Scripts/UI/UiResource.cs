@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Elebris.Core.Library.CharacterValues.Mutable;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
-using Elebris.Library.Units;
 
 namespace Assets.Scripts.Units
 {
@@ -48,7 +46,7 @@ namespace Assets.Scripts.Units
         {
             content = GetComponentInChildren<Image>();
             valueText = GetComponentInChildren<TMP_Text>();
-            if(valueText = null)
+            if (valueText = null)
             {
                 Debug.Log("Null text in resource bar");
             }
@@ -59,7 +57,7 @@ namespace Assets.Scripts.Units
         void FixedUpdate()
         {
             if (_resourceValue == null) return;
-            
+
             MyCurrentValue = _resourceValue.CurrentValue;
             if (currentFill != content.fillAmount)
             {

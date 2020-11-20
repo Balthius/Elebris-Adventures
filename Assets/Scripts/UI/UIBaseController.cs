@@ -19,7 +19,7 @@ public abstract class UIBaseController : MonoBehaviour
     {
 
     }
-  
+
 
     //respond to updates from the canvas
 

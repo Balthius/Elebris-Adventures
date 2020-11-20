@@ -1,8 +1,7 @@
 ﻿
 using Assets.Scripts.Units;
-using Elebris.Library.Units.AI;
+using Elebris.Rpg.Library.Units.AI;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AttackState : BaseState
@@ -25,14 +24,14 @@ public class AttackState : BaseState
 
         if (_parent.Target != null)
         {
-            
+
             if (_parent.UsingAction) return;
-            if(_parent.AttemptAttackRange > _parent.DistanceFromTarget)
+            if (_parent.AttemptAttackRange > _parent.DistanceFromTarget)
             {
                 _parent.currentAction = _parent.ActionContainer.CheckActions(_parent.DistanceFromTarget);
                 UseAction(_parent.currentAction);
             }
-            else if(_parent.AttemptAttackRange < _parent.DistanceFromTarget)
+            else if (_parent.AttemptAttackRange < _parent.DistanceFromTarget)
             {
                 _parent.ChangeState(new FollowState());
             }
@@ -69,7 +68,8 @@ public class AttackState : BaseState
                 break;
             case ActionSlot.select:
 
-            default: _parent.ChargingSelect = true;
+            default:
+                _parent.ChargingSelect = true;
                 break;
         }
         //Can also use GetCurrentAnimatorStateInfo(0).Length if we'd like

@@ -1,7 +1,5 @@
-﻿using Assets.Scripts.Actions.Attacks;
-using Assets.Scripts.Units;
-using Elebris.Library.Enums;
-using Elebris.Library.Units;
+﻿using Assets.Scripts.Units;
+using Elebris.Core.Library.CharacterValues.Mutable;
 using System.Collections;
 using UnityEngine;
 
@@ -10,21 +8,25 @@ namespace Assets.Scripts.Input
 
     public class ActionCharging : BaseChargeState
     {
-        public ValueHolder chargeTime = new ValueHolder(1.5f, 0, StatsEnum.HealthResource);
-        public ValueHolder chargeAmount = new ValueHolder(3, 0, StatsEnum.HealthResource);// placeholder Enum. Needs to either be a nullable value or removed from the valueholder and put in a child class
+        public ValueHolder chargeTime = new ValueHolder(1.5f, 0);
+        public ValueHolder chargeAmount = new ValueHolder(3, 0);
 
-        public override void Enter(Unit parent)
+        public override void Enter(MonoUnit parent)
         {
             base.Enter(parent);
             _parent.canChangeFacing = false;
-            _action = _parent.CurrentAction;
+            _action = _parent.ActionBase;
             _parent.Animator.SetBool("Charging", true);
-            _parent.SetSpeed(.75f); // this should proooooobably be moved back into the unit itself
-            SetNextChargeTime();
+            _parent.SetSpeed(.75f); // this should proooooobably be moved back into the unit itself as a stat modifiable
 
-            chargeTime.MaxValue = _parent.ActionPrototype.baseChargeTime;
-            chargeAmount.MaxValue = _parent.ActionPrototype.chargeMax;
-            chargeAmount.CurrentValue = -1;
+            if(_parent.ActionBase.ActionInfo.canCharge)
+            {
+                chargeTime.MaxValue = _parent.ActionBase.ActionInfo.baseChargeTime.ReturnValue;
+                //chargeAmount.MaxValue = (int) Get a charge max based on the type of action it is (attack, skill etc) and what level that action is
+                chargeAmount.CurrentValue = -1;
+                SetNextChargeTime();
+            }
+           
         }
 
         public override void Exit()
@@ -64,7 +66,7 @@ namespace Assets.Scripts.Input
         {
             chargeAmount.CurrentValue++;
 
-           chargeTime.MaxValue *= .8f; //quicker charges as it gets higher
+            chargeTime.MaxValue *= .8f; //quicker charges as it gets higher
             _parent.StartCoroutine(CheckChargeAction(chargeTime.MaxValue));
             //Debug.Log($"{chargeTime.MaxValue} max time, {chargeTime.CurrentValue} current time  and then abse charge time{_actionPrototype.baseChargeTime}");
 
@@ -73,7 +75,7 @@ namespace Assets.Scripts.Input
         public IEnumerator CheckChargeAction(float duration)
         {
             yield return new WaitForSeconds(duration);
-            if (ChargeMaxed())
+            if (!ChargeMaxed())
             {
                 SetNextChargeTime();
             }

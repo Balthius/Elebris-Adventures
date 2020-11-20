@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,8 +14,8 @@ public class InputIndicator : MonoBehaviour
         originalColor = bgImage.color;
         Image[] images = gameObject.GetComponentsInChildren<Image>();
         foreach (var image in images)
-        { 
-            if(image != bgImage)
+        {
+            if (image != bgImage)
             {
                 actionImage = image;
                 break;
@@ -35,7 +33,7 @@ public class InputIndicator : MonoBehaviour
     {
         if (currentState == state) return; //don't waste time updating values that havent changed
         currentState = state;
-        if(currentState)
+        if (currentState)
         {
             bgImage.color = Color.white;
             //change color and size slightly

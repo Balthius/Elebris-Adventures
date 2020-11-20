@@ -1,6 +1,6 @@
-﻿using UnityEngine;
+﻿using Elebris.Core.Library.CharacterValues.Mutable;
 using TMPro;
-using Elebris.Library.Units;
+using UnityEngine;
 
 namespace Assets.Scripts.Units
 {
@@ -23,11 +23,11 @@ namespace Assets.Scripts.Units
         {
             if (_resourceValue == null) return;
             MyCurrentValue = _resourceValue.CurrentValue;
-           
+
             //valueText.text = $"{MyCurrentValue}/{MyMaxValue}"; // Also displays max
             valueText.text = $"{MyCurrentValue}"; //Only displays current
-            //change text color at max
-            
+                                                  //change text color at max
+
         }
         public void Initialize(ValueHolder valueHolder)
         {

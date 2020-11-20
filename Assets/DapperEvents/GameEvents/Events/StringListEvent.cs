@@ -1,6 +1,4 @@
-﻿using Assets.DapperEvents;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.DapperEvents.GameEvents.Events

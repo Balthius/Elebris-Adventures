@@ -1,4 +1,4 @@
-﻿using Elebris.Library.Units;
+﻿using Elebris.Core.Library.CharacterValues.Mutable;
 using UnityEngine;
 using UnityEngine.UI;
 

@@ -21,13 +21,13 @@ public class FollowState : BaseState
     {
         base.UpdateState();
         //going to need to work on selectively locking out movement here as well for when the unit is attacking
-       if(_parent.Target != null )
+        if (_parent.Target != null)
         {
-            if(!_parent.UsingAction)
+            if (!_parent.UsingAction)
             {
                 _parent.CurrentMovement = _parent.Target.position - _parent.transform.position;
             }
-            if (_parent.AttemptAttackRange > _parent.DistanceFromTarget )
+            if (_parent.AttemptAttackRange > _parent.DistanceFromTarget)
             {
                 _parent.ChangeState(new AttackState());
             }
@@ -39,4 +39,3 @@ public class FollowState : BaseState
     }
 }
 
- 

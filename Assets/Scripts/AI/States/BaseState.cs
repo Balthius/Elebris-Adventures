@@ -1,6 +1,5 @@
 ﻿
 using Assets.Scripts.Units;
-using UnityEngine;
 
 public class BaseState : IState
 {
@@ -8,7 +7,7 @@ public class BaseState : IState
     public virtual void Enter(CpuInputController parent)
     {
         _parent = parent;
-        
+
     }
 
     public virtual void Exit()
@@ -23,4 +22,3 @@ public class BaseState : IState
 
 }
 
- 

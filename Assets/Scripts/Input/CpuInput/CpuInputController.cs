@@ -1,7 +1,4 @@
-﻿using Elebris.Library.Units.AI;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Elebris.Rpg.Library.Units.AI;
 using UnityEngine;
 
 
@@ -49,7 +46,8 @@ namespace Assets.Scripts.Units
 
         //public float AttemptRetreatRange { get; set; } = .3f;//distance at which at least one action will be within range
 
-        public float DistanceFromTarget {
+        public float DistanceFromTarget
+        {
             get
             {
                 if (target != null)
@@ -107,7 +105,7 @@ namespace Assets.Scripts.Units
             //Debug.Log("Reached");
             foreach (AIAction item in ActionContainer.actionList)
             {
-                if(item.maxRange > AttemptAttackRange)
+                if (item.maxRange > AttemptAttackRange)
                 {
                     AttemptAttackRange = item.maxRange;
                     //Debug.Log("Enemy attack range" + AttemptAttackRange);

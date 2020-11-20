@@ -6,7 +6,7 @@ public class RetreatState : BaseState
 {
     public override void Enter(CpuInputController parent)
     {
-        
+
         Debug.Log("Retreating");
         base.Enter(parent);
         _parent.UnitPanicked = true;

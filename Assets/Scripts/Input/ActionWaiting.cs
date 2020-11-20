@@ -1,16 +1,10 @@
-﻿using Assets.Scripts.Actions.Attacks;
-using Assets.Scripts.Units;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Assets.Scripts.Units;
 
 namespace Assets.Scripts.Input
 {
     public class ActionWaiting : BaseChargeState
     {
-        public override void Enter(Unit parent)
+        public override void Enter(MonoUnit parent)
         {
             base.Enter(parent);
         }
@@ -23,7 +17,7 @@ namespace Assets.Scripts.Input
         public override void UpdateState()
         {
             base.UpdateState();
-            bool actionInitiated = false; ;
+            bool actionInitiated = false;
 
             if (_parent.UnitController.ChargingSelect)
             {
@@ -66,7 +60,7 @@ namespace Assets.Scripts.Input
                 //Debug.Log("ChargingSkillFour");
                 actionInitiated = _parent.UseAction(_parent.SkillContainer.SkillFour);
             }
-            if(actionInitiated)
+            if (actionInitiated)
             {
                 _parent.ChangeState(new ActionCharging());
             }

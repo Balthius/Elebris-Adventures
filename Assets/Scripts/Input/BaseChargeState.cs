@@ -5,9 +5,9 @@ namespace Assets.Scripts.Input
 {
     public class BaseChargeState : IChargingState
     {
-        protected Unit _parent;
-        protected ActiveAction _action;
-        public virtual void Enter(Unit parent)
+        protected MonoUnit _parent;
+        protected ActionBase _action;
+        public virtual void Enter(MonoUnit parent)
         {
 
             _parent = parent;

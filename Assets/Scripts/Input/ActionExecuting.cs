@@ -1,15 +1,14 @@
-﻿using Assets.Scripts.Actions.Attacks;
-using Assets.Scripts.Units;
+﻿using Assets.Scripts.Units;
 
 namespace Assets.Scripts.Input
 {
     public class ActionExecuting : BaseChargeState
     {
-        public override void Enter(Unit parent)
+        public override void Enter(MonoUnit parent)
         {
 
             _parent.Animator.SetTrigger("ActionUsed");
-            _action = _parent.CurrentAction;
+            _action = _parent.ActionBase;
             base.Enter(parent);
         }
 
@@ -21,7 +20,6 @@ namespace Assets.Scripts.Input
         public override void UpdateState()
         {
             base.UpdateState();
-            _parent.ResetActionState();
         }
     }
 }
