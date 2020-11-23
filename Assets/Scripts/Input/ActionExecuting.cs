@@ -4,7 +4,7 @@ namespace Assets.Scripts.Input
 {
     public class ActionExecuting : BaseChargeState
     {
-        public override void Enter(MonoUnit parent)
+        public override void Enter(Unit parent)
         {
 
             _parent.Animator.SetTrigger("ActionUsed");

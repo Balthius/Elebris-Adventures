@@ -1,24 +1,14 @@
 ﻿using Elebris.Core.Library.CharacterValues.Mutable;
+using System;
 using UnityEngine;
 
 namespace Assets.Scripts.Units
 {
-
-    public struct MonoPassiveBehaviorModel
+    [Serializable]
+    public struct UnitActionBehaviourModel
     {
-        public Sprite actionIcon;
+        //inheret from non-unity behaviourmodel
         public string actionName;
-        public GameObject actionPrefab;
-    }
-    public struct MonoActionBehaviorModel
-    {
-        //This is the info that needs to be calculated before an action is sent towards its target
-        //all of these values are inherent to the whole action, not the individual components
-        public Sprite actionIcon;
-        public string actionName;
-        public GameObject actionPrefab;
-
-        public CharacterValue animationLength;
 
         public CharacterValue baseChargeTime;
         public CharacterValue actionDuration;
@@ -29,7 +19,13 @@ namespace Assets.Scripts.Units
         public bool canCharge;
         public bool destroyOnContact; //some skills will stay their whole duration, or pierce etc
 
-        public MonoActionBehaviorModel(Sprite actionIcon, string actionName, GameObject actionPrefab, CharacterValue animationLength, CharacterValue baseChargeTime, CharacterValue actionDuration, CharacterValue actionSpeed, CharacterValue actionCooldown, bool canCharge, bool destroyOnContact)
+        //This is the info that needs to be calculated before an action is sent towards its target
+        //all of these values are inherent to the whole action, not the individual components
+        public Sprite actionIcon;
+        public GameObject actionPrefab;
+
+        public CharacterValue animationLength;
+        public UnitActionBehaviourModel(Sprite actionIcon, string actionName, GameObject actionPrefab, CharacterValue animationLength, CharacterValue baseChargeTime, CharacterValue actionDuration, CharacterValue actionSpeed, CharacterValue actionCooldown, bool canCharge, bool destroyOnContact)
         {
             this.actionIcon = actionIcon;
             this.actionName = actionName;

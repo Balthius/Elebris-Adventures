@@ -9,7 +9,7 @@ namespace Assets.Scripts.Units
     /// <summary>
     /// Base class for all Units, Inhereted by player, character(uncontrolled hero), enemies, NPC
     /// </summary>
-    public class MonoUnit : MonoBehaviour
+    public class Unit : MonoBehaviour
     {
         #region Core Containers and stats
         [SerializeField] protected float speed = 5f;

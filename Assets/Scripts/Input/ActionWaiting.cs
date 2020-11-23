@@ -4,7 +4,7 @@ namespace Assets.Scripts.Input
 {
     public class ActionWaiting : BaseChargeState
     {
-        public override void Enter(MonoUnit parent)
+        public override void Enter(Unit parent)
         {
             base.Enter(parent);
         }

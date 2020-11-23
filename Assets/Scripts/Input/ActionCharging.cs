@@ -11,7 +11,7 @@ namespace Assets.Scripts.Input
         public ValueHolder chargeTime = new ValueHolder(1.5f, 0);
         public ValueHolder chargeAmount = new ValueHolder(3, 0);
 
-        public override void Enter(MonoUnit parent)
+        public override void Enter(Unit parent)
         {
             base.Enter(parent);
             _parent.canChangeFacing = false;

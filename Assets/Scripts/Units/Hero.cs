@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Assets.Scripts.Units
 {
     [RequireComponent(typeof(Rigidbody2D))]
-    public class Hero : MonoUnit
+    public class Hero : Unit
     {
 
         [SerializeField] private ActiveHeroEvent activeHeroEvent = null;

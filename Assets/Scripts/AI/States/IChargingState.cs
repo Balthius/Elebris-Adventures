@@ -2,7 +2,7 @@
 
 public interface IChargingState
 {
-    void Enter(MonoUnit parent);
+    void Enter(Unit parent);
 
     void UpdateState();
 

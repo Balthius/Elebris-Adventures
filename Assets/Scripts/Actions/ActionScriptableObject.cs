@@ -11,37 +11,16 @@ namespace Assets.Scripts.Units
     [Serializable]
     public class ActionScriptableObject : ScriptableObject
     {
-        public MonoActionBehaviorModel model;
+        public UnitActionBehaviourModel model;
 
-        ActionComponent[] components;
-
-
-        public virtual void GenerateComponents(ActionBase action, MonoUnit owner)
+        [SerializeField]ActionComponent[] components;
+        public virtual void GenerateComponents(IActionComponent action, Unit owner)
         {
             action.ActionInfo = model;
             foreach (var item in components)
             {
                 item.Initialize(action.ActionPacket, owner.Character);
                 //the actions in skill/attackcontainer need to be able to request an initialization from the scriptableobject
-            }
-        }
-
-    }
-    [CreateAssetMenu(menuName = "Actions/New Basic Passive")]
-    [Serializable]
-    public class PassiveScriptableObject : ScriptableObject
-    {
-        public MonoPassiveBehaviorModel model;
-
-        MonoPassiveComponent[] components;
-
-
-        public virtual void GenerateComponents(MonoUnit owner)
-        {
-
-            foreach (var item in components)
-            {
-                owner.PassiveContainer.passives.Add(item);
             }
         }
 

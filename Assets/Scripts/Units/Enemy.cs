@@ -3,7 +3,7 @@
 namespace Assets.Scripts.Units
 {
     [RequireComponent(typeof(Rigidbody2D))]
-    public class Enemy : MonoUnit
+    public class Enemy : Unit
     {
         //we have the option of changing player scale to -1 when moving left and  1 when moving right in order to have a "player side" sprite transform.localScale
         //rather than a left and right, that can be reused. I'm not currently going this route because I want left and right assets to be more than just mirror copies of eachother

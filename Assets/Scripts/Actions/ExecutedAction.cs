@@ -1,22 +1,10 @@
 ﻿using Assets.Scripts.Units;
-using Elebris.Actions.Library.Actions.Core;
-using Elebris.Core.Library.CharacterValues.Mutable;
 using System;
 using System.Collections;
 using UnityEngine;
 
 namespace Assets.Scripts.Actions.Attacks
 {
-    public class ActionBase : MonoBehaviour
-    {
-        public CharacterAction ActionPacket { get; set; }
-        public MonoActionBehaviorModel ActionInfo { get; set; }
-    }
-
-    public class StoredAction : ActionBase
-    {
-        ValueHolder Cooldown { get; set; }
-    }
 
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(CircleCollider2D))]
@@ -28,7 +16,7 @@ namespace Assets.Scripts.Actions.Attacks
         private Vector2 directionUsed; //if the skill travels at all
         public int currentCharge;
 
-        public void Initialize(MonoUnit owner, int currentCharge, Vector2 directionUsed, ActionBase storedAction)
+        public void Initialize(Unit owner, int currentCharge, Vector2 directionUsed, ActionBase storedAction)
         {
             ActionPacket = storedAction.ActionPacket;
             ActionInfo = storedAction.ActionInfo;
