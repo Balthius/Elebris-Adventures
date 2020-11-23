@@ -1,4 +1,4 @@
-﻿using Elebris.Library.Units;
+﻿using Elebris.Core.Library.CharacterValues.Mutable;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -49,7 +49,7 @@ namespace Assets.Scripts.Units
             if (_resourceValue == null) return;
             MyCurrentValue = _resourceValue.CurrentValue;
             MyMaxValue = _resourceValue.MaxValue;
-            Debug.Log($"Current value {MyCurrentValue} and max {MyMaxValue}");
+            //Debug.Log($"Current value {MyCurrentValue} and max {MyMaxValue}");
             if (currentFill != _unitBar.fillAmount)
             {
                 _unitBar.fillAmount = Mathf.Lerp(_unitBar.fillAmount, currentFill, Time.fixedDeltaTime * lerpSpeed);

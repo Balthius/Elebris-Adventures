@@ -1,6 +1,4 @@
 using Assets.Scripts.Units;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class UIResourceController : UIBaseController
@@ -24,9 +22,9 @@ public class UIResourceController : UIBaseController
     private void SetResourceValues()
     {
         //pass in the value you want the ui elements to be tracking
-        _healthResource.Initialize(canvas._player.ResourceContainer.HealthValue);
-        _spiritResource.Initialize(canvas._player.ResourceContainer.SpiritValue);
-        _staminaResource.Initialize(canvas._player.ResourceContainer.StaminaValue);
-        _manaResource.Initialize(canvas._player.ResourceContainer.ManaValue);
+        _healthResource.Initialize(canvas._player.Character.CharacterResources.CharacterHealth);
+        _spiritResource.Initialize(canvas._player.Character.CharacterResources.CharacterSpirit);
+        _staminaResource.Initialize(canvas._player.Character.CharacterResources.CharacterStamina);
+        _manaResource.Initialize(canvas._player.Character.CharacterResources.CharacterMana);
     }
 }

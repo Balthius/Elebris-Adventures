@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -23,7 +21,7 @@ namespace Assets.Scripts.Units
         List<InputAction> interactionInputs = new List<InputAction>();
 
         InputAction activeAction;
-      
+
         private InputActions _inputActions; //simple version for single player on system, not splitscreen
 
         public Vector2 CurrentMovement { get => _inputActions.Gameplay.Movement.ReadValue<Vector2>(); set => currentMovement = value; }
@@ -45,7 +43,7 @@ namespace Assets.Scripts.Units
         {
             get
             {
-                if(_inputActions.Gameplay.LightAttack.phase == InputActionPhase.Started)
+                if (_inputActions.Gameplay.LightAttack.phase == InputActionPhase.Started)
                 {
                     LockOtherInputs(_inputActions.Gameplay.LightAttack);
                 }
@@ -218,7 +216,7 @@ namespace Assets.Scripts.Units
             //Debug.Log($"lock inputs other than {activeAction.name}");
             foreach (var action in interactionInputs)
             {
-                if(action != inputAction)
+                if (action != inputAction)
                 {
                     action.Disable();
                 }

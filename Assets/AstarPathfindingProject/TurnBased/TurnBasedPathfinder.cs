@@ -3,10 +3,7 @@ using Pathfinding.AIComponents;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Pathfinding.Util;
 using UnityEngine.EventSystems;
-using System.Linq;
-using UnityEngine.Events;
 
 namespace RPG.InteractiveStateManagers
 {
@@ -14,7 +11,7 @@ namespace RPG.InteractiveStateManagers
     [HelpURL("http://arongranberg.com/astar/docs/class_pathfinding_1_1_examples_1_1_turn_based_manager.php")]
     public class TurnBasedPathfinder : MonoBehaviour
     {//each unit could reference the scriptable object directly, where they could add themselves to the queue and then update it from this class
-        
+
         public LayerMask layerMask;
         public float movementSpeed;//how quickly a unit goes from A to B
         protected TurnBasedAI selected;
@@ -49,7 +46,7 @@ namespace RPG.InteractiveStateManagers
         private void OnDisable()
         {
 
-           onStateChanged -= UpdateState;
+            onStateChanged -= UpdateState;
         }
         protected void Awake()
         {
@@ -92,7 +89,7 @@ namespace RPG.InteractiveStateManagers
         }
 
         // TODO: Move to separate class
-       
+
 
         void HandleButtonUnderRay(Ray ray)
         {
@@ -127,7 +124,7 @@ namespace RPG.InteractiveStateManagers
                 // Likely a node was blocked between the possible moves being
                 // generated and the player choosing which node to move to
                 Debug.LogError("Path failed:\n" + path.errorLog);
-               state = TurnState.SelectTarget;
+                state = TurnState.SelectTarget;
                 GeneratePossibleMoves(selected);
                 yield break;
             }
@@ -226,7 +223,7 @@ namespace RPG.InteractiveStateManagers
                 }
             }
         }
-       
+
         public T GetByRay<T>(Ray ray) where T : class
         {
             Vector3 mousePos = Input.mousePosition;
@@ -245,7 +242,7 @@ namespace RPG.InteractiveStateManagers
         /// <summary>Interpolates the unit along the path</summary>
     }
     public enum TurnState
-    { 
+    {
         //enables and disables certain actions during each TurnState
         SelectUnit, //Default, used when preparing an action
         SelectTarget, // Used when an action with a target has been selected (Moving, skills, attacking)

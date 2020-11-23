@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Elebris.Rpg.Library.Units.AI;
+using UnityEngine;
 
 
 /// <summary>
@@ -15,14 +16,14 @@ namespace Assets.Scripts.Units
         //"initialize" the weights of each skill, percentages units perform certain actions at, whatever
         //target and aggro range/type.
         //all of the above sound like good contained classes
-        public bool ChargingLightAttack { get; set ; }
-        public bool ChargingHeavyAttack { get; set ; }
+        public bool ChargingLightAttack { get; set; }
+        public bool ChargingHeavyAttack { get; set; }
 
-        public bool ChargingSkillOne { get; set ; }
+        public bool ChargingSkillOne { get; set; }
 
-        public bool ChargingSkillTwo { get; set ; }
+        public bool ChargingSkillTwo { get; set; }
 
-        public bool ChargingSkillThree { get; set ; }
+        public bool ChargingSkillThree { get; set; }
 
         public bool ChargingSkillFour { get; set; }
 
@@ -31,20 +32,90 @@ namespace Assets.Scripts.Units
         public Transform Target { get => target; set => target = value; }
 
         private Transform target;
+        private IState currentState;
+        public AIActionContainer ActionContainer { get; set; } = new AIActionContainer(); //contains a list (scriptable object?) of each skill available to the unit
 
+        public AIAction currentAction;
+        public Vector2 CurrentMovement { get; set; }
         public Vector2 ReturnMovement()
         {
-            //going to need to work on selectively locking out movement here as well for when the unit is attacking
-            if (target != null)
+            return CurrentMovement;
+        }
+
+        public float AttemptAttackRange { get; set; } = 2;//distance at which at least one action will be within range
+
+        //public float AttemptRetreatRange { get; set; } = .3f;//distance at which at least one action will be within range
+
+        public float DistanceFromTarget
+        {
+            get
             {
-                return target.position - transform.position;
-            }
-            else
-            {
-                return Vector2.zero;
+                if (target != null)
+                {
+                    return Vector2.Distance(Target.position, transform.position);
+                }
+                else
+                {
+                    return 9999;
+                }
             }
         }
 
+        public bool UsingAction { get; set; }
+        public bool UnitPanicked { get; set; }
 
+        private void Awake()
+        {
+            ActionContainer.GroupActions();
+            SetAttackThreshold();
+            ChangeState(new IdleState());
+        }
+
+        private void Update()
+        {
+            currentState.UpdateState();
+        }
+
+        public void ChangeState(IState newState)
+        {
+            if (currentState != null)
+            {
+                currentState.Exit();
+            }
+            currentState = newState;
+            currentState.Enter(this);
+        }
+
+        public void EndAction()
+        {
+            UsingAction = false;
+            ChargingLightAttack = false;
+            ChargingHeavyAttack = false;
+            ChargingSkillOne = false;
+            ChargingSkillTwo = false;
+            ChargingSkillThree = false;
+            ChargingSkillFour = false;
+            ChargingManeuver = false;
+            //sets next action to use
+        }
+
+
+        private void SetAttackThreshold()
+        {
+            //Debug.Log("Reached");
+            foreach (AIAction item in ActionContainer.actionList)
+            {
+                if (item.maxRange > AttemptAttackRange)
+                {
+                    AttemptAttackRange = item.maxRange;
+                    //Debug.Log("Enemy attack range" + AttemptAttackRange);
+                }
+                //if( item.minRange < AttemptRetreatRange)
+                //{
+                //    AttemptRetreatRange = item.minRange;
+                //}
+            }
+        }
     }
+
 }

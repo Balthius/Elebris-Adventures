@@ -1,6 +1,4 @@
 using Assets.Scripts.Units;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Range : MonoBehaviour
@@ -11,14 +9,14 @@ public class Range : MonoBehaviour
     private void Start()
     {
         parent = GetComponentInParent<CpuInputController>();
-        Debug.Log(parent);
+        //Debug.Log(parent);
     }
 
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //simple target aquisition system
-        if(collision.tag == "Hero")
+        if (collision.tag == "Hero")
         {
             parent.Target = collision.transform;
         }
@@ -26,7 +24,7 @@ public class Range : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if(collision.transform == parent.Target)
+        if (collision.transform == parent.Target)
         {
             parent.Target = null;
         }

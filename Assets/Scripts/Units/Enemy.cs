@@ -1,10 +1,8 @@
-﻿using Assets.DapperEvents.GameEvents;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.Scripts.Units
 {
     [RequireComponent(typeof(Rigidbody2D))]
-    [RequireComponent(typeof(Animator))]
     public class Enemy : Unit
     {
         //we have the option of changing player scale to -1 when moving left and  1 when moving right in order to have a "player side" sprite transform.localScale
@@ -17,6 +15,7 @@ namespace Assets.Scripts.Units
         protected override void Start()
         {
             base.Start();
+
         }
 
         protected override void FixedUpdate()

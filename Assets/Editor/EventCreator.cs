@@ -1,6 +1,6 @@
-using UnityEngine;
-using UnityEditor;
 using System.IO;
+using UnityEditor;
+using UnityEngine;
 
 
 namespace Assets.DapperEvents
@@ -49,7 +49,7 @@ namespace Assets.DapperEvents
 
                 //Start Listener Creation
                 string currentUnityEventName = "Unity" + eventName + "Event";
-                string currentUnityEventClassName =  currentUnityEventName + ".cs";
+                string currentUnityEventClassName = currentUnityEventName + ".cs";
                 string currentUnityEventClassPath = unityEventsFolder + currentUnityEventClassName;
 
                 if (File.Exists(currentEventClassPath) == false)
@@ -61,7 +61,7 @@ namespace Assets.DapperEvents
                         outfile.WriteLine("[CreateAssetMenu(fileName = \"New" + currentEventName + "\", menuName = \"Game Events /" + currentEventName + "\")]");
                         outfile.WriteLine("public class " + currentEventName + " : BaseGameEvent <" + typeName + ">");
                         outfile.WriteLine("    {");
-                        outfile.WriteLine("    }"); 
+                        outfile.WriteLine("    }");
                         outfile.WriteLine("}");
                     }//File written
                 }
