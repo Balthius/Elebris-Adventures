@@ -113,7 +113,7 @@ namespace Assets.Scripts.Units
         public bool canChangeFacing = true;
 
 
-        public bool UseAction(StoredAction action)
+        public bool UseAction(BoundAction action)
         {
             if (ActionBase != null) return false;
             ActionBase = new ActionBase();

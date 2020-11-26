@@ -13,13 +13,14 @@ namespace Assets.Scripts.Units
     {
         public UnitActionBehaviourModel model;
 
-        [SerializeField]ActionComponent[] components;
-        public virtual void GenerateComponents(IActionComponent action, Unit owner)
+        [SerializeField]IActionComponent[] components;
+        public virtual void GenerateComponents(ref BoundAction action, Unit owner)
         {
             action.ActionInfo = model;
             foreach (var item in components)
             {
-                item.Initialize(action.ActionPacket, owner.Character);
+                item.Initialize(owner.Character);
+                action.ActionPacket.AddComponent(item);
                 //the actions in skill/attackcontainer need to be able to request an initialization from the scriptableobject
             }
         }
