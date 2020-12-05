@@ -6,7 +6,7 @@ using Elebris.Rpg.Library.Actions.ActionValues;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Actions/DamageAction")]
-public class DamageActionBehaviour : ActionBehaviour
+public class DamageActionBuilder : ActionBuilder
 {
     
     public ResourceCost[] costs;

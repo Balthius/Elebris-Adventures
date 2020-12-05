@@ -9,12 +9,12 @@ using UnityEngine;
 /// <summary>
 /// https://gamedev.stackexchange.com/questions/46819/making-characters-skills-and-abilities-as-commands-good-practice
 /// </summary>
-public class ActionBehaviour : ScriptableObject, IActionBehaviour
+public class ActionBuilder : ScriptableObject, IActionBehaviour
 {
     public GameObject obj;
     public Sprite ActionIcon;
-    public float baseChargeTime;
 
+    public float baseChargeTime;
     public float actionLock;
     public float actionDuration;
     public float actionSpeed;

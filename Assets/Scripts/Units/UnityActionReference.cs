@@ -4,7 +4,7 @@ namespace Assets.Scripts.Units
 {
     public class UnityActionReference
     {
-        IActionBehaviour behaviour;
+        public IActionBehaviour behaviour;
         public Action Unequipped;
 
         public UnityActionReference(IActionBehaviour behaviour)

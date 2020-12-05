@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [CreateAssetMenu(menuName = "Actions/HealAction")]
-public class HealActionBehaviour : ActionBehaviour
+public class HealActionBuilder : ActionBuilder
 {
 
     //public HealType damageType;
