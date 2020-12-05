@@ -1,6 +1,8 @@
 ﻿using Assets.Scripts.Actions.Attacks;
 using Assets.Scripts.Input;
 using Elebris.Core.Library.Components;
+using Elebris.Rpg.Library.Actions.Core;
+using Elebris.Rpg.Library.CharacterValues;
 using System.Collections;
 using UnityEngine;
 
@@ -17,15 +19,10 @@ namespace Assets.Scripts.Units
         protected Vector2 movementDirection = new Vector2(0, 0);
         protected Vector2 facingDirection = new Vector2(0, -1);
 
-        public Character Character { get; set; }
+        public CharacterValueContainer container;
+        public UnityActionContainer ActionContainer { get; set; }
 
-
-        //public ActionContainerScriptableObject defaultActions;
-
-        public AttackContainer AttackContainer { get; set; }
-        public SkillContainer SkillContainer { get; set; }
-
-        public PassiveContainer PassiveContainer { get; set; }
+        //public PassiveContainer PassiveContainer { get; set; }
         public IUnitController UnitController { get => unitController; set => unitController = value; }
         public Rigidbody2D Rigidbody { get => rigidBody; set => rigidBody = value; }
         public Animator Animator { get => animator; set => animator = value; }
@@ -50,7 +47,7 @@ namespace Assets.Scripts.Units
         }
         protected virtual void Start()
         {
-            PassiveContainer.ModifyCharacter(this);
+            //PassiveContainer.ModifyCharacter(this);
             //Set attacks and skills from Saved config
             //AttackContainer.LightAttack = defaultActions.lightAttack;
             //AttackContainer.HeavyAttack = defaultActions.heavyAttack;
@@ -107,32 +104,30 @@ namespace Assets.Scripts.Units
 
         protected bool lockedByAction = false;
         public IChargingState currentChargeState;
-        public ActionBase ActionBase { get; set; }
+        public BundledUnityAction ActiveAction { get; set; }
 
 
         public bool canChangeFacing = true;
 
 
-        public bool UseAction(BoundAction action)
+        public bool UseAction(UnityBoundAction action)
         {
-            if (ActionBase != null) return false;
-            ActionBase = new ActionBase();
-            ActionBase.ActionInfo = action.ActionInfo;
-            ActionBase.ActionPacket = action.ActionPacket;
+            if (ActiveAction != null) return false;
+            ActiveAction = new BundledUnityAction(action.ReturnAction(this.container)); 
             return true;
         }
 
 
         public void SpawnAction(int charge)
         {
-            PassiveContainer.ModifyAction(ActionBase, this);
-            StartCoroutine(LockDuringAction(ActionBase.ActionInfo.animationLength.ReturnValue)); //time spent "casting" the skill (locked in place) whereas action duration is how long it sticks around
+            //PassiveContainer.ModifyAction(ActiveAction, this);
+            StartCoroutine(LockDuringAction(ActiveAction.activeBehaviour.actionLock)); //time spent "casting" the skill (locked in place) whereas action duration is how long it sticks around
             // I really wanted a way to create a clone of a gameobject without cloning it, tweaking values, and then instantiating it, but that currently doesnt seem easy/possib le
             Vector3 actionDirection = new Vector3(facingDirection.x, facingDirection.y, 0);
 
-            GameObject spawn = Instantiate(ActionBase.ActionInfo.actionPrefab, transform.position + actionDirection, Quaternion.identity);
+            GameObject spawn = Instantiate(ActiveAction.activeBehaviour.obj, transform.position + actionDirection, Quaternion.identity);
             ExecutedAction executedAction = spawn.GetComponent<ExecutedAction>(); 
-            executedAction.Initialize(this, charge, facingDirection, ActionBase);
+            executedAction.Initialize(this, charge, facingDirection, ActiveAction);
 
         }
 
@@ -158,5 +153,4 @@ namespace Assets.Scripts.Units
         #endregion
 
     }
-
 }

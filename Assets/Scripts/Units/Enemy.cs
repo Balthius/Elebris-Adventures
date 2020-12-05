@@ -10,7 +10,7 @@ namespace Assets.Scripts.Units
 
         //add a "run" function similar to charging where as long as your moving you start to fill a hidden bar, when it fills you boost your movespeed by 1.25
 
-        //Right now valueholders are overkill.
+        //Right now ResourceBarValues are overkill.
 
         protected override void Start()
         {

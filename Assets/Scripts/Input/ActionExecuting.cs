@@ -8,7 +8,7 @@ namespace Assets.Scripts.Input
         {
 
             _parent.Animator.SetTrigger("ActionUsed");
-            _action = _parent.ActionBase;
+            _action = _parent.ActiveAction;
             base.Enter(parent);
         }
 

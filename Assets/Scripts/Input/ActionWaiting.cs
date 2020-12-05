@@ -32,33 +32,33 @@ namespace Assets.Scripts.Input
             else if (_parent.UnitController.ChargingLightAttack)
             {
                 //Debug.Log("ChargingLightAttack");
-                actionInitiated = _parent.UseAction(_parent.AttackContainer.LightAttack);
+                actionInitiated = _parent.UseAction(_parent.ActionContainer.LightAttack);
             }
             else if (_parent.UnitController.ChargingHeavyAttack)
             {
                 //Debug.Log("ChargingHeavyAttack");
-                actionInitiated = _parent.UseAction(_parent.AttackContainer.HeavyAttack);
+                actionInitiated = _parent.UseAction(_parent.ActionContainer.HeavyAttack);
             }
 
             else if (_parent.UnitController.ChargingSkillOne)
             {
                 //Debug.Log("ChargingSkillOne");
-                actionInitiated = _parent.UseAction(_parent.SkillContainer.SkillOne);
+                actionInitiated = _parent.UseAction(_parent.ActionContainer.SkillOne);
             }
             else if (_parent.UnitController.ChargingSkillTwo)
             {
                 //Debug.Log("ChargingSkillTwo");
-                actionInitiated = _parent.UseAction(_parent.SkillContainer.SkillTwo);
+                actionInitiated = _parent.UseAction(_parent.ActionContainer.SkillTwo);
             }
             else if (_parent.UnitController.ChargingSkillThree)
             {
                 //Debug.Log("ChargingSkillThree");
-                actionInitiated = _parent.UseAction(_parent.SkillContainer.SkillThree);
+                actionInitiated = _parent.UseAction(_parent.ActionContainer.SkillThree);
             }
             else if (_parent.UnitController.ChargingSkillFour)
             {
                 //Debug.Log("ChargingSkillFour");
-                actionInitiated = _parent.UseAction(_parent.SkillContainer.SkillFour);
+                actionInitiated = _parent.UseAction(_parent.ActionContainer.SkillFour);
             }
             if (actionInitiated)
             {

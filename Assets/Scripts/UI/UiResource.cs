@@ -10,7 +10,7 @@ namespace Assets.Scripts.Units
         private Image content;//or image, down the road. slider just adds convenience for quick setup
         private TMP_Text valueText;
 
-        ValueHolder _resourceValue;
+        ResourceBarValue _resourceValue;
 
         public float MyMaxValue { get; set; }//Updating correctly to unique Values
 
@@ -65,11 +65,11 @@ namespace Assets.Scripts.Units
                 valueText.text = $"{MyCurrentValue}/{MyMaxValue}";
             }
         }
-        public void Initialize(ValueHolder valueHolder)
+        public void Initialize(ResourceBarValue ResourceBarValue)
         {
 
-            //Debug.Log($"{valueHolder} is now being tracked");
-            _resourceValue = valueHolder;
+            //Debug.Log($"{ResourceBarValue} is now being tracked");
+            _resourceValue = ResourceBarValue;
             MyMaxValue = _resourceValue.MaxValue;
             MyCurrentValue = _resourceValue.CurrentValue;
 

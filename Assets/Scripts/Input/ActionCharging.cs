@@ -8,20 +8,20 @@ namespace Assets.Scripts.Input
 
     public class ActionCharging : BaseChargeState
     {
-        public ValueHolder chargeTime = new ValueHolder(1.5f, 0);
-        public ValueHolder chargeAmount = new ValueHolder(3, 0);
+        public ResourceBarValue chargeTime = new ResourceBarValue(1.5f);
+        public ResourceBarValue chargeAmount = new ResourceBarValue(3);
 
         public override void Enter(Unit parent)
         {
             base.Enter(parent);
             _parent.canChangeFacing = false;
-            _action = _parent.ActionBase;
+            _action = _parent.ActiveAction;
             _parent.Animator.SetBool("Charging", true);
             _parent.SetSpeed(.75f); // this should proooooobably be moved back into the unit itself as a stat modifiable
 
-            if(_parent.ActionBase.ActionInfo.canCharge)
+            if(_parent.ActiveAction.activeBehaviour.canCharge)
             {
-                chargeTime.MaxValue = _parent.ActionBase.ActionInfo.baseChargeTime.ReturnValue;
+                chargeTime.MaxValue = _parent.ActiveAction.activeBehaviour.baseChargeTime;
                 //chargeAmount.MaxValue = (int) Get a charge max based on the type of action it is (attack, skill etc) and what level that action is
                 chargeAmount.CurrentValue = -1;
                 SetNextChargeTime();

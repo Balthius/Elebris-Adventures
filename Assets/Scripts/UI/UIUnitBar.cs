@@ -6,7 +6,7 @@ namespace Assets.Scripts.Units
 {
     public class UIUnitBar : MonoBehaviour
     {
-        ValueHolder _resourceValue;
+        ResourceBarValue _resourceValue;
         //this is not currently working as intended, but doesnt impact gameplay either. 
         //at some point I'll either add a color changing system for each level of charge, or work out the fillamount properly.
         public float MyMaxValue { get; set; }//Updating correctly to unique Values
@@ -55,10 +55,10 @@ namespace Assets.Scripts.Units
                 _unitBar.fillAmount = Mathf.Lerp(_unitBar.fillAmount, currentFill, Time.fixedDeltaTime * lerpSpeed);
             }
         }
-        public void Initialize(ValueHolder valueHolder)
+        public void Initialize(ResourceBarValue ResourceBarValue)
         {
 
-            _resourceValue = valueHolder;
+            _resourceValue = ResourceBarValue;
             MyMaxValue = _resourceValue.MaxValue;
             MyCurrentValue = _resourceValue.CurrentValue;
         }

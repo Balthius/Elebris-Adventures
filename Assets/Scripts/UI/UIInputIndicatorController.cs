@@ -26,16 +26,16 @@ public class UIInputIndicatorController : UIBaseController
         //Debug.Log("Player Updated");
         unitController = canvas._player.UnitController;
         //update images of skills, and the state a skill is in
-
-        lightAttack.SetImage(canvas._player.AttackContainer.LightAttack.ActionInfo.actionIcon);
-        heavyAttack.SetImage(canvas._player.AttackContainer.HeavyAttack.ActionInfo.actionIcon);
+        UnityActionContainer container = canvas._player.ActionContainer;
+        lightAttack.SetImage(container.LightAttack.actionBehaviour.ActionIcon);
+        heavyAttack.SetImage(container.HeavyAttack.actionBehaviour.ActionIcon);
         //select.SetImage(canvas._player.XXXX.Select.actionIcon);
         //maneuver.SetImage(canvas._player.XXXX.Select.actionIcon);
-        skillOne.SetImage(canvas._player.SkillContainer.SkillOne.ActionInfo.actionIcon);
-        skillTwo.SetImage(canvas._player.SkillContainer.SkillTwo.ActionInfo.actionIcon);
-        skillThree.SetImage(canvas._player.SkillContainer.SkillThree.ActionInfo.actionIcon);
+        skillOne.SetImage(container.SkillOne.actionBehaviour.ActionIcon);
+        skillTwo.SetImage(container.SkillTwo.actionBehaviour.ActionIcon);
+        skillThree.SetImage(container.SkillThree.actionBehaviour.ActionIcon);
 
-        skillFour.SetImage(canvas._player.SkillContainer.SkillFour.ActionInfo.actionIcon);
+        skillFour.SetImage(container.SkillFour.actionBehaviour.ActionIcon);
     }
 
     private void FixedUpdate()

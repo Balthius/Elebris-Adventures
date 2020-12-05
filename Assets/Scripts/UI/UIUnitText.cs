@@ -6,7 +6,7 @@ namespace Assets.Scripts.Units
 {
     public class UIUnitText : MonoBehaviour
     {
-        ValueHolder _resourceValue;
+        ResourceBarValue _resourceValue;
 
         public float MyMaxValue { get; set; }//Updating correctly to unique Values
         public float MyCurrentValue { get; private set; }
@@ -29,9 +29,9 @@ namespace Assets.Scripts.Units
                                                   //change text color at max
 
         }
-        public void Initialize(ValueHolder valueHolder)
+        public void Initialize(ResourceBarValue ResourceBarValue)
         {
-            _resourceValue = valueHolder;
+            _resourceValue = ResourceBarValue;
             MyMaxValue = _resourceValue.MaxValue;
             MyCurrentValue = _resourceValue.CurrentValue;
         }
