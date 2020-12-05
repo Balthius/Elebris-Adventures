@@ -20,12 +20,12 @@ public class DamageActionBuilder : ActionBuilder
     public float scale;
     public string scaleStat; //attribute? stat enum?)
 
-    public ActionBehaviourValueCalculator ReturnDamageScale()
+    public StatScaleModel ReturnDamageScale()
     {
         return new ActionBehaviourValueCalculator("Damage", scaleStat, flat, scale);
     }
 
-    public DamageAction CreateAction()
+    public ICoreAction CreateAction()
     {
         return new DamageAction(ReturnDamageScale(), mainType, subType, element, baseCritChance);
     }

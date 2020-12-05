@@ -9,7 +9,16 @@ using UnityEngine;
 /// <summary>
 /// https://gamedev.stackexchange.com/questions/46819/making-characters-skills-and-abilities-as-commands-good-practice
 /// </summary>
-public class ActionBuilder : ScriptableObject, IActionBehaviour
+
+public interface IActionBuilder
+{
+    ActionType ReturnType();
+
+    
+    object ReturnBehaviour();
+
+}
+public class ActionBuilder : ScriptableObject, IActionBuilder
 {
     public GameObject obj;
     public Sprite ActionIcon;
