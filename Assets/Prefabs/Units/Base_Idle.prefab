@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 2717812185280673888}
   - component: {fileID: 2717812185280673889}
   - component: {fileID: 2717812185280673884}
+  - component: {fileID: 2565520371320904539}
   - component: {fileID: 2717812185280673891}
-  - component: {fileID: 2717812185280673885}
-  - component: {fileID: 2717812185280673890}
   - component: {fileID: 2717812185280673887}
+  - component: {fileID: 6619343738824092350}
   m_Layer: 0
   m_Name: Base_Idle
   m_TagString: Hero
@@ -108,6 +108,18 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &2565520371320904539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2717812185280673894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3be737270af811499909aa299490e07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!95 &2717812185280673891
 Animator:
   serializedVersion: 3
@@ -127,33 +139,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &2717812185280673885
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2717812185280673894}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3be737270af811499909aa299490e07, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2717812185280673890
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2717812185280673894}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65992aea73d58ca43ab731eafe798310, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 5
-  container: {fileID: 11400000, guid: 58b95d1dd079986479c68cfdc7829b87, type: 2}
-  activeHeroEvent: {fileID: 11400000, guid: 3dd68378e032dbc4c956dae46d5caeea, type: 2}
 --- !u!58 &2717812185280673887
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -170,3 +155,19 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 1}
   serializedVersion: 2
   m_Radius: 1
+--- !u!114 &6619343738824092350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2717812185280673894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 799427fd77d975e439e3ece2f01943df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 5
+  unitData: {fileID: 0}
+  canChangeFacing: 1
+  activeHeroEvent: {fileID: 0}

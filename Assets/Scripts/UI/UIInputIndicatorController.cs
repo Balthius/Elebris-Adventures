@@ -1,21 +1,22 @@
 using Assets.Scripts.Units;
+using Elebris.Core.Library.Components;
 using UnityEngine;
 
 public class UIInputIndicatorController : UIBaseController
 {
 
-    [SerializeField] InputIndicator lightAttack;
-    [SerializeField] InputIndicator heavyAttack;
-    [SerializeField] InputIndicator select;
-    [SerializeField] InputIndicator maneuver;
-    [SerializeField] InputIndicator skillOne;
-    [SerializeField] InputIndicator skillTwo;
-    [SerializeField] InputIndicator skillThree;
-    [SerializeField] InputIndicator skillFour;
+    [SerializeField] InputIndicator lightAttack = null;
+    [SerializeField] InputIndicator heavyAttack = null;
+    [SerializeField] InputIndicator select = null;
+    [SerializeField] InputIndicator maneuver = null;
+    [SerializeField] InputIndicator skillOne = null;
+    [SerializeField] InputIndicator skillTwo = null;
+    [SerializeField] InputIndicator skillThree = null;
+    [SerializeField] InputIndicator skillFour = null;
 
-
-    private IUnitController unitController;
-
+    [SerializeField] Sprite DefaultSprite;
+    private IUnitController unitController = null;
+    private CharacterActionContainer container = null;
 
     public override void Start()
     {
@@ -23,19 +24,29 @@ public class UIInputIndicatorController : UIBaseController
     }
     public override void OnPlayerUpdated()
     {
-        //Debug.Log("Player Updated");
+        container = canvas._player.unitData.ActionContainer;
         unitController = canvas._player.UnitController;
+        //Debug.Log("Player Updated");
         //update images of skills, and the state a skill is in
-        UnityActionContainer container = canvas._player.ActionContainer;
-        lightAttack.SetImage(container.LightAttack.actionBehaviour.ActionIcon);
-        heavyAttack.SetImage(container.HeavyAttack.actionBehaviour.ActionIcon);
+        
+        lightAttack.SetImage(GetSpriteFromBoundAction(BindableActions.LightAttack));
+        heavyAttack.SetImage(GetSpriteFromBoundAction(BindableActions.HeavyAttack));
         //select.SetImage(canvas._player.XXXX.Select.actionIcon);
         //maneuver.SetImage(canvas._player.XXXX.Select.actionIcon);
-        skillOne.SetImage(container.SkillOne.actionBehaviour.ActionIcon);
-        skillTwo.SetImage(container.SkillTwo.actionBehaviour.ActionIcon);
-        skillThree.SetImage(container.SkillThree.actionBehaviour.ActionIcon);
+        skillOne.SetImage(GetSpriteFromBoundAction(BindableActions.SkillOne));
+        skillTwo.SetImage(GetSpriteFromBoundAction(BindableActions.SkillTwo));
+        skillThree.SetImage(GetSpriteFromBoundAction(BindableActions.SkillThree));
 
-        skillFour.SetImage(container.SkillFour.actionBehaviour.ActionIcon);
+        skillFour.SetImage(GetSpriteFromBoundAction(BindableActions.SkillFour));
+    }
+    public Sprite GetSpriteFromBoundAction(BindableActions action)
+    {
+        if(container.CharacterActions[action] == null)
+        {
+            return DefaultSprite;
+        }
+        //and an else that returns an "empty" icon if image is null, action is null etc
+        return container.CharacterActions[action].data.ActionIcon;
     }
 
     private void FixedUpdate()

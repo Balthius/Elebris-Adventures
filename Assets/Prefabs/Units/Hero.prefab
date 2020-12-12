@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &407338012823025451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7992276177106731304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c3638658d2adb1489bc2ff2f30b5977, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7023320360459374880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7992276177106731304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 799427fd77d975e439e3ece2f01943df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inSafeZone: 0
+  speed: 5
+  unitData: {fileID: 407338012823025451}
+  uiManager: {fileID: 8729038853333039185}
+  buffStatusManager: {fileID: 6500311130373212207}
+  canChangeFacing: 1
+  activeHeroEvent: {fileID: 11400000, guid: 3dd68378e032dbc4c956dae46d5caeea, type: 2}
 --- !u!114 &7766297203762693906
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12,7 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3be737270af811499909aa299490e07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &9061532067962904651
+--- !u!114 &8729038853333039185
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -21,12 +52,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 7992276177106731304}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65992aea73d58ca43ab731eafe798310, type: 3}
+  m_Script: {fileID: 11500000, guid: 05f14ab36b387b5418eca4f6d9dec59c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
-  container: {fileID: 11400000, guid: 58b95d1dd079986479c68cfdc7829b87, type: 2}
-  activeHeroEvent: {fileID: 11400000, guid: 3dd68378e032dbc4c956dae46d5caeea, type: 2}
+  popupManager: {fileID: 11400000, guid: 9cfbf21800b60a645bb0453fe8aeeb26, type: 2}
+--- !u!114 &6500311130373212207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7992276177106731304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10bda49005478884197f7d500f5d29a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3673950403345068296
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -56,6 +97,10 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: bf9e21c77bda5594490268cab4464ad4, type: 2}
     - target: {fileID: 6635555678939951136, guid: c77e02b9d4b9bf4448620a2dfb9b6c21, type: 3}
       propertyPath: m_Name
+      value: Hero
+      objectReference: {fileID: 0}
+    - target: {fileID: 6635555678939951136, guid: c77e02b9d4b9bf4448620a2dfb9b6c21, type: 3}
+      propertyPath: m_TagString
       value: Hero
       objectReference: {fileID: 0}
     - target: {fileID: 6635555678939951139, guid: c77e02b9d4b9bf4448620a2dfb9b6c21, type: 3}

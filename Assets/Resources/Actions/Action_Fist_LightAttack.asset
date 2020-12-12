@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b68ecd0d6ba23c478d30ab7f4650c9e, type: 3}
+  m_Name: Action_Fist_LightAttack
+  m_EditorClassIdentifier: 
+  _baseActionData:
+    name: Action_Fist_LightAttack
+    ActionIcon: {fileID: 21300000, guid: 6602a6779c672c44ea282f872f3387d2, type: 3}
+    learnDefault: 1
+    showCastBar: 0
+    obj: {fileID: 2798447261580245637, guid: d062a716a597c9b4c8e2962bf7f4911c, type: 3}
+    requiredWeaponCategory: 
+    permittedSlot: 0
+  _hotBarBehaviour:
+    baseChargeTime: 1
+    actionLock: 0.1
+    actionCooldown: 0
+    canCharge: 1
+    chargeMoveSpeed: 85
+  _preparedbehaviour:
+    actionDuration: 0.15
+    actionSpeed: 0
+    targetsHitToDestroy: 0
+  _abilityEffects: []
+  _placement: 1
+  damageType: 1
+  mainType: 0
+  subType: 1
+  element: 1
+  baseCritChance: 5
+  flat: 10
+  scale: 10
+  scaleStat: 21
