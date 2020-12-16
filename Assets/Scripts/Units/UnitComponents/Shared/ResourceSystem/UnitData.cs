@@ -6,12 +6,14 @@ using UnityEngine;
 
 public class UnitData : MonoBehaviour
 {
-    public CharacterValueContainer ValueContainer { get; set; } = new CharacterValueContainer();
-    public CharacterActionContainer ActionContainer { get; set; } = new CharacterActionContainer();
+    public CharacterValueContainer ValueContainer { get; set; } 
+    public CharacterActionContainer ActionContainer { get; set; }
 
 
     private void Awake()
     {
+        ValueContainer = new CharacterValueContainer();
+        ActionContainer = gameObject.AddComponent<CharacterActionContainer>();
         //generate or find classes from guid
         //generate or find attributes from guid
         //generate or find stats from guid

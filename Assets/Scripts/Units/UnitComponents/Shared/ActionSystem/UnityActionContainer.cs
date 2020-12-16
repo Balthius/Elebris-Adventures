@@ -8,9 +8,18 @@ namespace Assets.Scripts.Units
 {
     public class CharacterActionContainer : MonoBehaviour
     {
-        public Dictionary<BindableActions, HotbarBoundAction> CharacterActions = new Dictionary<BindableActions, HotbarBoundAction>();
+        public Dictionary<BindableActions, HotbarBoundAction> CharacterActions { get; set; }
         //retrieve hash(value) associated with the key, create and execute the skill
 
+        public BaseActionData currentData;
+        public HotbarActionBehaviour currentBehaviour;
+        public Vector3 currentDirection;
+        public IActionBuilder builder;
+        public HotbarBoundAction BoundAction{ get;set; }
+        private void Awake()
+        {
+            CharacterActions = new Dictionary<BindableActions, HotbarBoundAction>();
+        }
         private void Update()
         {
             foreach (var action in CharacterActions.Values)
@@ -23,29 +32,16 @@ namespace Assets.Scripts.Units
 
         public void StartAction(Entity parent, BindableActions selectedAction)
         {
+            //skills should only be cast from here
             if (!CharacterActions[selectedAction].CanCast(parent.unitData.ValueContainer)) return;
-            IActionBuilder builder = CharacterActions[selectedAction].data;
-            BaseActionData data = builder.ReturnActionData();
+            builder = CharacterActions[selectedAction].builder;
+            currentData= builder.ReturnActionData();
 
-            HotbarActionBehaviour actionBehaviour = new HotbarActionBehaviour();    
-            builder.Modifybehaviour(ref actionBehaviour, parent.unitData.ValueContainer);
+            currentBehaviour= builder.ReturnHotbarBehaviour(parent.unitData.ValueContainer);  
+           
+            currentDirection = new Vector3(parent.facingDirection.x, parent.facingDirection.y, 0); //set direction
 
-            Vector3 actionDirection = new Vector3(parent.facingDirection.x, parent.facingDirection.y, 0); //set direction
-
-            StartCoroutine(parent.LockDuringAction(actionBehaviour.actionLock)); //time spent "casting" the skill (locked in place) whereas action duration is how long it sticks around
-
-            GameObject action = Instantiate(data.Obj);
-
-            if (!action.GetComponent<PreparedAction>())
-            {
-                action.AddComponent<PreparedAction>();
-            }
-
-            PreparedAction defaultAction = action.GetComponent<PreparedAction>();
-            defaultAction.Initialize(parent, actionDirection); //get components and set info from Players passives
-            builder.ModifyAction(ref defaultAction, parent.unitData.ValueContainer);
-
-
+           
         }
         public void CancelAction(bool resetCurrentSkill = true)
         {  // reset cast time, otherwise if a buff has a 10s cast time and we
@@ -54,13 +50,34 @@ namespace Assets.Scripts.Units
            // -> we cancel it in any case. players will have to wait for 'casttime'
            //    when attempting another cast anyway.
         }
-        public void FinishAction()
+        public void FinishAction(Entity parent)
         {
             // * check if we can currently cast a skill (enough mana etc.)
             // * check if we can cast THAT skill on THAT target
             // note: we don't check the distance again. the skill will be cast even
             //   if the target walked a bit while we casted it (it's simply better
             //   gameplay and less frustrating)
+
+            GameObject action = Instantiate(currentData.Obj);
+
+            if (!action.GetComponent<PreparedAction>())
+            {
+                action.AddComponent<PreparedAction>();
+            }
+
+            StartCoroutine(parent.LockDuringAction(currentBehaviour.actionLock)); //time spent "casting" the skill (locked in place) whereas action duration is how long it sticks around
+
+
+            PreparedAction defaultAction = builder.ReturnPreparedAction(parent.unitData.ValueContainer);
+            defaultAction.Initialize(parent, currentDirection); //get components and set info from Players passives
+        }
+
+        private void Cleanup()
+        {
+             currentData = null;
+             currentBehaviour = new HotbarActionBehaviour(); ;
+             currentDirection = Vector3.zero;
+             builder = null;
         }
 
 

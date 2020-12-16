@@ -19,7 +19,7 @@ namespace Assets.Scripts.Input
         public override void UpdateState()
         {
             base.UpdateState();
-            if (boundAction != null)
+            if (_parent.unitData.ActionContainer.BoundAction != null)
             {
                 return;
             }
@@ -65,7 +65,7 @@ namespace Assets.Scripts.Input
                 //Debug.Log("ChargingSkillFour");
                 UseAction(BindableActions.SkillFour);
             }
-            if (boundAction != null)
+            if (_parent.unitData.ActionContainer.BoundAction != null)
             {
                 _parent.ChangeState(new ActionCharging());
             }
@@ -73,11 +73,10 @@ namespace Assets.Scripts.Input
 
         private void UseAction(BindableActions actions)
         {
-            HotbarBoundAction bound = _parent.unitData.ActionContainer.CharacterActions[actions];
            
-            if (boundAction.CanCast(_parent.unitData.ValueContainer))
+            if (_parent.unitData.ActionContainer.BoundAction.CanCast(_parent.unitData.ValueContainer))
             {
-                boundAction = bound;
+                _parent.unitData.ActionContainer.StartAction(_parent, actions);
             }
             
                

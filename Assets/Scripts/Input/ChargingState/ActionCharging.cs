@@ -16,11 +16,11 @@ namespace Assets.Scripts.Input
             base.Enter(parent);
             _parent.canChangeFacing = false;
             _parent.Animator.SetBool("Charging", true);
-            _parent.SetSpeed(boundAction.behaviour.chargeMoveSpeed); // this should proooooobably be moved back into the unit itself as a stat modifiable
+            _parent.SetSpeed(_parent.unitData.ActionContainer.currentBehaviour.chargeMoveSpeed); // this should proooooobably be moved back into the unit itself as a stat modifiable
 
-            if (boundAction.behaviour.canCharge)
+            if (_parent.unitData.ActionContainer.currentBehaviour.canCharge)
             {
-                chargeTime.MaxValue = boundAction.behaviour.baseChargeTime;
+                chargeTime.MaxValue = _parent.unitData.ActionContainer.currentBehaviour.baseChargeTime;
                 //chargeAmount.MaxValue = (int) Get a charge max based on the type of action it is (attack, skill etc) and what level that action is
                 chargeAmount.CurrentValue = -1;
                 SetNextChargeTime();

@@ -6,7 +6,6 @@ namespace Assets.Scripts.Input
     public class BaseChargeState : IChargingState
     {
         protected Entity _parent;
-        protected HotbarBoundAction boundAction;
         public virtual void Enter(Entity parent)
         {
 

@@ -1,6 +1,7 @@
 using Assets.Scripts.UI;
 using Assets.Scripts.Units;
 using Elebris.Core.Library.CharacterValues.Mutable;
+using Elebris.Core.Library.Components;
 using Elebris.UnitCreation.Library.StatGeneration;
 using System.Collections;
 using System.Collections.Generic;
@@ -24,6 +25,11 @@ public class UIInteractionManager : MonoBehaviour
     public ResourceBarValue RetrieveResourceBar(ResourceStats stat)
     {
         return unitData.ValueContainer.DataHandler.RetrieveResourceData(stat);
+    }
+
+    public BaseActionData RetrieveActionData(BindableActions selectedAction)
+    {
+        return unitData.ActionContainer.CharacterActions[selectedAction].Data;
     }
 
 }

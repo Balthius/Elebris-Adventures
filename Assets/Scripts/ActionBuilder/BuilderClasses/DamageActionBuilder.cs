@@ -35,42 +35,38 @@ public class DamageActionBuilder : BaseActionBuilder
 
    
     //conceptually, these are good methods, but the implementation of retrieving stats is sloppy and verbose, needs to be smoother
-    public override void Modifybehaviour(ref HotbarActionBehaviour behaviour, CharacterValueContainer container)
+    public override HotbarActionBehaviour ReturnHotbarBehaviour(CharacterValueContainer container)
     {
-        float baseChargeTime = ModifedValue( _hotBarBehaviour.baseChargeTime, Stats.ChargeReduction.ToString(), container).TotalValue;
+        HotbarActionBehaviour behaviour = new HotbarActionBehaviour();
+        behaviour.baseChargeTime = ModifedValue( _hotBarBehaviour.baseChargeTime, Stats.ChargeReduction.ToString(), container).TotalValue;
 
-        float actionLock = ModifedValue( _hotBarBehaviour.actionLock, Stats.ActionLockScale.ToString(), container).TotalValue;
+        behaviour.actionLock = ModifedValue( _hotBarBehaviour.actionLock, Stats.ActionLockScale.ToString(), container).TotalValue;
 
-        float actionCooldown = ModifedValue( _hotBarBehaviour.actionCooldown, Stats.CurrentCooldownReduction.ToString(), container).TotalValue;
-        bool canCharge = _hotBarBehaviour.canCharge;
-        float chargeMoveSpeed = ModifedValue( _hotBarBehaviour.chargeMoveSpeed, Stats.ChargeMoveSpeedIncrease.ToString(), container).TotalValue;
-        ResourceCost[] resources = _hotBarBehaviour.ResourceCosts;
-        foreach (var item in resources)
+        behaviour.actionCooldown = ModifedValue( _hotBarBehaviour.actionCooldown, Stats.CurrentCooldownReduction.ToString(), container).TotalValue;
+        behaviour.canCharge = _hotBarBehaviour.canCharge;
+        behaviour.chargeMoveSpeed = ModifedValue( _hotBarBehaviour.chargeMoveSpeed, Stats.ChargeMoveSpeedIncrease.ToString(), container).TotalValue;
+         
+        behaviour.ResourceCosts = _hotBarBehaviour.ResourceCosts;
+        foreach (var item in behaviour.ResourceCosts)
         {
             item.Amount = ModifedValue( item.Amount, Stats.CostReduction.ToString(), container).TotalValue;
         }
-
-        behaviour = new HotbarActionBehaviour(baseChargeTime, actionLock, actionCooldown, canCharge, chargeMoveSpeed, resources);
+        return behaviour;
 
     }
-    public override void ModifyAction(ref PreparedAction action, CharacterValueContainer container)
+    public override PreparedAction ReturnPreparedAction(CharacterValueContainer container)
     {
         float actionDuration = ModifedValue( _preparedbehaviour.actionDuration, Stats.SkillDuration.ToString(), container).TotalValue;
         float actionSpeed = ModifedValue( _preparedbehaviour.actionSpeed, Stats.ProjectileSpeed.ToString(), container).TotalValue;
         NumAffectedTargets numTargets = _preparedbehaviour.targetsHitToDestroy;
         PreparedActionBehaviour behaviour = new PreparedActionBehaviour(actionDuration, actionSpeed, numTargets);
-        action = new PreparedAction(behaviour);
+        PreparedAction action = new PreparedAction(behaviour);
         DamageAction dam= CreateDamageAction();
-        CheckPassives(ref dam, container);
         action.AddAction(dam);
+        return action;
         
     }
 
-
-    private void CheckPassives(ref DamageAction action, CharacterValueContainer container)
-    {
-        //modify dam with players relevant...stuff
-    }
     private DamageAction CreateDamageAction()
     {
         return new DamageAction(ReturnDamageScale(), mainType, subType, element, baseCritChance);

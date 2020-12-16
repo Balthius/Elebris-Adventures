@@ -14,9 +14,9 @@ public class UIInputIndicatorController : UIBaseController
     [SerializeField] InputIndicator skillThree = null;
     [SerializeField] InputIndicator skillFour = null;
 
-    [SerializeField] Sprite DefaultSprite;
+    [SerializeField] Sprite DefaultSprite = null;
     private IUnitController unitController = null;
-    private CharacterActionContainer container = null;
+    private UIInteractionManager _uiManager= null;
 
     public override void Start()
     {
@@ -24,7 +24,7 @@ public class UIInputIndicatorController : UIBaseController
     }
     public override void OnPlayerUpdated()
     {
-        container = canvas._player.unitData.ActionContainer;
+        _uiManager = canvas._player.uiManager;
         unitController = canvas._player.UnitController;
         //Debug.Log("Player Updated");
         //update images of skills, and the state a skill is in
@@ -41,12 +41,12 @@ public class UIInputIndicatorController : UIBaseController
     }
     public Sprite GetSpriteFromBoundAction(BindableActions action)
     {
-        if(container.CharacterActions[action] == null)
+        if(_uiManager.RetrieveActionData(action) == null)
         {
             return DefaultSprite;
         }
         //and an else that returns an "empty" icon if image is null, action is null etc
-        return container.CharacterActions[action].data.ActionIcon;
+        return _uiManager.RetrieveActionData(action).ActionIcon;
     }
 
     private void FixedUpdate()

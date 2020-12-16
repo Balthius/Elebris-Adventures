@@ -17,9 +17,28 @@ public class HotbarBoundAction
         hash = data.name.GetStableHashCode();
 
     }
-
     // wrappers for easier access
-    public BaseActionBuilder data
+    public BaseActionData Data
+    {
+        get
+        {
+
+            //cache it?
+            return builder.ReturnActionData();
+        }
+    }
+    public HotbarActionBehaviour Behaviour(CharacterValueContainer container)
+    {
+        //cache it?
+        return builder.ReturnHotbarBehaviour(container);
+    }
+    public PreparedAction Action(CharacterValueContainer container)
+    {
+
+        //cache it?
+        return builder.ReturnPreparedAction(container);
+    }
+    public BaseActionBuilder builder
     {
         get
         {
@@ -35,7 +54,7 @@ public class HotbarBoundAction
     public bool CanCast(CharacterValueContainer container)
     {
         if (cooldown.CurrentValue < cooldown.MaxValue) return false;
-        data.CanCast(container);
+        builder.CanCast(container);
         return true;
     }
 

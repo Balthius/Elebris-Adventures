@@ -2,6 +2,7 @@ using Assets.Helpers;
 using Assets.Scripts.Actions.Attacks;
 using Elebris.Core.Library.CharacterValues.Mutable;
 using Elebris.Core.Library.Enums;
+using Elebris.Rpg.Library.Actions.ActionBehaviour;
 using Elebris.Rpg.Library.CharacterValues;
 using Elebris.Rpg.Library.Utils;
 using Elebris.UnitCreation.Library.StatGeneration;
@@ -27,15 +28,17 @@ public abstract class ScriptableObjectNonAlloc : ScriptableObject
         }
         // set: not needed, we don't change ScriptableObject names at runtime.
     }
+
+
 }
 public class BaseActionBuilder : ScriptableObjectNonAlloc, IActionBuilder
 {
    
-    [SerializeField] protected BaseActionData _baseActionData;
-    [SerializeField] protected HotbarActionBehaviour _hotBarBehaviour;
-    [SerializeField] protected PreparedActionBehaviour _preparedbehaviour;
-    [SerializeField] protected AbilityEffects[] _abilityEffects; //currently only onUse, eventually OnUse, OnTravel, OnHit 
-    [SerializeField] protected TwinStickEffectPlacement _placement;
+    protected BaseActionData _baseActionData;
+    protected HotbarActionBehaviour _hotBarBehaviour;
+    protected PreparedActionBehaviour _preparedbehaviour;
+    protected AbilityEffects[] _abilityEffects; //currently only onUse, eventually OnUse, OnTravel, OnHit 
+    protected TwinStickEffectPlacement _placement;
     //ChargeBehaviour which controls what happens at each level of charge
     [Serializable]
     public class AbilityEffects
@@ -113,12 +116,12 @@ public class BaseActionBuilder : ScriptableObjectNonAlloc, IActionBuilder
         return _baseActionData;
     }
 
-    public virtual void Modifybehaviour(ref HotbarActionBehaviour behaviour, CharacterValueContainer container)
+    public virtual HotbarActionBehaviour ReturnHotbarBehaviour(CharacterValueContainer container)
     {
         throw new NotImplementedException();
     }
 
-    public virtual void ModifyAction(ref PreparedAction action, CharacterValueContainer container)
+    public virtual PreparedAction ReturnPreparedAction(CharacterValueContainer container)
     {
         throw new NotImplementedException();
     }

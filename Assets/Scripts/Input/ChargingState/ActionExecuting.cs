@@ -9,20 +9,19 @@ namespace Assets.Scripts.Input
         {
             base.Enter(parent);
             _parent.Animator.SetTrigger("ActionUsed");
-            boundAction.StartAction(parent);
-            boundAction = null;
+            _parent.unitData.ActionContainer.BoundAction = null;
         }
 
         public override void Exit()
         {
             base.Exit();
-            boundAction = null;
+            _parent.unitData.ActionContainer.BoundAction = null;
         }
 
         public override void UpdateState()
         {
             base.UpdateState();
-            if(!boundAction)
+            if(_parent.unitData.ActionContainer.BoundAction == null)
             {
                 _parent.ChangeState(new ActionWaiting());
             }

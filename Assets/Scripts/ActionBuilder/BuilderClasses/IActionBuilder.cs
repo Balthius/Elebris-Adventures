@@ -10,7 +10,7 @@ using Elebris.Rpg.Library.CharacterValues;
 public interface IActionBuilder
 {
     BaseActionData ReturnActionData();
-    void Modifybehaviour(ref HotbarActionBehaviour behaviour, CharacterValueContainer container);
-    void ModifyAction(ref PreparedAction action, CharacterValueContainer container);
+    HotbarActionBehaviour ReturnHotbarBehaviour(CharacterValueContainer container);
+    PreparedAction ReturnPreparedAction(CharacterValueContainer container);
 
 }

@@ -7,11 +7,11 @@ using UnityEngine;
 public class TestActionPopulator : MonoBehaviour
 {
 
-    [SerializeField] DamageActionBuilder builder;
+    [SerializeField] DamageActionBuilder lAttackbuilder = null;
     private void Start()
     {
         UnitData data = GetComponentInParent<UnitData>();
 
-        data.ActionContainer.CharacterActions.Add(BindableActions.LightAttack, new HotbarBoundAction());
+        data.ActionContainer.CharacterActions.Add(BindableActions.LightAttack, new HotbarBoundAction(lAttackbuilder));
     }
 }
