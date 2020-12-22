@@ -1,5 +1,7 @@
 using Assets.Scripts.Units;
 using Elebris.Rpg.Library.CharacterValues;
+using Elebris.Rpg.Library.StatGeneration;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,11 +11,19 @@ public class UnitData : MonoBehaviour
     public CharacterValueContainer ValueContainer { get; set; } 
     public CharacterActionContainer ActionContainer { get; set; }
 
-
+    [SerializeField] private Guid unitGuid;
     private void Awake()
-    {
-        ValueContainer = new CharacterValueContainer();
-        ActionContainer = gameObject.AddComponent<CharacterActionContainer>();
+    {     
+        if(unitGuid != null)
+        {
+            ValueContainer = CharacterGenerationHandler.CreateCharacterValues(unitGuid);
+        }   
+        else
+        {
+            ValueContainer = CharacterGenerationHandler.CreateCharacterValues();
+        }
+
+        ActionContainer = gameObject.AddComponent<CharacterActionContainer>(); //same as above, later
         //generate or find classes from guid
         //generate or find attributes from guid
         //generate or find stats from guid
@@ -22,13 +32,4 @@ public class UnitData : MonoBehaviour
     }
 
 
-
-    private void OnEnable()
-    {
-        //subscribe resourcebars to events when their max stats change
-    }
-    private void OnDisable()
-    {
-        //unsubscribe resourcebars to events when their max stats change
-    }
 }

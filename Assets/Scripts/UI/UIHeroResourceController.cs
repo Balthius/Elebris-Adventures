@@ -3,7 +3,7 @@ using Elebris.Core.Library.CharacterValues.Mutable;
 using Elebris.UnitCreation.Library.StatGeneration;
 using UnityEngine;
 
-public class UIResourceController : UIBaseController
+public class UIHeroResourceController : UIBaseController
 {
     //reference to the resources this is the parent of for initialization
     [SerializeField] private UIResource _healthResource = null;
@@ -29,4 +29,5 @@ public class UIResourceController : UIBaseController
         _staminaResource.Initialize(canvas._player.uiManager.RetrieveResourceBar(ResourceStats.StaminaResource));
         _manaResource.Initialize(canvas._player.uiManager.RetrieveResourceBar(ResourceStats.ManaResource));
     }
+
 }

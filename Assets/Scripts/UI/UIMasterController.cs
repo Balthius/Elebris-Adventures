@@ -6,6 +6,7 @@ public class UIMasterController : MonoBehaviour
 {
     //set all values from this centralized class attached to the canvas
     public Hero _player;
+    public Entity _target;
 
     public List<UIBaseController> uIBaseControllers;
 
@@ -27,6 +28,12 @@ public class UIMasterController : MonoBehaviour
         uIBaseControllers = new List<UIBaseController>();
     }
 
+    public void UpdateActiveTarget(Entity target)
+    {
+        _target = target;
+
+        //last unit hit or healed can have info displayed in the upper corner (League style)
+    }
 
 
 }

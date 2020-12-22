@@ -16,6 +16,10 @@ namespace Assets.Scripts.Units
         public Vector3 currentDirection;
         public IActionBuilder builder;
         public HotbarBoundAction BoundAction{ get;set; }
+
+        private float globalSkillCD = .1f;
+        private float globalAttackCD = .1f;
+        private float globalManeuverCD = .1f;
         private void Awake()
         {
             CharacterActions = new Dictionary<BindableActions, HotbarBoundAction>();

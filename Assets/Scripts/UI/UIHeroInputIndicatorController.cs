@@ -2,7 +2,7 @@ using Assets.Scripts.Units;
 using Elebris.Core.Library.Components;
 using UnityEngine;
 
-public class UIInputIndicatorController : UIBaseController
+public class UIHeroInputIndicatorController : UIBaseController
 {
 
     [SerializeField] InputIndicator lightAttack = null;

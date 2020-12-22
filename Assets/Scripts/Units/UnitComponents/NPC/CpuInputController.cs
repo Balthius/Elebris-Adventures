@@ -42,7 +42,7 @@ namespace Assets.Scripts.Units
             return CurrentMovement;
         }
 
-        public float AttemptAttackRange { get; set; } = 2;//distance at which at least one action will be within range
+        public float AttemptAttackRange { get; set; } = 1;//distance at which at least one action will be within range
 
         //public float AttemptRetreatRange { get; set; } = .3f;//distance at which at least one action will be within range
 
